@@ -86,5 +86,87 @@ void ViewContactInfo()
             }
         }
 }
+void EditContactInfo()
+{
+    bool isEditable = false;
+    while (!isEditable)
+    {
+        if (contacts.Count == 0)
+        {
+            Console.WriteLine("There is no contact in the manager");
+            continue;
+        }
+        Console.WriteLine("Enter the index of the contact to edit: ");
+        var userInput = Console.ReadLine();
+        if (int.TryParse(userInput, out int index) && index >= 1 && index <= contacts.Count)
+        {
+            var contactToBeEdited = contacts[index - 1];
+            Console.WriteLine("Enter New Name: ");
+            string newName = Console.ReadLine();
+            contactToBeEdited = newName;
+            Console.WriteLine("Edited the contact info successfully");
+            ViewContactInfo();
+            isEditable = true;
+        }
+        else
+        {
+            Console.WriteLine("There is no such contact");
+        }
+    }
+}
+void RemoveContactInfo()
+{
+    if (contacts.Count == 0)
+    {
+        Console.WriteLine("No Contacts have been added yet");
+        return;
+    }
+    bool isIndexValid = false;
+
+    while (!isIndexValid)
+    {
+        Console.WriteLine("Enter the index of the contact to delete: ");
+        ViewContactInfo();
+        var removeIndex = Console.ReadLine();
+        if (removeIndex == "")
+        {
+            Console.WriteLine("Remove Index should not be empty");
+            continue;
+        }
+        if (int.TryParse(removeIndex, out int index) && index >= 1 && index <= contacts.Count)
+        {
+            var contactToBeRemoved = contacts[index - 1];
+            contacts.RemoveAt(index - 1);
+            Console.WriteLine("Contact" + contactToBeRemoved + " deleted successfully");
+            isIndexValid = true;
+            ViewContactInfo();
+        }
+        else
+        {
+            Console.WriteLine("The given index is not valid");
+        }
+    }
+}
+void SearchContactInfo()
+{
+    bool isNameValid = false;
+    Console.WriteLine("Enter name to search: ");
+    var searchName = Console.ReadLine();
+    if (searchName.Length == 0)
+    {
+        Console.WriteLine("Not a valid input");
+    }
+
+    string foundName = contacts.Find(s => s.Equals(searchName, StringComparison.OrdinalIgnoreCase));
+    if (foundName != null)
+    {
+        isNameValid = true;
+        Console.WriteLine("Contact Found :" + foundName);
+    }
+    else
+    {
+        Console.WriteLine("There is no such contact");
+    }
+}
 
 Console.ReadKey();
