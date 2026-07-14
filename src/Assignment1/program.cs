@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Assignments
+namespace Assignment1
 {
     /// <summary>
     /// First Assignment
@@ -15,7 +15,7 @@ namespace Assignments
         /// <param name="args">Console-Based Contact Manager</param>
         public static void Main(string[] args)
         {
-            List<List<string>> contacts = new List<List<string>>();
+            List<List<string>> contacts = new ();
 
             Console.WriteLine("Console-Based Contact Manager");
             Console.WriteLine();
@@ -68,7 +68,7 @@ namespace Assignments
 
             void AddContactInfo()
             {
-                List<string> contact = new List<string>();
+                List<string> contact = new ();
                 Console.WriteLine("Add New Contact:");
                 Console.WriteLine();
                 Console.WriteLine("Enter name of the contact :");
@@ -177,7 +177,7 @@ namespace Assignments
                         continue;
                     }
 
-                    for (int i = 0; i < contacts.Count(); i++)
+                    for (int i = 0; i < contacts.Count; i++)
                     {
                         if (removeName.ToLower() == contacts[i][0].ToLower())
                         {
