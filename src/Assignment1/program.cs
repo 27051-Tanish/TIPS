@@ -65,9 +65,10 @@ namespace Assignments
                         break;
                 }
             }
+
             void AddContactInfo()
             {
-                List<string> contact = new List<string>(); 
+                List<string> contact = new List<string>();
                 Console.WriteLine("Add New Contact:");
                 Console.WriteLine();
                 Console.WriteLine("Enter name of the contact :");
@@ -86,6 +87,7 @@ namespace Assignments
                 contacts.Add(contact);
                 Console.WriteLine("Contact added successfully");
             }
+
             void ViewContactInfo()
             {
                 if (contacts.Count == 0)
@@ -104,6 +106,7 @@ namespace Assignments
                     }
                 }
             }
+
             void EditContactInfo()
             {
                 bool isEditable = false;
@@ -114,9 +117,10 @@ namespace Assignments
                         Console.WriteLine("There is no contact in the manager");
                         continue;
                     }
+
                     Console.WriteLine("Enter the name of the contact to edit: ");
                     var userInput = Console.ReadLine();
-                    foreach(List<string> c in contacts)
+                    foreach (List<string> c in contacts)
                     {
                         if (userInput.ToLower() == c[0].ToLower())
                         {
@@ -136,19 +140,22 @@ namespace Assignments
                                 var newNumber = Console.ReadLine();
                                 c[1] = newNumber;
                             }
-                            else if(userOption == "Email")
+                            else if (userOption == "Email")
                             {
                                 Console.WriteLine("Enter new email: ");
                                 var newEmail = Console.ReadLine();
                                 c[2] = newEmail;
                             }
+
                             isEditable = true;
                             return;
                         }
-                    } 
+                    }
                 }
+
                 Console.WriteLine("There is no such contact");
             }
+
             void RemoveContactInfo()
             {
                 if (contacts.Count <= 0)
@@ -156,6 +163,7 @@ namespace Assignments
                     Console.WriteLine("No Contacts have been added yet");
                     return;
                 }
+
                 bool isIndexValid = false;
 
                 while (!isIndexValid)
@@ -163,11 +171,12 @@ namespace Assignments
                     Console.WriteLine("Enter the name of the contact to delete: ");
                     ViewContactInfo();
                     var removeName = Console.ReadLine();
-                    if (removeName == "")
+                    if (removeName == string.Empty)
                     {
                         Console.WriteLine("Name field should not be empty");
                         continue;
                     }
+
                     for (int i = 0; i < contacts.Count(); i++)
                     {
                         if (removeName.ToLower() == contacts[i][0].ToLower())
@@ -179,9 +188,11 @@ namespace Assignments
                             return;
                         }
                     }
+
                     Console.WriteLine("There is no such contact");
                 }
             }
+
             void SearchContactInfo()
             {
                 bool isNameValid = false;
@@ -209,6 +220,7 @@ namespace Assignments
                     }
                 }
             }
+
             Console.ReadKey();
         }
     }
