@@ -48,6 +48,20 @@ namespace Assignment1.Services
 
                         Console.WriteLine("Enter Phone Number :");
                         contact.PhoneNumber = Console.ReadLine();
+                        bool isValidPhone = false;
+                        while (!isValidPhone)
+                        {
+                            if (!Helper.IsValidNumber(contact.PhoneNumber))
+                            {
+                                Console.WriteLine("Invalid Phone Number");
+                                Console.WriteLine("Enter Phone Number again:");
+                                contact.PhoneNumber = Console.ReadLine();
+                            }
+                            else
+                            {
+                                isValidPhone = true;
+                            }
+                        }
 
                         Console.WriteLine("Enter email address :");
                         contact.Email = Console.ReadLine();
@@ -101,10 +115,11 @@ namespace Assignment1.Services
 
             void DisplayAll(List<ContactInfo> contacts)
             {
-                if(contacts.Count == 0)
+                if (contacts.Count == 0)
                 {
                     Console.WriteLine("No contact available");
                 }
+
                 foreach (var contact in contacts)
                 {
                     DisplayContact(contact);
@@ -113,11 +128,11 @@ namespace Assignment1.Services
 
             void EditContact()
             {
-                List<ContactInfo> contacts = _manager.ViewContactInfo();
+                List<ContactInfo> contacts = this._manager.ViewContactInfo();
                 ContactInfo contact = new ContactInfo();
                 Console.WriteLine("Enter serial number of the contact to edit: ");
                 var serialNumber = int.Parse(Console.ReadLine());
-                if (serialNumber == null)
+                if (serialNumber <= 0)
                 {
                     Console.WriteLine("Invalid serial number");
                 }
@@ -144,12 +159,12 @@ namespace Assignment1.Services
                                 isEdit = true;
                                 break;
                             case 3:
-                                Console.WriteLine("Enter new phone: ");
+                                Console.WriteLine("Enter new email: ");
                                 newContact.Email = Console.ReadLine();
                                 isEdit = true;
                                 break;
                             case 4:
-                                Console.WriteLine("Enter new phone: ");
+                                Console.WriteLine("Enter new note: ");
                                 newContact.Note = Console.ReadLine();
                                 isEdit = true;
                                 break;
@@ -157,7 +172,7 @@ namespace Assignment1.Services
                     }
 
                     Guid selectedId = (Guid)contacts[serialNumber - 1].ID;
-                    _manager.EditContactInfo(selectedId, newContact);
+                    this._manager.EditContactInfo(selectedId, newContact);
                 }
             }
 
@@ -169,15 +184,15 @@ namespace Assignment1.Services
                 Console.WriteLine("Enter delete ID of the cotact: ");
                 int deleteId = int.Parse(Console.ReadLine());
                 Guid selectedId = (Guid)contacts[deleteId - 1].ID;
-                _manager.RemoveContactInfo(selectedId);
+                this._manager.RemoveContactInfo(selectedId);
             }
 
             void SearchContact()
             {
                 Console.WriteLine("---Search Here---");
-                string keyword = Console.ReadLine();
+                string? keyword = Console.ReadLine();
 
-                DisplayAll(_manager.SearchContactInfo(keyword));
+                DisplayAll(this._manager.SearchContactInfo(keyword));
             }
         }
     }

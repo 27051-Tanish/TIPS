@@ -9,11 +9,11 @@ using Assignment1.Persistence;
 namespace Assignment1.Services
 {
     /// <summary>
-    /// CRUD operations 
+    /// CRUD operations
     /// </summary>
     internal class ContactManager
     {
-        private Repository _repo = new Repository();
+        private Repository _repo = new ();
 
         /// <summary>
         /// add contact to manager
@@ -31,7 +31,9 @@ namespace Assignment1.Services
         /// <returns>list</returns>
         public List<ContactInfo> ViewContactInfo()
         {
-            return _repo.GetContacts();
+            List<ContactInfo> contact = this._repo.GetContacts();
+            contact.Sort((a, b) => a.Name.CompareTo(b.Name));
+            return contact;
         }
 
         /// <summary>
@@ -42,11 +44,6 @@ namespace Assignment1.Services
         public string RemoveContactInfo(Guid id)
         {
             ContactInfo contact = this._repo.GetById(id);
-
-            if (id == null)
-            {
-                return "No contact present (or) Invalid id";
-            }
 
             this._repo.Remove(contact);
             return "Contact deleted successfully";
@@ -60,7 +57,7 @@ namespace Assignment1.Services
         /// <returns>bool</returns>
         public string EditContactInfo(Guid id,  ContactInfo newContact)
         {
-            ContactInfo contact = _repo.GetById(id);
+            ContactInfo contact = this._repo.GetById(id);
             if (contact == null)
             {
                 return "Invalid ID (or) Cannot edit";
@@ -69,24 +66,28 @@ namespace Assignment1.Services
             if (newContact.Name != null)
             {
                 contact.Name = newContact.Name;
+                return "Name edited successfully";
             }
 
             if (contact.Email != null)
             {
                 contact.Email = newContact.Email;
+                return "Email edited successfully";
             }
 
             if (newContact.PhoneNumber != null)
             {
                 contact.PhoneNumber = newContact.PhoneNumber;
+                return "PhoneNumber edited successfully";
             }
 
             if (newContact.Note != null)
             {
                 contact.Note = newContact.Note;
+                return "Note edited successfully";
             }
 
-            return "Contact edited successfully";
+            return "Contact Updated";
         }
 
         /// <summary>
@@ -96,8 +97,8 @@ namespace Assignment1.Services
         /// <returns>List of contacts</returns>
         public List<ContactInfo> SearchContactInfo(string searchValue)
         {
-            return this._repo.GetContacts().Where(s=>s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase)||
-                s.PhoneNumber.Contains(searchValue)||s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase)||s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+                s.PhoneNumber.Contains(searchValue) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
         }
     }
 }

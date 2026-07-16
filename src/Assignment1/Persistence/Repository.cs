@@ -42,12 +42,14 @@ namespace Assignment1.Persistence
             List<ContactInfo> duplicate = new List<ContactInfo>();
             for (int i = 0; i < this._contacts.Count; i++)
             {
-                ContactInfo copyInfo = new ContactInfo();
-                copyInfo.Name = this._contacts[i].Name;
-                copyInfo.Email = this._contacts[i].Email;
-                copyInfo.ID = this._contacts[i].ID;
-                copyInfo.PhoneNumber = this._contacts[i].PhoneNumber;
-                copyInfo.Note = this._contacts[i].Note;
+                ContactInfo copyInfo = new ()
+                {
+                    Name = this._contacts[i].Name,
+                    Email = this._contacts[i].Email,
+                    ID = this._contacts[i].ID,
+                    PhoneNumber = this._contacts[i].PhoneNumber,
+                    Note = this._contacts[i].Note,
+                };
                 duplicate.Add(copyInfo);
             }
 
