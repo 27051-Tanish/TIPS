@@ -129,10 +129,15 @@ namespace Assignment1.Services
             void EditContact()
             {
                 List<ContactInfo> contacts = this._manager.ViewContactInfo();
+                if (contacts.Count == 0)
+                {
+                    Console.WriteLine("No contact available");
+                }
+
                 ContactInfo contact = new ContactInfo();
                 Console.WriteLine("Enter serial number of the contact to edit: ");
-                var serialNumber = int.Parse(Console.ReadLine());
-                if (serialNumber <= 0)
+                bool serialNumber = int.TryParse(Console.ReadLine(), out int result);
+                if (result <= 0)
                 {
                     Console.WriteLine("Invalid serial number");
                 }
@@ -145,8 +150,8 @@ namespace Assignment1.Services
                         Console.WriteLine("Which details you need to change: ");
                         Console.WriteLine();
                         Console.WriteLine("[1]Name\n[2]Phone\n[3]Email\n[4]Note");
-                        int userChoice = int.Parse(Console.ReadLine());
-                        switch (userChoice)
+                        bool userChoice = int.TryParse(Console.ReadLine(), out int choice);
+                        switch (choice)
                         {
                             case 1:
                                 Console.WriteLine("Enter new Name: ");
@@ -171,19 +176,24 @@ namespace Assignment1.Services
                         }
                     }
 
-                    Guid selectedId = (Guid)contacts[serialNumber - 1].ID;
+                    Guid? selectedId = (Guid?)contacts[result - 1].ID;
                     this._manager.EditContactInfo(selectedId, newContact);
                 }
             }
 
             void DeleteContact()
             {
-                List<ContactInfo> contacts = _manager.ViewContactInfo();
-                _manager.ViewContactInfo();
+                List<ContactInfo> contacts = this._manager.ViewContactInfo();
+                if (contacts.Count == 0)
+                {
+                    Console.WriteLine("No contact available");
+                }
+
+                this._manager.ViewContactInfo();
                 ContactInfo contact = new ContactInfo();
                 Console.WriteLine("Enter delete ID of the cotact: ");
-                int deleteId = int.Parse(Console.ReadLine());
-                Guid selectedId = (Guid)contacts[deleteId - 1].ID;
+                bool deleteId = int.TryParse(Console.ReadLine(), out int deleteNumber);
+                Guid? selectedId = (Guid?)contacts[deleteNumber - 1].ID;
                 this._manager.RemoveContactInfo(selectedId);
             }
 

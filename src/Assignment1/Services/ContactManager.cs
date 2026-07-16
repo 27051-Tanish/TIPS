@@ -32,7 +32,7 @@ namespace Assignment1.Services
         public List<ContactInfo> ViewContactInfo()
         {
             List<ContactInfo> contact = this._repo.GetContacts();
-            contact.Sort((a, b) => a.Name.CompareTo(b.Name));
+            contact.Sort((a, b) => string.Compare(a.Name, b.Name));
             return contact;
         }
 
@@ -41,11 +41,14 @@ namespace Assignment1.Services
         /// </summary>
         /// <param name="id">remove</param>
         /// <returns>bool</returns>
-        public string RemoveContactInfo(Guid id)
+        public string RemoveContactInfo(Guid? id)
         {
-            ContactInfo contact = this._repo.GetById(id);
+            ContactInfo? contact = this._repo.GetById(id);
+            if (contact != null)
+            {
+                this._repo.Remove(contact);
+            }
 
-            this._repo.Remove(contact);
             return "Contact deleted successfully";
         }
 
@@ -55,9 +58,9 @@ namespace Assignment1.Services
         /// <param name="id">id</param>
         /// <param name="newContact">newContact</param>
         /// <returns>bool</returns>
-        public string EditContactInfo(Guid id,  ContactInfo newContact)
+        public string EditContactInfo(Guid? id,  ContactInfo newContact)
         {
-            ContactInfo contact = this._repo.GetById(id);
+            ContactInfo? contact = this._repo.GetById(id);
             if (contact == null)
             {
                 return "Invalid ID (or) Cannot edit";
@@ -95,10 +98,15 @@ namespace Assignment1.Services
         /// </summary>
         /// <param name="searchValue">search</param>
         /// <returns>List of contacts</returns>
-        public List<ContactInfo> SearchContactInfo(string searchValue)
+        public List<ContactInfo>? SearchContactInfo(string? searchValue)
         {
-            return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
-                s.PhoneNumber.Contains(searchValue) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (searchValue != null)
+            {
+                return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+                s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return null;
         }
     }
 }

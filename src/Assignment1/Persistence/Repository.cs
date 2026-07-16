@@ -61,7 +61,7 @@ namespace Assignment1.Persistence
         /// </summary>
         /// <param name="id">id</param>
         /// <returns>Id</returns>
-        public ContactInfo GetById(Guid id)
+        public ContactInfo? GetById(Guid? id)
         {
             return this._contacts.Find(c => c.ID == id);
         }

@@ -16,9 +16,9 @@ namespace Assignment1
         /// </summary>
         /// <param name="number">number</param>
         /// <returns>bool</returns>
-        public static bool IsValidNumber(string number)
+        public static bool IsValidNumber(string? number)
         {
-            if (number.Length != 10)
+            if (number?.Length != 10)
             {
                 return false;
             }
