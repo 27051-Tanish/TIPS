@@ -11,7 +11,7 @@ namespace Assignment1.Services
     /// <summary>
     /// CRUD operations
     /// </summary>
-    internal class ContactManager
+    public class ContactManager
     {
         private Repository _repo = new ();
 
@@ -98,15 +98,10 @@ namespace Assignment1.Services
         /// </summary>
         /// <param name="searchValue">search</param>
         /// <returns>List of contacts</returns>
-        public List<ContactInfo>? SearchContactInfo(string? searchValue)
+        public List<ContactInfo> SearchContactInfo(string? searchValue)
         {
-            if (searchValue != null)
-            {
-                return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
-                s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            return null;
+             return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+             s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
         }
     }
 }

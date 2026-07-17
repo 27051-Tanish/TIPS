@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Assignment1
@@ -32,6 +33,22 @@ namespace Assignment1
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks valid email
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <returns>bool</returns>
+        public static bool IsValidEmail(string? email)
+        {
+            if (email == null)
+            {
+                return false;
+            }
+
+            string pattern = @"^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$";
+            return Regex.IsMatch(email, pattern);
         }
     }
 }

@@ -9,7 +9,7 @@ using Assignment1.Models;
 namespace Assignment1.Persistence
 {
     /// <summary>
-    /// Repo for storing
+    /// The repository class used to store the List of Contacts
     /// </summary>
     internal class Repository
     {
@@ -25,7 +25,7 @@ namespace Assignment1.Persistence
         }
 
         /// <summary>
-        /// Remove contact
+        /// Remove contact from the list
         /// </summary>
         /// <param name="contact">remvove given contact</param>
         public void Remove(ContactInfo contact)
@@ -34,7 +34,7 @@ namespace Assignment1.Persistence
         }
 
         /// <summary>
-        /// Gets all conatactInfo
+        /// gets or sets all contacts
         /// </summary>
         /// <returns>list</returns>
         public List<ContactInfo> GetContacts()

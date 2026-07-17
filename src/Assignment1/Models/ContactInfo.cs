@@ -12,7 +12,7 @@ namespace Assignment1.Models
     public class ContactInfo
     {
         /// <summary>
-        /// Gets or sets and sets GUID
+        /// Gets or sets GUID
         /// </summary>
         /// <param name = "GUID">GUID</param>
         /// <returns>returns guid</returns>
@@ -32,22 +32,22 @@ namespace Assignment1.Models
         public string? Name { get; set; }
 
         /// <summary>
-        /// Gets or sets GUID
+        /// Gets or sets email
         /// </summary>
         /// <param name = "email">GUID</param>
         /// <returns>returns guid</returns>
         /// <value>
-        /// And sets GUID
+        /// sets email
         /// </value>
         public string? Email { get; set; }
 
         /// <summary>
-        /// Gets or sets GUID
+        /// Gets or sets phone
         /// </summary>
         /// <param name = "phone">GUID</param>
         /// <returns>returns phonenumber</returns>
         /// <value>
-        /// And sets GUID
+        /// sets phone
         /// </value>
         public string? PhoneNumber { get; set; }
 
