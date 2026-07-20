@@ -14,8 +14,6 @@ namespace Assignment1.Models
         /// <summary>
         /// Gets or sets GUID
         /// </summary>
-        /// <param name = "GUID">GUID</param>
-        /// <returns>returns guid</returns>
         /// <value>
         /// And sets GUID
         /// </value>
@@ -24,8 +22,6 @@ namespace Assignment1.Models
         /// <summary>
         /// Gets or sets  Name
         /// </summary>
-        /// <param name = "Name">GUID</param>
-        /// <returns>returns name</returns>
         /// <value>
         /// gets and sets name
         /// </value>
@@ -34,8 +30,6 @@ namespace Assignment1.Models
         /// <summary>
         /// Gets or sets email
         /// </summary>
-        /// <param name = "email">GUID</param>
-        /// <returns>returns guid</returns>
         /// <value>
         /// sets email
         /// </value>
@@ -44,8 +38,6 @@ namespace Assignment1.Models
         /// <summary>
         /// Gets or sets phone
         /// </summary>
-        /// <param name = "phone">GUID</param>
-        /// <returns>returns phonenumber</returns>
         /// <value>
         /// sets phone
         /// </value>
@@ -54,8 +46,6 @@ namespace Assignment1.Models
         /// <summary>
         /// Gets or sets notes
         /// </summary>
-        /// <param name = "notes">GUID</param>
-        /// <returns>returns notes</returns>
         /// <value>
         /// notes
         /// </value>

@@ -16,28 +16,28 @@ namespace Assignment1.Services
         private Repository _repo = new ();
 
         /// <summary>
-        /// add contact to manager
+        /// add new contact details to contact log
         /// </summary>
         /// <param name="contact">add feature</param>
         public void AddContactInfo(ContactInfo contact)
         {
             contact.ID = Guid.NewGuid();
-            this._repo.Add(contact);
+            this._repo.AddNewContact(contact);
         }
 
         /// <summary>
-        /// gets all values
+        /// gets all contact details from the list
         /// </summary>
         /// <returns>list</returns>
         public List<ContactInfo> ViewContactInfo()
         {
-            List<ContactInfo> contact = this._repo.GetContacts();
+            List<ContactInfo> contact = (List<ContactInfo>)this._repo.GetContacts();
             contact.Sort((a, b) => string.Compare(a.Name, b.Name));
             return contact;
         }
 
         /// <summary>
-        /// remove contact
+        /// remove contact by id from the list
         /// </summary>
         /// <param name="id">remove</param>
         /// <returns>bool</returns>
@@ -46,14 +46,14 @@ namespace Assignment1.Services
             ContactInfo? contact = this._repo.GetById(id);
             if (contact != null)
             {
-                this._repo.Remove(contact);
+                this._repo.RemoveContact(contact);
             }
 
-            return "Contact deleted successfully";
+            return "ID is null";
         }
 
         /// <summary>
-        /// edit contact
+        /// edit contact by id from the list
         /// </summary>
         /// <param name="id">id</param>
         /// <param name="newContact">newContact</param>
@@ -72,7 +72,7 @@ namespace Assignment1.Services
                 return "Name edited successfully";
             }
 
-            if (contact.Email != null)
+            if (newContact.Email != null)
             {
                 contact.Email = newContact.Email;
                 return "Email edited successfully";
@@ -90,18 +90,23 @@ namespace Assignment1.Services
                 return "Note edited successfully";
             }
 
-            return "Contact Updated";
+            return "No updation in contact log";
         }
 
         /// <summary>
-        /// Search value Contact From Manager
+        /// Search by keyword for a contact from contact manager
         /// </summary>
         /// <param name="searchValue">search</param>
         /// <returns>List of contacts</returns>
-        public List<ContactInfo> SearchContactInfo(string? searchValue)
+        public List<ContactInfo>? SearchContactInfo(string searchValue)
         {
-             return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
-             s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (!(string.IsNullOrEmpty(searchValue) || string.IsNullOrWhiteSpace(searchValue)))
+            {
+                return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+                s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            return null;
         }
     }
 }

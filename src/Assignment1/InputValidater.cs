@@ -10,33 +10,41 @@ namespace Assignment1
     /// <summary>
     /// helper class
     /// </summary>
-    public static class Helper
+    public static class InputValidater
     {
         /// <summary>
-        /// Checks number
+        /// Validates name of the contact
+        /// </summary>
+        /// <param name="name">name of the contact in the contact manager</param>
+        /// <returns>bool</returns>
+        public static bool IsValidName(string? name)
+        {
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks number entered by the user
         /// </summary>
         /// <param name="number">number</param>
         /// <returns>bool</returns>
         public static bool IsValidNumber(string? number)
         {
-            if (number?.Length != 10)
+            if (number == null)
             {
                 return false;
             }
 
-            foreach (char c in number)
-            {
-                if (!char.IsDigit(c))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            string pattern = @"^[0-9]{10}$";
+            return Regex.IsMatch(number, pattern);
         }
 
         /// <summary>
-        /// Checks valid email
+        /// Checks for valid email
         /// </summary>
         /// <param name="email">email</param>
         /// <returns>bool</returns>

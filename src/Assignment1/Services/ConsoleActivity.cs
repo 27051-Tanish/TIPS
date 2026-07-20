@@ -17,27 +17,25 @@ namespace Assignment1.Services
         /// Shows menu to the user for selecting a operation
         /// </summary>
         /// <returns>string</returns>
-        public string? ShowMenu()
+        public int? GetChoice()
         {
-            Console.WriteLine("Welcome to Console-based contact manager\n");
-
             Console.WriteLine("===========================================");
-            Console.WriteLine("[1]. To Add New Contact: Press 'A' or 'a'");
-            Console.WriteLine("[2]. To View Contact: Press 'V' or 'v'");
-            Console.WriteLine("[3]. To Edit Contact: Press 'ED' or 'ed'");
-            Console.WriteLine("[4]. To Delete Contact: Press 'D' or 'd'");
-            Console.WriteLine("[5]. To Search Contact: Press 'S' or 's'");
-            Console.WriteLine("[6]. To Exit: Press 'E' or 'e'");
+            Console.WriteLine("[1]. To Add New Contact");
+            Console.WriteLine("[2]. To View Contact");
+            Console.WriteLine("[3]. To Edit Contact");
+            Console.WriteLine("[4]. To Delete Contact");
+            Console.WriteLine("[5]. To Search Contact");
+            Console.WriteLine("[6]. To Exit");
             Console.WriteLine("===========================================");
 
-            string? userChoice = Console.ReadLine();
+            bool? userChoice = int.TryParse(Console.ReadLine(), out int value);
 
-            if (userChoice == null)
+            if (userChoice != false)
             {
-                return null;
+                return value;
             }
 
-            return userChoice;
+            return null;
         }
 
         /// <summary>
@@ -47,17 +45,32 @@ namespace Assignment1.Services
         public ContactInfo AddContactInfo()
         {
             ContactInfo contact = new ContactInfo();
+
             Console.WriteLine("Add New Contact:");
             Console.WriteLine();
             Console.WriteLine("Enter name of the contact :");
             contact.Name = Console.ReadLine();
+            bool isValidName = false;
+            while (!isValidName)
+            {
+                if (!InputValidater.IsValidName(contact.Name))
+                {
+                    Console.WriteLine("Invalid name");
+                    Console.WriteLine("Enter name again: ");
+                    contact.Name = Console.ReadLine();
+                }
+                else
+                {
+                    isValidName = true;
+                }
+            }
 
             Console.WriteLine("Enter Phone Number :");
             contact.PhoneNumber = Console.ReadLine();
             bool isValidPhone = false;
             while (!isValidPhone)
             {
-                if (!Helper.IsValidNumber(contact.PhoneNumber))
+                if (!InputValidater.IsValidNumber(contact.PhoneNumber))
                 {
                     Console.WriteLine("Invalid Phone Number");
                     Console.WriteLine("Enter Phone Number again:");
@@ -74,7 +87,7 @@ namespace Assignment1.Services
             bool isValidEmail = false;
             while (!isValidEmail)
             {
-                if (!Helper.IsValidEmail(contact.Email))
+                if (!InputValidater.IsValidEmail(contact.Email))
                 {
                     Console.WriteLine("Invalid email");
                     Console.WriteLine("Enter email again");
@@ -112,14 +125,21 @@ namespace Assignment1.Services
         /// <param name="contacts">contacts</param>
         public void DisplayAll(List<ContactInfo> contacts)
         {
-            foreach (var contact in contacts)
+            if (contacts.Count == 0)
             {
-                this.DisplayContact(contact);
+                Console.WriteLine("Contact log is empty");
+            }
+            else
+            {
+                foreach (var contact in contacts)
+                {
+                    this.DisplayContact(contact);
+                }
             }
         }
 
         /// <summary>
-        /// It shows all the message
+        /// Shows all the console messages
         /// </summary>
         /// <param name="message">message</param>
         public void ShowMessage(string message)

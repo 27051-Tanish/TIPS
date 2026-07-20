@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Assignment1.Models;
@@ -9,7 +8,7 @@ using Assignment1.Models;
 namespace Assignment1.Persistence
 {
     /// <summary>
-    /// The repository class used to store the List of Contacts
+    /// Store the List of Contacts in the contact log
     /// </summary>
     internal class Repository
     {
@@ -18,8 +17,8 @@ namespace Assignment1.Persistence
         /// <summary>
         /// Add new contact to the list
         /// </summary>
-        /// <param name="contact">Add </param>
-        public void Add(ContactInfo contact)
+        /// <param name="contact">Add new contact to the contact log</param>
+        public void AddNewContact(ContactInfo contact)
         {
             this._contacts.Add(contact);
         }
@@ -27,8 +26,8 @@ namespace Assignment1.Persistence
         /// <summary>
         /// Remove contact from the list
         /// </summary>
-        /// <param name="contact">remvove given contact</param>
-        public void Remove(ContactInfo contact)
+        /// <param name="contact">remvove given contact from the contact log</param>
+        public void RemoveContact(ContactInfo contact)
         {
             this._contacts.Remove(contact);
         }
@@ -36,8 +35,8 @@ namespace Assignment1.Persistence
         /// <summary>
         /// gets or sets all contacts
         /// </summary>
-        /// <returns>list</returns>
-        public List<ContactInfo> GetContacts()
+        /// <returns>list of contacts from contact log</returns>
+        public IEnumerable<ContactInfo> GetContacts()
         {
             List<ContactInfo> duplicate = new List<ContactInfo>();
             for (int i = 0; i < this._contacts.Count; i++)
@@ -57,9 +56,9 @@ namespace Assignment1.Persistence
         }
 
         /// <summary>
-        /// get guid
+        /// get contact by the guid
         /// </summary>
-        /// <param name="id">id</param>
+        /// <param name="id">Get the contact information from the id</param>
         /// <returns>Id</returns>
         public ContactInfo? GetById(Guid? id)
         {

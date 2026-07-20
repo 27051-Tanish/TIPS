@@ -9,7 +9,7 @@ namespace Assignment1
     public class Program
     {
         /// <summary>
-        /// main method
+        /// Entry point of the project
         /// </summary>
         /// <param name="args">Console-Based Contact Manager</param>
         public static void Main(string[] args)

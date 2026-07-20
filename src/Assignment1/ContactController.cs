@@ -9,12 +9,12 @@ using Assignment1.Services;
 namespace Assignment1
 {
     /// <summary>
-    /// This is the class which acts as bridge between view and service
+    /// Contact controller acts as bridge between view and service
     /// </summary>
     public class ContactController
     {
         /// <summary>
-        /// This starts the excecution of the contact manager
+        /// private objects for the view and service layer
         /// </summary>
         private readonly ConsoleActivity _view;
         private readonly ContactManager _manager;
@@ -36,43 +36,36 @@ namespace Assignment1
         /// </summary>
         public void Run()
         {
-            bool isExit = false;
-            while (!isExit)
+            this._view.ShowMessage("Welcome to Console-based contact manager\n");
+            do
             {
-                string? choice = this._view.ShowMenu();
+                int? choice = this._view.GetChoice();
 
                 switch (choice)
                 {
-                    case "A":
-                    case "a":
+                    case 1:
                         ContactInfo newContact = this._view.AddContactInfo();
                         this._manager.AddContactInfo(newContact);
                         this._view.ShowMessage("Contact Added successfully");
                         break;
 
-                    case "V":
-                    case "v":
+                    case 2:
                         this._view.DisplayAll(this._manager.ViewContactInfo());
                         break;
 
-                    case "ED":
-                    case "ed":
+                    case 3:
                         EditContact();
                         break;
 
-                    case "D":
-                    case "d":
+                    case 4:
                         DeleteContact();
                         break;
 
-                    case "S":
-                    case "s":
+                    case 5:
                         SearchContact();
                         break;
 
-                    case "E":
-                    case "e":
-                        isExit = true;
+                    case 6:
                         break;
 
                     default:
@@ -80,11 +73,11 @@ namespace Assignment1
                         break;
                 }
             }
+            while (this._view.GetChoice() != 6);
 
             void EditContact()
             {
                 List<ContactInfo> contacts = this._manager.ViewContactInfo();
-                ContactInfo contact = new ContactInfo();
                 this._view.ShowMessage("Enter serial number of the contact to edit: ");
                 bool serialNumber = int.TryParse(this._view.ReadInput(), out int result);
                 if (result <= 0)
