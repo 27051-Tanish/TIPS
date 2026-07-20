@@ -9,7 +9,7 @@ using Assignment1.Persistence;
 namespace Assignment1.Services
 {
     /// <summary>
-    /// CRUD operations
+    /// performs basic CRUD operations
     /// </summary>
     public class ContactManager
     {
@@ -18,7 +18,7 @@ namespace Assignment1.Services
         /// <summary>
         /// add new contact details to contact log
         /// </summary>
-        /// <param name="contact">add feature</param>
+        /// <param name="contact">add new contact information</param>
         public void AddContactInfo(ContactInfo contact)
         {
             contact.ID = Guid.NewGuid();
@@ -28,7 +28,7 @@ namespace Assignment1.Services
         /// <summary>
         /// gets all contact details from the list
         /// </summary>
-        /// <returns>list</returns>
+        /// <returns>list of contact details</returns>
         public List<ContactInfo> ViewContactInfo()
         {
             List<ContactInfo> contact = (List<ContactInfo>)this._repo.GetContacts();
@@ -39,8 +39,8 @@ namespace Assignment1.Services
         /// <summary>
         /// remove contact by id from the list
         /// </summary>
-        /// <param name="id">remove</param>
-        /// <returns>bool</returns>
+        /// <param name="id">remove existing contact by id</param>
+        /// <returns>string</returns>
         public string RemoveContactInfo(Guid? id)
         {
             ContactInfo? contact = this._repo.GetById(id);
@@ -55,7 +55,7 @@ namespace Assignment1.Services
         /// <summary>
         /// edit contact by id from the list
         /// </summary>
-        /// <param name="id">id</param>
+        /// <param name="id">id and new contact information to edit</param>
         /// <param name="newContact">newContact</param>
         /// <returns>bool</returns>
         public string EditContactInfo(Guid? id,  ContactInfo newContact)
@@ -96,7 +96,7 @@ namespace Assignment1.Services
         /// <summary>
         /// Search by keyword for a contact from contact manager
         /// </summary>
-        /// <param name="searchValue">search</param>
+        /// <param name="searchValue">search a contact</param>
         /// <returns>List of contacts</returns>
         public List<ContactInfo>? SearchContactInfo(string searchValue)
         {
