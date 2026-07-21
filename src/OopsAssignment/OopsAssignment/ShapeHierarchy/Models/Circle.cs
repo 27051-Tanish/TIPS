@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OopsAssignment.ShapeHierarchy.Models
+{
+    /// <summary>
+    /// Inherits the Shapeinfo class and its methods and properties
+    /// </summary>
+    public class Circle : ShapeInfo
+    {
+        /// <summary>
+        /// Gets or sets radius of the circle
+        /// </summary>
+        /// <value>
+        /// Radius of the circle in double type
+        /// </value>
+        public double? Radius { get; set; }
+
+        /// <summary>
+        /// Prints the type of the shape
+        /// </summary>
+        /// <returns>string representing circle</returns>
+        public override string GetShapeType()
+        {
+            return "Circle";
+        }
+
+        /// <summary>
+        /// Calculates the area of circle
+        /// </summary>
+        /// <returns>double reperesenting area of circle</returns>s
+        public override double? CalculateArea()
+        {
+            return 3.14 * this.Radius * this.Radius;
+        }
+
+        /// <summary>
+        /// Prints the details of circle
+        /// </summary>
+        /// <returns>string containing circle details</returns>
+        public override string PrintDetails()
+        {
+            return $"Color: {this.Color}\nArea: {this.CalculateArea()}\nShape Type: {this.GetShapeType()}";
+        }
+    }
+}
