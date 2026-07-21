@@ -1,19 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace OopsAssignment.ShapeHierarchy.View
+namespace OopsAssignment.EmployeeHierarchy.EmployeeView
 {
     /// <summary>
-    /// Provides console view to the user
+    /// Provides console operations.
     /// </summary>
-    public class ShapeView
+    public class EmployeeConsoleView
     {
         /// <summary>
-        /// Show Console messages to the user
+        /// Display message in the console.
         /// </summary>
-        /// <param name="message">message that user wants to view in console</param>
+        /// <param name="message">string message</param>
         public void ShowMessage(string message)
         {
-             Console.WriteLine(message);
+            Console.WriteLine(message);
         }
 
         /// <summary>
@@ -25,9 +29,9 @@ namespace OopsAssignment.ShapeHierarchy.View
         }
 
         /// <summary>
-        /// Reads user input from console
+        /// Reads user input from the console.
         /// </summary>
-        /// <returns>console readline to read input </returns>
+        /// <returns>console readline to read input</returns>
         public string? ReadInput()
         {
             return Console.ReadLine();

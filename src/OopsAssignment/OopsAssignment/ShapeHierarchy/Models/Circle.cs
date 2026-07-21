@@ -12,6 +12,11 @@ namespace OopsAssignment.ShapeHierarchy.Models
     public class Circle : ShapeInfo
     {
         /// <summary>
+        /// Stores the value of pi.
+        /// </summary>
+        public const double Pi = Math.PI;
+
+        /// <summary>
         /// Gets or sets radius of the circle
         /// </summary>
         /// <value>
@@ -34,7 +39,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
         /// <returns>double reperesenting area of circle</returns>s
         public override double? CalculateArea()
         {
-            return 3.14 * this.Radius * this.Radius;
+            return Pi * this.Radius * this.Radius;
         }
 
         /// <summary>

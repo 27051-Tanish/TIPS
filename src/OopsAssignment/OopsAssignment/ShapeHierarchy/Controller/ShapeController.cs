@@ -6,12 +6,11 @@ using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
 namespace OopsAssignment.ShapeHierarchy.Controller
 {
     /// <summary>
-    /// Handles the communication between view and models
+    /// Handles the communication between view and models.
     /// </summary>
     public class ShapeController
     {
-        // Changed to non-nullable because the controller requires a view to function
-        private readonly ShapeView _view;
+        private readonly ShapeView? _view;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShapeController"/> class.
@@ -19,8 +18,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         /// <param name="view">The view instance</param>
         public ShapeController(ShapeView view)
         {
-            // Fail fast: Prevent the controller from being created with a null view
-            this._view = view ?? throw new ArgumentNullException(nameof(view), "ShapeView cannot be null.");
+            this._view = view;
         }
 
         /// <summary>
@@ -31,19 +29,21 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             int userChoice;
             do
             {
+                this._view.EndLine();
                 this._view.ShowMessage("[1].Rectangle");
                 this._view.ShowMessage("[2].Circle");
-                this._view.ShowMessage("[3].Exit"); // Added exit option to prevent infinite loop
+                this._view.ShowMessage("[3].Exit");
+                this._view.EndLine();
 
                 userChoice = Convert.ToInt32(this._view.ReadInput());
 
                 switch (userChoice)
                 {
                     case 1:
-                        GetRectangle();
+                        this.GetRectangle();
                         break;
                     case 2:
-                        GetCircle();
+                        this.GetCircle();
                         break;
                     case 3:
                         this._view.ShowMessage("Exiting program...");
@@ -53,7 +53,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                         break;
                 }
             }
-            while (userChoice != 3); // Loop continues until user chooses to exit
+            while (userChoice != 3);
         }
 
         /// <summary>

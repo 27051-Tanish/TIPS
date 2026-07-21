@@ -1,0 +1,226 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using OopsAssignment.BankingSystem.BankModel;
+using OopsAssignment.BankingSystem.BankView;
+
+namespace OopsAssignment.BankingSystem.BankController
+{
+    /// <summary>
+    /// Handles the communication between view and models.
+    /// </summary>
+    internal class BankServiceController
+    {
+        private readonly BankConsoleView _consoleView;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BankServiceController"/> class.
+        /// </summary>
+        /// <param name="consoleView">The view is instance</param>
+        public BankServiceController(BankConsoleView consoleView)
+        {
+            this._consoleView = consoleView;
+        }
+
+        /// <summary>
+        /// Starts the execution of the bank program.
+        /// </summary>
+        public void RunBankAccount()
+        {
+            int userInput;
+            do
+            {
+                this._consoleView.EndLine();
+                this._consoleView.ShowMessage("[1].Savings Account");
+                this._consoleView.ShowMessage("[2].Checking Account");
+                this._consoleView.ShowMessage("[3].Exit");
+                this._consoleView.EndLine();
+
+                userInput = Convert.ToInt32(this._consoleView.ReadInput());
+
+                switch (userInput)
+                {
+                    case 1:
+                        this.GetSavingsAccount();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        this._consoleView.ShowMessage("Exiting...");
+                        break;
+                    default:
+                        this._consoleView.ShowMessage("Invalid input: select 1, 2, or 3");
+                        break;
+                }
+            }
+            while (userInput != 3);
+        }
+
+        /// <summary>
+        /// perform deposit and withdraw operation and Display savings account details.
+        /// </summary>
+        public void GetSavingsAccount()
+        {
+            this._consoleView.ShowMessage("Enter savings account number: ");
+            string? accountNumber = this._consoleView.ReadInput();
+            do
+            {
+                if (!InputValidator.ValidateAccountNumber(accountNumber))
+                {
+                    this._consoleView.ShowMessage("Invalid account number\nEnter account number again: ");
+                    accountNumber = this._consoleView.ReadInput();
+                }
+            }
+            while (InputValidator.ValidateAccountNumber(accountNumber) == true);
+            this._consoleView.ShowMessage("Enter savings account balance: ");
+            decimal balance = Convert.ToDecimal(this._consoleView.ReadInput());
+
+            SavingsAccount savingsAccount = new SavingsAccount(accountNumber, balance);
+            this._consoleView.ShowMessage("--Which operation do you need to perform--");
+            this._consoleView.ShowMessage("[1]. Deposit\n[2]. Withdraw\n[3].Exit");
+            int choice;
+            do
+            {
+                choice = Convert.ToInt32(this._consoleView.ReadInput());
+                switch (choice)
+                {
+                    case 1:
+                        DepositAmount();
+                        break;
+                    case 2:
+                        WithdrawAmount();
+                        break;
+                    case 3:
+                        this._consoleView.ShowMessage("Exiting...");
+                        break;
+                    default:
+                        this._consoleView.ShowMessage("Invalid input");
+                        break;
+                }
+            }
+            while (choice != 3);
+
+            void DepositAmount()
+            {
+                this._consoleView.ShowMessage("Enter amount to deposit: ");
+                decimal amount = Convert.ToDecimal(this._consoleView.ReadInput());
+                if (amount > 0)
+                {
+                    savingsAccount.Balance += amount;
+                    this._consoleView.ShowMessage("Deposit successfull");
+                }
+                else
+                {
+                    this._consoleView.ShowMessage("Invalid input for amount");
+                }
+
+                this._consoleView.ShowMessage(savingsAccount.PrintDetails());
+                this._consoleView.ShowMessage($"Deposit amount: {amount}");
+            }
+
+            void WithdrawAmount()
+            {
+                this._consoleView.ShowMessage("Enter amount to withdraw: ");
+                decimal amount = Convert.ToDecimal(this._consoleView.ReadInput());
+
+                if (amount > SavingsAccount.MinimumBalance)
+                {
+                    this._consoleView.ShowMessage("No minimum balance available to withdraw");
+                }
+                else
+                {
+                    savingsAccount.Balance -= amount;
+                    this._consoleView.ShowMessage("Deposit successfull");
+                }
+
+                this._consoleView.ShowMessage(savingsAccount.PrintDetails());
+                this._consoleView.ShowMessage($"Withdraw amount: {amount}");
+            }
+        }
+
+        /// <summary>
+        /// perform deposit and withdraw operation and Display checking account details.
+        /// </summary>
+        public void GetCheckingAccount()
+        {
+            this._consoleView.ShowMessage("Enter savings account number: ");
+            string? accountNumber = this._consoleView.ReadInput();
+            do
+            {
+                if (InputValidator.ValidateAccountNumber(accountNumber))
+                {
+                    this._consoleView.ShowMessage("Invalid account number\nEnter account number again: ");
+                    accountNumber = this._consoleView.ReadInput();
+                }
+            }
+            while (InputValidator.ValidateAccountNumber(accountNumber) == true);
+            this._consoleView.ShowMessage("Enter savings account balance: ");
+            decimal balance = Convert.ToDecimal(this._consoleView.ReadInput());
+
+            CheckingAccount checkingAccount = new CheckingAccount(accountNumber, balance);
+            this._consoleView.ShowMessage("--Which operation do you need to perform--");
+            this._consoleView.ShowMessage("[1]. Deposit\n[2]. Withdraw\n[3].Exit");
+            int choice;
+            do
+            {
+                choice = Convert.ToInt32(this._consoleView.ReadInput());
+                switch (choice)
+                {
+                    case 1:
+                        DepositAmount();
+                        break;
+                    case 2:
+                        WithdrawAmount();
+                        break;
+                    case 3:
+                        this._consoleView.ShowMessage("Exiting...");
+                        break;
+                    default:
+                        this._consoleView.ShowMessage("Invalid input");
+                        break;
+                }
+            }
+            while (choice != 3);
+
+            void DepositAmount()
+            {
+                this._consoleView.ShowMessage("Enter amount to deposit: ");
+                decimal amount = Convert.ToDecimal(this._consoleView.ReadInput());
+                if (amount > 0)
+                {
+                    checkingAccount.Balance += amount;
+                    this._consoleView.ShowMessage("Deposit successfull");
+                }
+                else
+                {
+                    this._consoleView.ShowMessage("Invalid input to deposit amount");
+                }
+                this._consoleView.ShowMessage(checkingAccount.PrintDetails());
+                this._consoleView.ShowMessage($"Deposit amount: {amount}");
+            }
+
+            void WithdrawAmount()
+            {
+                this._consoleView.ShowMessage("Enter amount to withdraw: ");
+                decimal amount = Convert.ToDecimal(this._consoleView.ReadInput());
+
+                if (amount > 0 && amount <= checkingAccount.Balance)
+                {
+                    checkingAccount.Balance -= amount;
+                    this._consoleView.ShowMessage("Deposit successfull");
+                }
+                else
+                {
+                    this._consoleView.ShowMessage("Invalid input to withdraw amount");
+                }
+
+                this._consoleView.ShowMessage(checkingAccount.PrintDetails());
+                this._consoleView.ShowMessage($"Withdraw amount: {amount}");
+            }
+        }
+    }
+}

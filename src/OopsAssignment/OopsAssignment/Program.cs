@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OopsAssignment.BankingSystem.BankController;
+using OopsAssignment.BankingSystem.BankView;
+using OopsAssignment.EmployeeHierarchy.EmployeeController;
+using OopsAssignment.EmployeeHierarchy.EmployeeView;
 using OopsAssignment.ShapeHierarchy.Controller;
 using OopsAssignment.ShapeHierarchy.View;
 
@@ -19,9 +23,9 @@ namespace OopsAssignment
         /// <param name="args">string args</param>
         public static void Main(string[] args)
         {
-            ShapeView view = new ShapeView();
-            ShapeController controller = new ShapeController(view);
-            controller.RunShape();
+            ProjectConsoleView view = new ProjectConsoleView();
+            ProjectController controller = new ProjectController(view);
+            controller.RunProject();
         }
     }
 }
