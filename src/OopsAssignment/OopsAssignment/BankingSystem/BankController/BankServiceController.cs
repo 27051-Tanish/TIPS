@@ -55,7 +55,7 @@ namespace OopsAssignment.BankingSystem.BankController
         }
 
         /// <summary>
-        /// perform deposit and withdraw operation and Display savings account details.
+        /// Perform deposit and withdraw operation and Display savings account details.
         /// </summary>
         public void GetSavingsAccount()
         {
@@ -142,7 +142,7 @@ namespace OopsAssignment.BankingSystem.BankController
         }
 
         /// <summary>
-        /// perform deposit and withdraw operation and Display checking account details.
+        /// Perform deposit and withdraw operation and Display checking account details.
         /// </summary>
         public void GetCheckingAccount()
         {

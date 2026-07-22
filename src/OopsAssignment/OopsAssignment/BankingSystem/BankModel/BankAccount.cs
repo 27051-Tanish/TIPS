@@ -19,7 +19,7 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// Gets or sets the balance.
         /// </summary>
         /// <value>
-        /// Balance of the user.
+        /// Bank balance of the user.
         /// </value>
         public decimal Balance { get; set; }
 

@@ -9,7 +9,7 @@ using OopsAssignment.ShapeHierarchy.View;
 namespace OopsAssignment
 {
     /// <summary>
-    /// Handles between different tasks
+    /// Handles between different tasks.
     /// </summary>
     public class ProjectController
     {
@@ -55,6 +55,7 @@ namespace OopsAssignment
                         GetBankingTask();
                         break;
                     case 4:
+                        this._projectConsole.ExitKey();
                         break;
                     default:
                         this._projectConsole.ShowMessage("Invalid choice");

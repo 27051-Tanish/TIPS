@@ -32,13 +32,5 @@ namespace OopsAssignment.ShapeHierarchy.View
         {
             return Console.ReadLine();
         }
-
-        /// <summary>
-        /// Waits until user clicks any key
-        /// </summary>
-        public void ExitKey()
-        {
-            Console.ReadKey();
-        }
     }
 }

@@ -16,12 +16,12 @@ namespace OopsAssignment.ShapeHierarchy.Models
         /// Gets or sets radius of the circle
         /// </summary>
         /// <value>
-        /// Radius of the circle in double type
+        /// Radius of the circle with the type double.
         /// </value>
         public double? Radius { get; set; }
 
         /// <summary>
-        /// Prints the type of the shape
+        /// Prints the type of the shape.
         /// </summary>
         /// <returns>string representing circle</returns>
         public override string GetShapeType()
@@ -30,7 +30,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
         }
 
         /// <summary>
-        /// Calculates the area of circle
+        /// Calculates the area of circle.
         /// </summary>
         /// <returns>double reperesenting area of circle</returns>s
         public override double? CalculateArea()
@@ -39,7 +39,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
         }
 
         /// <summary>
-        /// Prints the details of circle
+        /// Prints the details of circle.
         /// </summary>
         /// <returns>string containing circle details</returns>
         public override string PrintDetails()

@@ -22,7 +22,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         }
 
         /// <summary>
-        /// Starts the execution of the Shape project
+        /// Starts the execution of the Shape project.
         /// </summary>
         public void RunShape()
         {
@@ -57,7 +57,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         }
 
         /// <summary>
-        /// Performs logic for rectangle class
+        /// Performs calculation logic for rectangle class.
         /// </summary>
         public void GetRectangle()
         {
@@ -83,7 +83,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         }
 
         /// <summary>
-        /// Performs operation on circle class
+        /// Performs calculation logic for circle class
         /// </summary>
         public void GetCircle()
         {
