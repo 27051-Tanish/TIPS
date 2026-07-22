@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assignment1.Models;
 
 namespace Assignment1.Persistence
 {
     /// <summary>
-    /// Store the List of Contacts in the contact log
+    /// In-memory repository stores the list of contacts.
     /// </summary>
     internal class Repository
     {
         private List<ContactInfo> _contacts = new List<ContactInfo>();
 
         /// <summary>
-        /// Add new contact to the list
+        /// Add new contact to the list.
         /// </summary>
         /// <param name="contact">Add new contact to the contact log</param>
         public void AddNewContact(ContactInfo contact)
@@ -24,16 +20,16 @@ namespace Assignment1.Persistence
         }
 
         /// <summary>
-        /// Remove contact from the list
+        /// Remove contact from the list.
         /// </summary>
-        /// <param name="contact">remvove given contact from the contact log</param>
+        /// <param name="contact">remove given contact from the contact log</param>
         public void RemoveContact(ContactInfo contact)
         {
             this._contacts.Remove(contact);
         }
 
         /// <summary>
-        /// gets or sets all contacts
+        /// Copies the in-memory repository to a duplicate list.
         /// </summary>
         /// <returns>list of contacts from contact log</returns>
         public IEnumerable<ContactInfo> GetContacts()
@@ -56,10 +52,10 @@ namespace Assignment1.Persistence
         }
 
         /// <summary>
-        /// get contact by the guid
+        /// Get contact information by the guid.
         /// </summary>
         /// <param name="id">Get the contact information from the id</param>
-        /// <returns>Id</returns>
+        /// <returns>Contact information with the mentioned id</returns>
         public ContactInfo? GetById(Guid? id)
         {
             return this._contacts.Find(c => c.ID == id);

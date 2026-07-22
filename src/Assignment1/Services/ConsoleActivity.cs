@@ -16,8 +16,7 @@ namespace Assignment1.Services
         /// <summary>
         /// Shows menu to the user for selecting a operation
         /// </summary>
-        /// <returns>string</returns>
-        public int? GetChoice()
+        public void ShowMenu()
         {
             Console.WriteLine("===========================================");
             Console.WriteLine("[1]. To Add New Contact");
@@ -27,15 +26,6 @@ namespace Assignment1.Services
             Console.WriteLine("[5]. To Search Contact");
             Console.WriteLine("[6]. To Exit");
             Console.WriteLine("===========================================");
-
-            bool? userChoice = int.TryParse(Console.ReadLine(), out int value);
-
-            if (userChoice != false)
-            {
-                return value;
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -67,37 +57,23 @@ namespace Assignment1.Services
 
             Console.WriteLine("Enter Phone Number :");
             contact.PhoneNumber = Console.ReadLine();
-            bool isValidPhone = false;
-            while (!isValidPhone)
+            do
             {
-                if (!InputValidater.IsValidNumber(contact.PhoneNumber))
-                {
-                    Console.WriteLine("Invalid Phone Number");
-                    Console.WriteLine("Enter Phone Number again:");
-                    contact.PhoneNumber = Console.ReadLine();
-                }
-                else
-                {
-                    isValidPhone = true;
-                }
+                Console.WriteLine("Invalid Phone Number");
+                Console.WriteLine("Enter Phone Number again:");
+                contact.PhoneNumber = Console.ReadLine();
             }
-
+            while (!InputValidater.IsValidNumber(contact.PhoneNumber));
             Console.WriteLine("Enter email address :");
             contact.Email = Console.ReadLine();
-            bool isValidEmail = false;
-            while (!isValidEmail)
+
+            do
             {
-                if (!InputValidater.IsValidEmail(contact.Email))
-                {
-                    Console.WriteLine("Invalid email");
-                    Console.WriteLine("Enter email again");
-                    contact.Email = Console.ReadLine();
-                }
-                else
-                {
-                    isValidEmail = true;
-                }
+                Console.WriteLine("Invalid email");
+                Console.WriteLine("Enter email again");
+                contact.Email = Console.ReadLine();
             }
+            while (!InputValidater.IsValidEmail(contact.Email));
 
             Console.WriteLine("Enter a short note: ");
             contact.Note = Console.ReadLine();

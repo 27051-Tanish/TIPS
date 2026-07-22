@@ -9,14 +9,14 @@ using Assignment1.Persistence;
 namespace Assignment1.Services
 {
     /// <summary>
-    /// performs basic CRUD operations
+    /// Performs basic CRUD operations.
     /// </summary>
     public class ContactManager
     {
         private Repository _repo = new ();
 
         /// <summary>
-        /// add new contact details to contact log
+        /// Add new contact details to contact log.
         /// </summary>
         /// <param name="contact">add new contact information</param>
         public void AddContactInfo(ContactInfo contact)
@@ -26,7 +26,7 @@ namespace Assignment1.Services
         }
 
         /// <summary>
-        /// gets all contact details from the list
+        /// Gets all contact details from the list.
         /// </summary>
         /// <returns>list of contact details</returns>
         public List<ContactInfo> ViewContactInfo()
@@ -37,7 +37,7 @@ namespace Assignment1.Services
         }
 
         /// <summary>
-        /// remove contact by id from the list
+        /// Remove contact by id from the list.
         /// </summary>
         /// <param name="id">remove existing contact by id</param>
         /// <returns>string</returns>
@@ -53,7 +53,7 @@ namespace Assignment1.Services
         }
 
         /// <summary>
-        /// edit contact by id from the list
+        /// Edit contact by id from the list.
         /// </summary>
         /// <param name="id">id and new contact information to edit</param>
         /// <param name="newContact">newContact</param>
@@ -94,7 +94,7 @@ namespace Assignment1.Services
         }
 
         /// <summary>
-        /// Search by keyword for a contact from contact manager
+        /// Search by keyword for a contact from contact manager.
         /// </summary>
         /// <param name="searchValue">search a contact</param>
         /// <returns>List of contacts</returns>

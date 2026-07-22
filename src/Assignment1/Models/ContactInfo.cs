@@ -15,7 +15,7 @@ namespace Assignment1.Models
         /// Gets or sets GUID
         /// </summary>
         /// <value>
-        /// And sets GUID
+        /// Id of the contact.
         /// </value>
         public Guid? ID { get; set; }
 
@@ -23,7 +23,7 @@ namespace Assignment1.Models
         /// Gets or sets  Name
         /// </summary>
         /// <value>
-        /// gets and sets name
+        /// Name of the contact.
         /// </value>
         public string? Name { get; set; }
 
@@ -31,7 +31,7 @@ namespace Assignment1.Models
         /// Gets or sets email
         /// </summary>
         /// <value>
-        /// sets email
+        /// Email of the contact.
         /// </value>
         public string? Email { get; set; }
 
@@ -39,7 +39,7 @@ namespace Assignment1.Models
         /// Gets or sets phone
         /// </summary>
         /// <value>
-        /// sets phone
+        /// Phone number of the contact.
         /// </value>
         public string? PhoneNumber { get; set; }
 
@@ -47,7 +47,7 @@ namespace Assignment1.Models
         /// Gets or sets notes
         /// </summary>
         /// <value>
-        /// notes
+        /// Notes of the contact.
         /// </value>
         public string? Note { get; set; }
     }

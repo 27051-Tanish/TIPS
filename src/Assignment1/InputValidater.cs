@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Assignment1
 {
     /// <summary>
-    /// helper class
+    /// Validates user input name, email, phone number.
     /// </summary>
     public static class InputValidater
     {
         /// <summary>
-        /// Validates name of the contact
+        /// Validates name of the contact.
         /// </summary>
         /// <param name="name">name of the contact in the contact manager</param>
-        /// <returns>bool</returns>
+        /// <returns>bool representing the correctness of the name</returns>
         public static bool IsValidName(string? name)
         {
             if (!string.IsNullOrWhiteSpace(name))
@@ -28,10 +23,10 @@ namespace Assignment1
         }
 
         /// <summary>
-        /// Checks number entered by the user
+        /// Checks phone number entered by the user.
         /// </summary>
         /// <param name="number">number</param>
-        /// <returns>bool</returns>
+        /// <returns>bool representing the correctness of the phone number</returns>
         public static bool IsValidNumber(string? number)
         {
             if (number == null)
@@ -44,10 +39,10 @@ namespace Assignment1
         }
 
         /// <summary>
-        /// Checks for valid email
+        /// Checks for valid email.
         /// </summary>
         /// <param name="email">email</param>
-        /// <returns>bool</returns>
+        /// <returns>bool representing the correctness of the email</returns>
         public static bool IsValidEmail(string? email)
         {
             if (email == null)
