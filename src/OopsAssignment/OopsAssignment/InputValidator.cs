@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,7 +34,9 @@ namespace OopsAssignment
         /// <returns>bool for verifying the correctness of the account number</returns>
         public static bool ValidateAccountNumber(string accountNumber)
         {
-            if (accountNumber.Length < 10 && accountNumber.Length > 17)
+            int minimumAccountNumberLength = 9;
+            int maximumAccountNumberLength = 18;
+            if (accountNumber.Length < minimumAccountNumberLength || accountNumber.Length > maximumAccountNumberLength)
             {
                 return false;
             }

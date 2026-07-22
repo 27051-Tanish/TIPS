@@ -64,8 +64,18 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// </summary>
         public void GetManagerDetails()
         {
-            this._employeeView.ShowMessage("Enter name of the manager: ");
-            string name = this._employeeView.ReadInput();
+            string? name;
+            do
+            {
+                this._employeeView.ShowMessage("Enter name of the manager: ");
+                name = this._employeeView.ReadInput();
+                if (!InputValidator.ValidateName(name))
+                {
+                    this._employeeView.ShowMessage("Invalid input for name");
+                }
+            }
+            while (!InputValidator.ValidateName(name));
+
             this._employeeView.ShowMessage("Enter the salary of the manager: ");
             decimal salary = Convert.ToDecimal(this._employeeView.ReadInput());
             Manager manager = new Manager(name, salary);
@@ -77,8 +87,17 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// </summary>
         public void GetDeveloperDetails()
         {
-            this._employeeView.ShowMessage("Enter name of the developer: ");
-            string name = this._employeeView.ReadInput();
+            string? name;
+            do
+            {
+                this._employeeView.ShowMessage("Enter name of the manager: ");
+                name = this._employeeView.ReadInput();
+                if (!InputValidator.ValidateName(name))
+                {
+                    this._employeeView.ShowMessage("Invalid input for name");
+                }
+            }
+            while (!InputValidator.ValidateName(name));
             this._employeeView.ShowMessage("Enter salary of the developer: ");
             decimal salary = Convert.ToDecimal(this._employeeView.ReadInput());
             Developer developer = new Developer(name, salary);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using OopsAssignment.ShapeHierarchy.Models;
 using OopsAssignment.ShapeHierarchy.View;
 using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
@@ -62,8 +63,16 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         public void GetRectangle()
         {
             Rectangle rectangle = new Rectangle();
-            this._view.ShowMessage("Enter the color of the rectangle");
-            rectangle.Color = this._view.ReadInput();
+            do
+            {
+                this._view.ShowMessage("Enter color of the rectangle: ");
+                rectangle.Color = this._view.ReadInput();
+                if (!InputValidator.ValidateName(rectangle.Color))
+                {
+                    this._view.ShowMessage("Invalid input for color");
+                }
+            }
+            while (!InputValidator.ValidateName(rectangle.Color));
             this._view.ShowMessage("Enter the Length of the rectangle");
             rectangle.Length = Convert.ToDouble(this._view.ReadInput());
             this._view.ShowMessage("Enter the Width of the rectangle");
@@ -80,8 +89,16 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         public void GetCircle()
         {
             Circle circle = new Circle();
-            this._view.ShowMessage("Enter the color of the circle");
-            circle.Color = this._view.ReadInput();
+            do
+            {
+                this._view.ShowMessage("Enter color of the rectangle: ");
+                circle.Color = this._view.ReadInput();
+                if (!InputValidator.ValidateName(circle.Color))
+                {
+                    this._view.ShowMessage("Invalid input for color");
+                }
+            }
+            while (!InputValidator.ValidateName(circle.Color));
             this._view.ShowMessage("Enter the radius of the circle");
             circle.Radius = Convert.ToDouble(this._view.ReadInput());
 
