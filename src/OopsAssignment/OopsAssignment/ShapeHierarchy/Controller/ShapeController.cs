@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using OopsAssignment.ShapeHierarchy.Models;
 using OopsAssignment.ShapeHierarchy.View;
 using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
