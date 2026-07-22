@@ -8,23 +8,23 @@ namespace OopsAssignment.ShapeHierarchy.Models
     public class Rectangle : ShapeInfo
     {
         /// <summary>
-        /// Gets or sets length
+        /// Gets or sets length.
         /// </summary>
         /// <value>
-        /// Length of the rectangle in double type
+        /// Length of the rectangle in double type.
         /// </value>
         public double? Length { get; set; }
 
         /// <summary>
-        /// Gets or sets width
+        /// Gets or sets width.
         /// </summary>
         /// <value>
-        /// Width of the rectangle in double type
+        /// Width of the rectangle in double type.
         /// </value>
         public double? Width { get; set; }
 
         /// <summary>
-        /// Prints the type of the shape
+        /// Prints the type of the shape.
         /// </summary>
         /// <returns>string representing rectangle</returns>
         public override string GetShapeType()
@@ -33,7 +33,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
         }
 
         /// <summary>
-        /// Calculates the area of the rectangle
+        /// Calculates the area of the rectangle.
         /// </summary>
         /// <returns>double area of rectangle value</returns>
         public override double? CalculateArea()
@@ -47,7 +47,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
         }
 
         /// <summary>
-        /// Prints the details of rectangle
+        /// Prints the details of rectangle.
         /// </summary>
         /// <returns>string containing rectangle details</returns>
         public override string PrintDetails()

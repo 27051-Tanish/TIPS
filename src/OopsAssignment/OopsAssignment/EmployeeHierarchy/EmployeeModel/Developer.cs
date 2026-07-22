@@ -4,7 +4,7 @@ using OopsAssignment.EmployeeHierarchy.Model;
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
     /// <summary>
-    /// Inherits the EmployeeInfo class and its methods
+    /// Inherits the EmployeeInfo class and its methods.
     /// </summary>
     public class Developer : EmployeeInfo
     {
