@@ -117,7 +117,7 @@ namespace Assignment1.Services
         }
 
         /// <summary>
-        /// reads user input from console
+        /// Reads user input from console.
         /// </summary>
         /// <param name="input">input</param>
         /// <returns>string</returns>
