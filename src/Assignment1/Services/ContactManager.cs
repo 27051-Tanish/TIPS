@@ -47,6 +47,7 @@ namespace Assignment1.Services
             if (contact != null)
             {
                 this._repo.RemoveContact(contact);
+                return "Contact removed successfully";
             }
 
             return "ID is null";
