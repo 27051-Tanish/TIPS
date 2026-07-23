@@ -40,20 +40,13 @@ namespace Assignment1.Services
             Console.WriteLine();
             Console.WriteLine("Enter name of the contact :");
             contact.Name = Console.ReadLine();
-            bool isValidName = false;
-            while (!isValidName)
+            do
             {
-                if (!InputValidater.IsValidName(contact.Name))
-                {
-                    Console.WriteLine("Invalid name");
-                    Console.WriteLine("Enter name again: ");
-                    contact.Name = Console.ReadLine();
-                }
-                else
-                {
-                    isValidName = true;
-                }
+                Console.WriteLine("Invalid Name");
+                Console.WriteLine("Enter name again:");
+                contact.Name = Console.ReadLine();
             }
+            while (!InputValidater.IsValidName(contact.Name));
 
             Console.WriteLine("Enter Phone Number :");
             contact.PhoneNumber = Console.ReadLine();
