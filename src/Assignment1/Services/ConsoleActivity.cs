@@ -89,7 +89,7 @@ namespace Assignment1.Services
         }
 
         /// <summary>
-        /// shows all the contact information
+        /// Shows all the contact information.
         /// </summary>
         /// <param name="contacts">contacts</param>
         public void DisplayAll(List<ContactInfo> contacts)
