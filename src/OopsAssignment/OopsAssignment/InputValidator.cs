@@ -36,12 +36,13 @@ namespace OopsAssignment
         {
             int minimumAccountNumberLength = 9;
             int maximumAccountNumberLength = 18;
-            if (accountNumber.Length < minimumAccountNumberLength || accountNumber.Length > maximumAccountNumberLength)
+
+            if (string.IsNullOrEmpty(accountNumber) || string.IsNullOrWhiteSpace(accountNumber))
             {
                 return false;
             }
 
-            if (string.IsNullOrEmpty(accountNumber) || string.IsNullOrWhiteSpace(accountNumber))
+            if (accountNumber.Length < minimumAccountNumberLength || accountNumber.Length > maximumAccountNumberLength)
             {
                 return false;
             }
