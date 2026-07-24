@@ -11,7 +11,7 @@ namespace OopsAssignment
         /// Display message in the console.
         /// </summary>
         /// <param name="message">string message</param>
-        public void ShowMessage(string message)
+        public void ShowMessage(string? message)
         {
             Console.WriteLine(message);
         }
@@ -31,14 +31,6 @@ namespace OopsAssignment
         public string? ReadInput()
         {
             return Console.ReadLine();
-        }
-
-        /// <summary>
-        /// Waits until user clicks any key
-        /// </summary>
-        public void ExitKey()
-        {
-            Console.ReadKey();
         }
     }
 }

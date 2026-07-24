@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using OopsAssignment.EmployeeHierarchy.EmployeeModel;
-using OopsAssignment.EmployeeHierarchy.Model;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
@@ -14,7 +14,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// </summary>
         /// <param name="name">string name of the manager</param>
         /// <param name="salary">decimal salary of the manager</param>
-        public Manager(string name, decimal salary)
+        public Manager(string? name, decimal salary)
         {
             this.Name = name;
             this.Salary = salary;
@@ -35,7 +35,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <returns>decimal representing the bonus</returns>
         public override decimal CalculateBonus()
         {
-            return this.Salary * 0.20m;
+            const decimal managerBonus = 0.20m;
+            return this.Salary * managerBonus;
         }
 
         /// <summary>

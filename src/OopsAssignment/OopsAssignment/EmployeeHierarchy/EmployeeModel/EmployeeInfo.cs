@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OopsAssignment.EmployeeHierarchy.Model
+namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
     /// <summary>
     /// Gets or sets employee information
@@ -41,7 +41,7 @@ namespace OopsAssignment.EmployeeHierarchy.Model
         /// <returns>string of details</returns>
         public virtual string PrintDetails()
         {
-            return $"Name: {this.Name}\nSalary: {this.Salary}\nBonus: {this.CalculateBonus()}\nPosition: {this.GetEmployeePosition}";
+            return $"Name: {this.Name}\nSalary: {this.Salary}\nBonus: {this.CalculateBonus()}\nPosition: {this.GetEmployeePosition()}";
         }
     }
 }

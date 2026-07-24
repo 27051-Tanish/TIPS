@@ -12,7 +12,7 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// </summary>
         /// <param name="accountNumber">string represent account number</param>
         /// <param name="balance">decimal represent balance</param>
-        public CheckingAccount(string accountNumber, decimal balance)
+        public CheckingAccount(string? accountNumber, decimal balance)
         {
             this.AccountNumber = accountNumber;
             this.Balance = balance;

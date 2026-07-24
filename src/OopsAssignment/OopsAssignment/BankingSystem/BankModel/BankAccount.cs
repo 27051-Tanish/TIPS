@@ -45,7 +45,7 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// Prints the details of the bank account.
         /// </summary>
         /// <returns>string of bank details</returns>
-        public virtual string PrintDetails()
+        public virtual string? PrintDetails()
         {
             return $"Account Number : {this.AccountNumber}\nBalance : {this.Balance}";
         }

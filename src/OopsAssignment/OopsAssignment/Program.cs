@@ -1,10 +1,8 @@
 ﻿using System;
+using OopsAssignment;
 using OopsAssignment.BankingSystem.BankController;
-using OopsAssignment.BankingSystem.BankView;
 using OopsAssignment.EmployeeHierarchy.EmployeeController;
-using OopsAssignment.EmployeeHierarchy.EmployeeView;
 using OopsAssignment.ShapeHierarchy.Controller;
-using OopsAssignment.ShapeHierarchy.View;
 
 namespace OopsAssignment
 {
@@ -17,10 +15,10 @@ namespace OopsAssignment
         /// Entry point of the program
         /// </summary>
         /// <param name="args">string args</param>
-        public static void Main(string[] args)
+        public static void Main()
         {
-            ProjectConsoleView view = new ProjectConsoleView();
-            ProjectController controller = new ProjectController(view);
+            ProjectConsoleView view = new ();
+            ProjectController controller = new (view);
             controller.RunProject();
         }
     }

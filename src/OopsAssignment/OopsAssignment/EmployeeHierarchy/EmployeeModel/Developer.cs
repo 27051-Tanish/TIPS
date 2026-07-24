@@ -1,5 +1,5 @@
 ﻿using System;
-using OopsAssignment.EmployeeHierarchy.Model;
+using OopsAssignment.EmployeeHierarchy.EmployeeModel;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
@@ -13,7 +13,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// </summary>
         /// <param name="name">string name of the developer</param>
         /// <param name="salary">decimal salary of the developer</param>
-        public Developer(string name, decimal salary)
+        public Developer(string? name, decimal salary)
         {
             this.Name = name;
             this.Salary = salary;
@@ -34,7 +34,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <returns>decimal representing the bonus</returns>
         public override decimal CalculateBonus()
         {
-            return this.Salary * 0.10m;
+            const decimal developerBonus = 0.10m;
+            return this.Salary * developerBonus;
         }
 
         /// <summary>

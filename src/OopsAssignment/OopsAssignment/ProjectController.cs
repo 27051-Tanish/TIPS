@@ -1,10 +1,7 @@
 ﻿using System;
 using OopsAssignment.BankingSystem.BankController;
-using OopsAssignment.BankingSystem.BankView;
 using OopsAssignment.EmployeeHierarchy.EmployeeController;
-using OopsAssignment.EmployeeHierarchy.EmployeeView;
 using OopsAssignment.ShapeHierarchy.Controller;
-using OopsAssignment.ShapeHierarchy.View;
 
 namespace OopsAssignment
 {
@@ -41,21 +38,20 @@ namespace OopsAssignment
                 this._projectConsole.ShowMessage("[4].Exit");
                 this._projectConsole.EndLine();
 
-                userInput = Convert.ToInt32(this._projectConsole.ReadInput());
-
-                switch (userInput)
+                userInput = GetChoice();
+                MainMenu mainMenu = (MainMenu)userInput;
+                switch (mainMenu)
                 {
-                    case 1:
+                    case MainMenu.ShapeTask:
                         GetShapeTask();
                         break;
-                    case 2:
+                    case MainMenu.EmployeeTask:
                         GetEmployeeTask();
                         break;
-                    case 3:
+                    case MainMenu.BankTask:
                         GetBankingTask();
                         break;
-                    case 4:
-                        this._projectConsole.ExitKey();
+                    case MainMenu.Exit:
                         break;
                     default:
                         this._projectConsole.ShowMessage("Invalid choice");
@@ -66,23 +62,38 @@ namespace OopsAssignment
 
             void GetShapeTask()
             {
-                ShapeView view = new ShapeView();
-                ShapeController controller = new ShapeController(view);
+                ProjectConsoleView shapeConsoleView = new ();
+                ShapeController controller = new (shapeConsoleView);
                 controller.RunShape();
             }
 
             void GetEmployeeTask()
             {
-                EmployeeConsoleView employeeConsoleView = new EmployeeConsoleView();
-                EmployeeControllerInfo employeeController = new EmployeeControllerInfo(employeeConsoleView);
+                ProjectConsoleView employeeConsoleView = new ();
+                EmployeeControllerInfo employeeController = new (employeeConsoleView);
                 employeeController.RunEmployeeTask();
             }
 
             void GetBankingTask()
             {
-                BankConsoleView bankConsoleView = new BankConsoleView();
-                BankServiceController bankServiceController = new BankServiceController(bankConsoleView);
+                ProjectConsoleView bankConsoleView = new ();
+                BankServiceController bankServiceController = new (bankConsoleView);
                 bankServiceController.RunBankAccount();
+            }
+
+            int GetChoice()
+            {
+                while (true)
+                {
+                    if (int.TryParse(this._projectConsole.ReadInput(), out int choiceValue))
+                    {
+                        return choiceValue;
+                    }
+                    else
+                    {
+                        this._projectConsole.ShowMessage("Please enter valid choice\nEnter your choice again :");
+                    }
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Transactions;
+using OopsAssignment;
 using OopsAssignment.ShapeHierarchy.Models;
-using OopsAssignment.ShapeHierarchy.View;
 using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
 
 namespace OopsAssignment.ShapeHierarchy.Controller
@@ -10,13 +11,13 @@ namespace OopsAssignment.ShapeHierarchy.Controller
     /// </summary>
     public class ShapeController
     {
-        private readonly ShapeView? _view;
+        private readonly ProjectConsoleView _view;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShapeController"/> class.
         /// </summary>
         /// <param name="view">The view instance</param>
-        public ShapeController(ShapeView view)
+        public ShapeController(ProjectConsoleView view)
         {
             this._view = view;
         }
@@ -35,17 +36,18 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 this._view.ShowMessage("[3].Exit");
                 this._view.EndLine();
 
-                userChoice = Convert.ToInt32(this._view.ReadInput());
+                userChoice = this.GetChoice();
+                ShapeMenu shapeMenu = (ShapeMenu)userChoice;
 
-                switch (userChoice)
+                switch (shapeMenu)
                 {
-                    case 1:
+                    case ShapeMenu.Rectangle:
                         this.GetRectangle();
                         break;
-                    case 2:
+                    case ShapeMenu.Circle:
                         this.GetCircle();
                         break;
-                    case 3:
+                    case ShapeMenu.Exit:
                         this._view.ShowMessage("Exiting program...");
                         break;
                     default:
@@ -61,7 +63,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         /// </summary>
         public void GetRectangle()
         {
-            Rectangle rectangle = new Rectangle();
+            Rectangle rectangle = new ();
             do
             {
                 this._view.ShowMessage("Enter color of the rectangle: ");
@@ -73,9 +75,9 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             }
             while (!InputValidator.ValidateName(rectangle.Color));
             this._view.ShowMessage("Enter the Length of the rectangle");
-            rectangle.Length = Convert.ToDouble(this._view.ReadInput());
+            rectangle.Length = this.GetShapeDimensions();
             this._view.ShowMessage("Enter the Width of the rectangle");
-            rectangle.Width = Convert.ToDouble(this._view.ReadInput());
+            rectangle.Width = this.GetShapeDimensions();
 
             rectangle.GetShapeType();
             rectangle.CalculateArea();
@@ -87,7 +89,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         /// </summary>
         public void GetCircle()
         {
-            Circle circle = new Circle();
+            Circle circle = new ();
             do
             {
                 this._view.ShowMessage("Enter color of the rectangle: ");
@@ -99,11 +101,49 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             }
             while (!InputValidator.ValidateName(circle.Color));
             this._view.ShowMessage("Enter the radius of the circle");
-            circle.Radius = Convert.ToDouble(this._view.ReadInput());
+            circle.Radius = this.GetShapeDimensions();
 
             circle.GetShapeType();
             circle.CalculateArea();
             this._view.ShowMessage(circle.PrintDetails());
+        }
+
+        /// <summary>
+        /// Gets user input for switch case choice.
+        /// </summary>
+        /// <returns>Int value representing choice from menu</returns>
+        public int GetChoice()
+        {
+            while (true)
+            {
+                if (int.TryParse(this._view.ReadInput(), out int choiceValue))
+                {
+                    return choiceValue;
+                }
+                else
+                {
+                    this._view.ShowMessage("Please enter valid choice");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets user input for length, width, and radius.
+        /// </summary>
+        /// <returns>double representing the dimensions</returns>
+        public double GetShapeDimensions()
+        {
+            while (true)
+            {
+                if (double.TryParse(this._view.ReadInput(), out double value))
+                {
+                    return value;
+                }
+                else
+                {
+                    this._view.ShowMessage("Invalid dimension value\nEnter again :");
+                }
+            }
         }
     }
 }
