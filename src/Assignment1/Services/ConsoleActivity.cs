@@ -38,33 +38,36 @@ namespace Assignment1.Services
 
             Console.WriteLine("Add New Contact:");
             Console.WriteLine();
-            Console.WriteLine("Enter name of the contact :");
-            contact.Name = Console.ReadLine();
             do
             {
-                Console.WriteLine("Invalid Name");
-                Console.WriteLine("Enter name again:");
+                Console.WriteLine("Enter name of the contact :");
                 contact.Name = Console.ReadLine();
+                if (!InputValidater.IsValidName(contact.Name))
+                {
+                    Console.WriteLine("Invalid Name");
+                }
             }
             while (!InputValidater.IsValidName(contact.Name));
 
-            Console.WriteLine("Enter Phone Number :");
-            contact.PhoneNumber = Console.ReadLine();
             do
             {
-                Console.WriteLine("Invalid Phone Number");
-                Console.WriteLine("Enter Phone Number again:");
+                Console.WriteLine("Enter Phone Number :");
                 contact.PhoneNumber = Console.ReadLine();
+                if (!InputValidater.IsValidNumber(contact.PhoneNumber))
+                {
+                    Console.WriteLine("Invalid Phone Number");
+                }
             }
             while (!InputValidater.IsValidNumber(contact.PhoneNumber));
-            Console.WriteLine("Enter email address :");
-            contact.Email = Console.ReadLine();
 
             do
             {
-                Console.WriteLine("Invalid email");
-                Console.WriteLine("Enter email again");
+                Console.WriteLine("Enter email address :");
                 contact.Email = Console.ReadLine();
+                if (!InputValidater.IsValidEmail(contact.Email))
+                {
+                    Console.WriteLine("Invalid email");
+                }
             }
             while (!InputValidater.IsValidEmail(contact.Email));
 

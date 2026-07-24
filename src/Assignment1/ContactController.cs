@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using Assignment1.Models;
 using Assignment1.Services;
 
@@ -41,7 +36,8 @@ namespace Assignment1
             do
             {
                 this._view.ShowMenu();
-                int? choiceValue = GetChoice();
+                this._view.ShowMessage("Enter your choice :");
+                int choiceValue = GetChoice();
                 switch (choiceValue)
                 {
                         case 1:
@@ -49,26 +45,20 @@ namespace Assignment1
                             this._manager.AddContactInfo(newContact);
                             this._view.ShowMessage("Contact Added successfully");
                             break;
-
                         case 2:
                             this._view.DisplayAll(this._manager.ViewContactInfo());
                             break;
-
                         case 3:
                             EditContact();
                             break;
-
                         case 4:
                             DeleteContact();
                             break;
-
                         case 5:
                             SearchContact();
                             break;
-
                         case 6:
                             break;
-
                         default:
                             this._view.ShowMessage("Invalid choice");
                             break;
@@ -80,8 +70,8 @@ namespace Assignment1
             {
                 List<ContactInfo> contacts = this._manager.ViewContactInfo();
                 this._view.ShowMessage("Enter serial number of the contact to edit: ");
-                bool serialNumber = int.TryParse(this._view.ReadInput(), out int result);
-                if (result <= 0)
+                int serialNumber = GetChoice();
+                if (serialNumber <= 0)
                 {
                     this._view.ShowMessage("Invalid serial number");
                 }
@@ -94,8 +84,8 @@ namespace Assignment1
                         this._view.ShowMessage("Which details you need to edit: ");
                         this._view.ShowMessage("\n");
                         this._view.ShowMessage("[1]Name\n[2]Phone\n[3]Email\n[4]Note");
-                        bool userChoice = int.TryParse(this._view.ReadInput(), out int choice);
-                        switch (choice)
+                        int userChoice = GetChoice();
+                        switch (userChoice)
                         {
                             case 1:
                                 this._view.ShowMessage("Enter new Name: ");
@@ -120,7 +110,7 @@ namespace Assignment1
                         }
                     }
 
-                    Guid? selectedId = (Guid?)contacts[result - 1].ID;
+                    Guid? selectedId = (Guid?)contacts[serialNumber - 1].ID;
                     this._manager.EditContactInfo(selectedId, newContact);
                     this._view.ShowMessage("Updated successfully");
                 }
@@ -134,10 +124,9 @@ namespace Assignment1
                     this._view.ShowMessage("No contact available");
                 }
 
-                ContactInfo contact = new ContactInfo();
                 this._view.ShowMessage("Enter delete ID of the cotact: ");
-                bool deleteId = int.TryParse(this._view.ReadInput(), out int deleteNumber);
-                Guid? selectedId = (Guid?)contacts[deleteNumber - 1].ID;
+                int deleteId = GetChoice();
+                Guid? selectedId = (Guid?)contacts[deleteId - 1].ID;
                 this._manager.RemoveContactInfo(selectedId);
             }
 
@@ -145,11 +134,11 @@ namespace Assignment1
             {
                 this._view.ShowMessage("---Search Here---");
                 string? keyword = this._view.ReadInput();
-                List<ContactInfo>? contactInfos = this._manager.SearchContactInfo(keyword);
+                List<ContactInfo> contactInfos = this._manager.SearchContactInfo(keyword);
                 this._view.DisplayAll(contactInfos);
             }
 
-            int? GetChoice()
+            int GetChoice()
             {
                 while (true)
                 {
