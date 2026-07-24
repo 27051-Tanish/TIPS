@@ -57,14 +57,16 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         }
 
         /// <summary>
-        /// Gets and prints manager details.
+        /// Gets employee inputs such as name and salary.
         /// </summary>
-        public void GetManagerDetails()
+        /// <param name="type">type referring to type of employee</param>
+        /// <returns>Name of the employee and salary of the employee</returns>
+        public (string? name, decimal salary) GetEmployeeDetails(string type)
         {
             string? name;
             do
             {
-                this._employeeView.ShowMessage("Enter name of the manager: ");
+                this._employeeView.ShowMessage($"Enter name of the {type}: ");
                 name = this._employeeView.ReadInput();
                 if (!InputValidator.ValidateName(name))
                 {
@@ -72,10 +74,18 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 }
             }
             while (!InputValidator.ValidateName(name));
-
-            this._employeeView.ShowMessage("Enter the salary of the manager: ");
+            this._employeeView.ShowMessage($"Enter salary of the {type}: ");
             decimal salary = this.GetSalary();
-            Manager manager = new (name, salary);
+            return (name, salary);
+        }
+
+        /// <summary>
+        /// Gets and prints manager details.
+        /// </summary>
+        public void GetManagerDetails()
+        {
+            var result = this.GetEmployeeDetails("Manager");
+            Manager manager = new (result.name, result.salary);
             this._employeeView.EndLine();
             this._employeeView.ShowMessage(manager.PrintDetails());
         }
@@ -85,20 +95,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// </summary>
         public void GetDeveloperDetails()
         {
-            string? name;
-            do
-            {
-                this._employeeView.ShowMessage("Enter name of the developer: ");
-                name = this._employeeView.ReadInput();
-                if (!InputValidator.ValidateName(name))
-                {
-                    this._employeeView.ShowMessage("Invalid input for name");
-                }
-            }
-            while (!InputValidator.ValidateName(name));
-            this._employeeView.ShowMessage("Enter salary of the developer: ");
-            decimal salary = this.GetSalary();
-            Developer developer = new (name, salary);
+            var result = this.GetEmployeeDetails("Developer");
+            Developer developer = new (result.name, result.salary);
             this._employeeView.EndLine();
             this._employeeView.ShowMessage(developer.PrintDetails());
         }
