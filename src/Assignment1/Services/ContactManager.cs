@@ -47,7 +47,7 @@ namespace Assignment1.Services
             }
             else
             {
-                return "ID is null";
+                return "ID is null. Contact Id should not be null.";
             }
         }
 
