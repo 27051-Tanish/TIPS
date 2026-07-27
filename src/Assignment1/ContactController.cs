@@ -138,18 +138,42 @@ namespace Assignment1
                         switch (userChoice)
                         {
                             case 1:
-                                this._consoleView.ShowMessage("Enter new Name: ");
-                                newContact.Name = this._consoleView.ReadInput();
+                                do
+                                {
+                                    this._consoleView.ShowMessage("Enter new name of the contact :");
+                                    newContact.Name = this._consoleView.ReadInput();
+                                    if (!InputValidater.IsValidName(newContact.Name))
+                                    {
+                                        this._consoleView.ShowMessage("Invalid Name");
+                                    }
+                                }
+                                while (!InputValidater.IsValidName(newContact.Name));
                                 isEdit = true;
                                 break;
                             case 2:
-                                this._consoleView.ShowMessage("Enter new phone: ");
-                                newContact.PhoneNumber = this._consoleView.ReadInput();
+                                do
+                                {
+                                    this._consoleView.ShowMessage("Enter new phone number :");
+                                    newContact.PhoneNumber = this._consoleView.ReadInput();
+                                    if (!InputValidater.IsValidNumber(newContact.PhoneNumber))
+                                    {
+                                        this._consoleView.ShowMessage("Invalid Phone Number");
+                                    }
+                                }
+                                while (!InputValidater.IsValidNumber(newContact.PhoneNumber));
                                 isEdit = true;
                                 break;
                             case 3:
-                                this._consoleView.ShowMessage("Enter new email: ");
-                                newContact.Email = this._consoleView.ReadInput();
+                                do
+                                {
+                                    this._consoleView.ShowMessage("Enter new email address :");
+                                    newContact.Email = this._consoleView.ReadInput();
+                                    if (!InputValidater.IsValidEmail(newContact.Email))
+                                    {
+                                        this._consoleView.ShowMessage("Invalid email");
+                                    }
+                                }
+                                while (!InputValidater.IsValidEmail(newContact.Email));
                                 isEdit = true;
                                 break;
                             case 4:
