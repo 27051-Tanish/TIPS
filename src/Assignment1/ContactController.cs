@@ -33,11 +33,12 @@ namespace Assignment1
         public void Run()
         {
             this._consoleView.ShowMessage("Welcome to Console-based contact manager\n");
+            int choiceValue;
             do
             {
                 this._consoleView.ShowMenu();
                 this._consoleView.ShowMessage("Enter your choice :");
-                int choiceValue = GetChoice();
+                choiceValue = GetChoice();
                 switch (choiceValue)
                 {
                         case 1:
@@ -60,11 +61,11 @@ namespace Assignment1
                         case 6:
                             break;
                         default:
-                            this._consoleView.ShowMessage("Invalid choice");
+                            this._consoleView.ShowMessage("Invalid choice, Enter your choice from menu.");
                             break;
                 }
             }
-            while (GetChoice() != 6);
+            while (choiceValue != 6);
             /// <summary>
             /// Add new contact information.
             /// </summary>
@@ -188,7 +189,6 @@ namespace Assignment1
                 Guid? selectedId = (Guid?)contacts[deleteId - 1].ID;
                 bool removed = this._manager.RemoveContactInfo(selectedId);
 
-                // Confirm deletion
                 if (removed)
                 {
                     this._consoleView.ShowMessage("Contact deleted successfully.");
