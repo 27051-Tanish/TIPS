@@ -170,12 +170,29 @@ namespace Assignment1
                 if (contacts.Count == 0)
                 {
                     this._consoleView.ShowMessage("No contact available");
+                    return;
                 }
 
                 this._consoleView.ShowMessage("Enter delete ID of the contact: ");
                 int deleteId = GetChoice();
+                if (deleteId < 1 || deleteId > contacts.Count)
+                {
+                    this._consoleView.ShowMessage("Invalid selection. Please try again.");
+                    return;
+                }
+
                 Guid? selectedId = (Guid?)contacts[deleteId - 1].ID;
-                this._manager.RemoveContactInfo(selectedId);
+                bool removed = this._manager.RemoveContactInfo(selectedId);
+
+                // Confirm deletion
+                if (removed)
+                {
+                    this._consoleView.ShowMessage("Contact deleted successfully.");
+                }
+                else
+                {
+                    this._consoleView.ShowMessage("Failed to delete contact. Please try again.");
+                }
             }
 
             void SearchContact()

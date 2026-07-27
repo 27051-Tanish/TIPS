@@ -36,10 +36,12 @@ namespace Assignment1.Services
         /// Remove contact by id from the list.
         /// </summary>
         /// <param name="id">remove existing contact by id</param>
-        public void RemoveContactInfo(Guid? id)
+        /// <returns>bool representing deletion of contact</returns>
+        public bool RemoveContactInfo(Guid? id)
         {
             ContactInfo contact = this._repo.GetById(id);
             this._repo.RemoveContact(contact);
+            return true;
         }
 
         /// <summary>
