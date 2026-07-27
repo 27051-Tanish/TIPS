@@ -27,7 +27,7 @@ namespace InventoryManagement.Service
         /// <returns>bool value representing deletion of product</returns>
         public bool DeleteItems(string? id)
         {
-            InventoryInfo? item = this._storage.GetItem(id);
+            InventoryInfo? item = this._storage.GetItemById(id);
             this._storage.RemoveItems(item);
             return true;
         }
@@ -38,7 +38,7 @@ namespace InventoryManagement.Service
         /// <returns>list of product details</returns>
         public List<InventoryInfo> GetItems()
         {
-            List<InventoryInfo> items = (List<InventoryInfo>)this.GetItems();
+            List<InventoryInfo> items = (List<InventoryInfo>)this._storage.GetAllItems();
             items.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
             return items;
         }
@@ -46,11 +46,31 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Updates the product information of given item.
         /// </summary>
-        /// <param name="id">string id of the product</param>
         /// <param name="newItem">object of the inventory class with new value for the properties</param>
-        public void EditItems(string? id, InventoryInfo? newItem)
+        public void EditItems(InventoryInfo? newItem)
         {
+            this._storage.UpdateItems(newItem);
+        }
 
+        /// <summary>
+        /// Search for product details from log by name.
+        /// </summary>
+        /// <param name="name">name representing the product name</param>
+        /// <returns>list of product details of the given name</returns>
+        public List<InventoryInfo> SearchItem(string? name)
+        {
+            return this._storage.GetAllItems().Where(s => s.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        /// <summary>
+        /// Gets the item with the given id.
+        /// </summary>
+        /// <param name="id">id of the product</param>
+        /// <returns>product information with the values of given id</returns>
+        public InventoryInfo GetProduct(string id)
+        {
+            InventoryInfo? item = this._storage.GetItemById(id);
+            return item;
         }
     }
 }

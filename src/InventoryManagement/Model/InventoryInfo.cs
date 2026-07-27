@@ -29,7 +29,7 @@ namespace InventoryManagement.Model
         /// <value>
         /// Price of the product from the inventory.
         /// </value>
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity of the product.

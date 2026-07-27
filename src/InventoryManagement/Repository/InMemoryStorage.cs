@@ -52,11 +52,26 @@ namespace InventoryManagement.Repository
         }
 
         /// <summary>
+        /// Edit product details from the list
+        /// </summary>
+        /// <param name="item">object of the class which needs to update</param>
+        public void UpdateItems(InventoryInfo item)
+        {
+            InventoryInfo? oldItem = this.GetItemById(item.Id);
+            if (oldItem != null)
+            {
+                oldItem.Name = item.Name;
+                oldItem.Price = item.Price;
+                oldItem.Quantity = item.Quantity;
+            }
+        }
+
+        /// <summary>
         /// Get item information by product id.
         /// </summary>
         /// <param name="id">product id of string type</param>
         /// <returns>Product information of given id</returns>
-        public InventoryInfo? GetItem(string? id)
+        public InventoryInfo? GetItemById(string? id)
         {
             return this._inventories.Find(item => item.Id == id);
         }

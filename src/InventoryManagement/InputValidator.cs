@@ -14,7 +14,7 @@ namespace InventoryManagement
         /// <returns>bool indicating the correctness of the input</returns>
         public static bool ValidateName(string? name)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return false;
             }
