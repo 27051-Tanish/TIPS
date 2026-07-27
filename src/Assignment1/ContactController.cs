@@ -73,42 +73,42 @@ namespace Assignment1
             {
                 ContactInfo contact = new ContactInfo();
 
-                Console.WriteLine("Add New Contact:");
+                this._consoleView.ShowMessage("Add New Contact:");
                 Console.WriteLine();
                 do
                 {
-                    Console.WriteLine("Enter name of the contact :");
+                    this._consoleView.ShowMessage("Enter name of the contact :");
                     contact.Name = this._consoleView.ReadInput();
                     if (!InputValidater.IsValidName(contact.Name))
                     {
-                        Console.WriteLine("Invalid Name");
+                        this._consoleView.ShowMessage("Invalid Name");
                     }
                 }
                 while (!InputValidater.IsValidName(contact.Name));
 
                 do
                 {
-                    Console.WriteLine("Enter Phone Number :");
+                    this._consoleView.ShowMessage("Enter Phone Number :");
                     contact.PhoneNumber = this._consoleView.ReadInput();
                     if (!InputValidater.IsValidNumber(contact.PhoneNumber))
                     {
-                        Console.WriteLine("Invalid Phone Number");
+                        this._consoleView.ShowMessage("Invalid Phone Number");
                     }
                 }
                 while (!InputValidater.IsValidNumber(contact.PhoneNumber));
 
                 do
                 {
-                    Console.WriteLine("Enter email address :");
+                    this._consoleView.ShowMessage("Enter email address :");
                     contact.Email = this._consoleView.ReadInput();
                     if (!InputValidater.IsValidEmail(contact.Email))
                     {
-                        Console.WriteLine("Invalid email");
+                        this._consoleView.ShowMessage("Invalid email");
                     }
                 }
                 while (!InputValidater.IsValidEmail(contact.Email));
 
-                Console.WriteLine("Enter a short note: ");
+                this._consoleView.ShowMessage("Enter a short note: ");
                 contact.Note = this._consoleView.ReadInput();
 
                 return contact;
