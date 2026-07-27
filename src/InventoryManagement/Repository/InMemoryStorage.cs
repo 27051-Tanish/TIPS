@@ -50,5 +50,15 @@ namespace InventoryManagement.Repository
 
             return copyList;
         }
+
+        /// <summary>
+        /// Get item information by product id.
+        /// </summary>
+        /// <param name="id">product id of string type</param>
+        /// <returns>Product information of given id</returns>
+        public InventoryInfo? GetItem(string? id)
+        {
+            return this._inventories.Find(item => item.Id == id);
+        }
     }
 }

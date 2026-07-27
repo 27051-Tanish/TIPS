@@ -13,7 +13,7 @@ namespace InventoryManagement.Model
         /// <value>
         /// Id of the product from the inventory.
         /// </value>
-        public int Id { get; set; }
+        public string? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the product.
