@@ -25,7 +25,7 @@ namespace Assignment1.Services
         /// Gets all contact details from the list.
         /// </summary>
         /// <returns>list of contact details</returns>
-        public List<ContactInfo> ViewContactInfo()
+        public List<ContactInfo> GetAllContact()
         {
             List<ContactInfo> contact = (List<ContactInfo>)this._repo.GetContacts();
             contact.Sort((a, b) => string.Compare(a.Name, b.Name));
@@ -36,19 +36,10 @@ namespace Assignment1.Services
         /// Remove contact by id from the list.
         /// </summary>
         /// <param name="id">remove existing contact by id</param>
-        /// <returns>string</returns>
-        public string RemoveContactInfo(Guid? id)
+        public void RemoveContactInfo(Guid? id)
         {
-            ContactInfo? contact = this._repo.GetById(id);
-            if (contact != null)
-            {
-                this._repo.RemoveContact(contact);
-                return "Contact removed successfully";
-            }
-            else
-            {
-                return "ID is null. Contact Id should not be null.";
-            }
+            ContactInfo contact = this._repo.GetById(id);
+            this._repo.RemoveContact(contact);
         }
 
         /// <summary>
@@ -59,7 +50,7 @@ namespace Assignment1.Services
         /// <returns>bool</returns>
         public string EditContactInfo(Guid? id,  ContactInfo newContact)
         {
-            ContactInfo? contact = this._repo.GetById(id);
+            ContactInfo contact = this._repo.GetById(id);
             if (contact == null)
             {
                 return "Invalid ID (or) Cannot edit";
@@ -89,7 +80,7 @@ namespace Assignment1.Services
                 return "Note edited successfully";
             }
 
-            return "No updation in contact log";
+            return "No update in contact log";
         }
 
         /// <summary>
@@ -97,9 +88,9 @@ namespace Assignment1.Services
         /// </summary>
         /// <param name="searchValue">search a contact</param>
         /// <returns>List of contacts</returns>
-        public List<ContactInfo>? SearchContactInfo(string searchValue)
+        public List<ContactInfo>? SearchContactInfo(string? searchValue)
         {
-            if (!(string.IsNullOrEmpty(searchValue) || string.IsNullOrWhiteSpace(searchValue)))
+            if (!string.IsNullOrWhiteSpace(searchValue))
             {
                 return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
                 s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();

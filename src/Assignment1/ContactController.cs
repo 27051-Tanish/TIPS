@@ -12,7 +12,7 @@ namespace Assignment1
         /// <summary>
         /// Private objects for the view and service layer.
         /// </summary>
-        private readonly ConsoleActivity _view;
+        private readonly ConsoleActivity _consoleView;
         private readonly ContactManager _manager;
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Assignment1
         /// <param name="manager">manager</param>
         public ContactController(ConsoleActivity view, ContactManager manager)
         {
-            this._view = view;
+            this._consoleView = view;
             this._manager = manager;
         }
 
@@ -32,21 +32,21 @@ namespace Assignment1
         /// </summary>
         public void Run()
         {
-            this._view.ShowMessage("Welcome to Console-based contact manager\n");
+            this._consoleView.ShowMessage("Welcome to Console-based contact manager\n");
             do
             {
-                this._view.ShowMenu();
-                this._view.ShowMessage("Enter your choice :");
+                this._consoleView.ShowMenu();
+                this._consoleView.ShowMessage("Enter your choice :");
                 int choiceValue = GetChoice();
                 switch (choiceValue)
                 {
                         case 1:
-                            ContactInfo newContact = this._view.AddContactInfo();
+                            ContactInfo newContact = AddContact();
                             this._manager.AddContactInfo(newContact);
-                            this._view.ShowMessage("Contact Added successfully");
+                            this._consoleView.ShowMessage("Contact Added successfully");
                             break;
                         case 2:
-                            this._view.DisplayAll(this._manager.ViewContactInfo());
+                            this._consoleView.DisplayAll(this._manager.GetAllContact());
                             break;
                         case 3:
                             EditContact();
@@ -60,20 +60,68 @@ namespace Assignment1
                         case 6:
                             break;
                         default:
-                            this._view.ShowMessage("Invalid choice");
+                            this._consoleView.ShowMessage("Invalid choice");
                             break;
                 }
             }
             while (GetChoice() != 6);
+            /// <summary>
+            /// Add new contact information.
+            /// </summary>
+            /// <returns>Object of the ContactInfo class with values for the properties</returns>
+            ContactInfo AddContact()
+            {
+                ContactInfo contact = new ContactInfo();
+
+                Console.WriteLine("Add New Contact:");
+                Console.WriteLine();
+                do
+                {
+                    Console.WriteLine("Enter name of the contact :");
+                    contact.Name = this._consoleView.ReadInput();
+                    if (!InputValidater.IsValidName(contact.Name))
+                    {
+                        Console.WriteLine("Invalid Name");
+                    }
+                }
+                while (!InputValidater.IsValidName(contact.Name));
+
+                do
+                {
+                    Console.WriteLine("Enter Phone Number :");
+                    contact.PhoneNumber = this._consoleView.ReadInput();
+                    if (!InputValidater.IsValidNumber(contact.PhoneNumber))
+                    {
+                        Console.WriteLine("Invalid Phone Number");
+                    }
+                }
+                while (!InputValidater.IsValidNumber(contact.PhoneNumber));
+
+                do
+                {
+                    Console.WriteLine("Enter email address :");
+                    contact.Email = this._consoleView.ReadInput();
+                    if (!InputValidater.IsValidEmail(contact.Email))
+                    {
+                        Console.WriteLine("Invalid email");
+                    }
+                }
+                while (!InputValidater.IsValidEmail(contact.Email));
+
+                Console.WriteLine("Enter a short note: ");
+                contact.Note = this._consoleView.ReadInput();
+
+                return contact;
+            }
 
             void EditContact()
             {
-                List<ContactInfo> contacts = this._manager.ViewContactInfo();
-                this._view.ShowMessage("Enter serial number of the contact to edit: ");
+                List<ContactInfo> contacts = this._manager.GetAllContact();
+                this._consoleView.ShowMessage("Enter serial number of the contact to edit: ");
                 int serialNumber = GetChoice();
                 if (serialNumber <= 0)
                 {
-                    this._view.ShowMessage("Invalid serial number");
+                    this._consoleView.ShowMessage("Invalid serial number");
                 }
                 else
                 {
@@ -81,30 +129,30 @@ namespace Assignment1
                     bool isEdit = false;
                     while (!isEdit)
                     {
-                        this._view.ShowMessage("Which details you need to edit: ");
-                        this._view.ShowMessage("\n");
-                        this._view.ShowMessage("[1]Name\n[2]Phone\n[3]Email\n[4]Note");
+                        this._consoleView.ShowMessage("Which details you need to edit: ");
+                        this._consoleView.ShowMessage("\n");
+                        this._consoleView.ShowMessage("[1]Name\n[2]Phone\n[3]Email\n[4]Note");
                         int userChoice = GetChoice();
                         switch (userChoice)
                         {
                             case 1:
-                                this._view.ShowMessage("Enter new Name: ");
-                                newContact.Name = this._view.ReadInput();
+                                this._consoleView.ShowMessage("Enter new Name: ");
+                                newContact.Name = this._consoleView.ReadInput();
                                 isEdit = true;
                                 break;
                             case 2:
-                                this._view.ShowMessage("Enter new phone: ");
-                                newContact.PhoneNumber = this._view.ReadInput();
+                                this._consoleView.ShowMessage("Enter new phone: ");
+                                newContact.PhoneNumber = this._consoleView.ReadInput();
                                 isEdit = true;
                                 break;
                             case 3:
-                                this._view.ShowMessage("Enter new email: ");
-                                newContact.Email = this._view.ReadInput();
+                                this._consoleView.ShowMessage("Enter new email: ");
+                                newContact.Email = this._consoleView.ReadInput();
                                 isEdit = true;
                                 break;
                             case 4:
-                                this._view.ShowMessage("Enter new note: ");
-                                newContact.Note = this._view.ReadInput();
+                                this._consoleView.ShowMessage("Enter new note: ");
+                                newContact.Note = this._consoleView.ReadInput();
                                 isEdit = true;
                                 break;
                         }
@@ -112,19 +160,19 @@ namespace Assignment1
 
                     Guid? selectedId = (Guid?)contacts[serialNumber - 1].ID;
                     this._manager.EditContactInfo(selectedId, newContact);
-                    this._view.ShowMessage("Updated successfully");
+                    this._consoleView.ShowMessage("Updated successfully");
                 }
             }
 
             void DeleteContact()
             {
-                List<ContactInfo> contacts = this._manager.ViewContactInfo();
+                List<ContactInfo> contacts = this._manager.GetAllContact();
                 if (contacts.Count == 0)
                 {
-                    this._view.ShowMessage("No contact available");
+                    this._consoleView.ShowMessage("No contact available");
                 }
 
-                this._view.ShowMessage("Enter delete ID of the cotact: ");
+                this._consoleView.ShowMessage("Enter delete ID of the contact: ");
                 int deleteId = GetChoice();
                 Guid? selectedId = (Guid?)contacts[deleteId - 1].ID;
                 this._manager.RemoveContactInfo(selectedId);
@@ -132,23 +180,23 @@ namespace Assignment1
 
             void SearchContact()
             {
-                this._view.ShowMessage("---Search Here---");
-                string? keyword = this._view.ReadInput();
+                this._consoleView.ShowMessage("---Search Here---");
+                string? keyword = this._consoleView.ReadInput();
                 List<ContactInfo> contactInfos = this._manager.SearchContactInfo(keyword);
-                this._view.DisplayAll(contactInfos);
+                this._consoleView.DisplayAll(contactInfos);
             }
 
             int GetChoice()
             {
                 while (true)
                 {
-                    if (int.TryParse(this._view.ReadInput(), out int choiceValue))
+                    if (int.TryParse(this._consoleView.ReadInput(), out int choiceValue))
                     {
                         return choiceValue;
                     }
                     else
                     {
-                        this._view.ShowMessage("Please enter valid choice");
+                        this._consoleView.ShowMessage("Please enter valid choice");
                     }
                 }
             }
