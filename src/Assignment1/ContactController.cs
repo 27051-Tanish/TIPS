@@ -119,9 +119,10 @@ namespace Assignment1
                 List<ContactInfo> contacts = this._manager.GetAllContact();
                 this._consoleView.ShowMessage("Enter serial number of the contact to edit: ");
                 int serialNumber = GetChoice();
-                if (serialNumber <= 0)
+                if (serialNumber <= 0 || serialNumber > contacts.Count)
                 {
-                    this._consoleView.ShowMessage("Invalid serial number");
+                    this._consoleView.ShowMessage("Invalid serial number.");
+                    return;
                 }
                 else
                 {
@@ -154,6 +155,9 @@ namespace Assignment1
                                 this._consoleView.ShowMessage("Enter new note: ");
                                 newContact.Note = this._consoleView.ReadInput();
                                 isEdit = true;
+                                break;
+                            default:
+                                this._consoleView.ShowMessage("Invalid choice");
                                 break;
                         }
                     }
