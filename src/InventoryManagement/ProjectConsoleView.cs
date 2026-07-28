@@ -6,7 +6,7 @@ namespace InventoryManagement
     /// <summary>
     /// Acts as view layer for project controller.
     /// </summary>
-    internal class ProjectConsoleView
+    public class ProjectConsoleView
     {
         /// <summary>
         /// Shows menu to the user for selecting a operation.

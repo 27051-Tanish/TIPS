@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Model
+namespace InventoryManagement.Model.Enum
 {
     /// <summary>
     /// Enum for representing values for switch case.
