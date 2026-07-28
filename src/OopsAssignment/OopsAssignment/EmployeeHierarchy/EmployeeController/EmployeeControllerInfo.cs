@@ -23,7 +23,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// <summary>
         /// Starts the execution of the employee program.
         /// </summary>
-        public void RunEmployeeTask()
+        public void StartEmployeeHierarchy()
         {
             int userInput;
             do

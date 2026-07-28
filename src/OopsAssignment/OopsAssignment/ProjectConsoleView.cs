@@ -3,12 +3,33 @@
 namespace OopsAssignment
 {
     /// <summary>
-    /// Acts as view layer for project controller.
+    /// Provides console-based UI methods for displaying menus, messages,
+    /// and reading user input for various application modules.
     /// </summary>
     public class ProjectConsoleView
     {
         /// <summary>
-        /// Display message in the console.
+        /// Provides different applications as a menu for user.
+        /// </summary>
+        public void ApplicationMenu()
+        {
+            this.EndLine();
+            this.ShowMessage("[1]. Shape Hierarchy\n[2]. Employee Hierarchy\n[3]. Banking System\n[4]. Exit");
+            this.EndLine();
+        }
+
+        /// <summary>
+        /// Provides different account types as menu for performing banking operations.
+        /// </summary>
+        public void BankSystemMenu()
+        {
+            this.EndLine();
+            this.ShowMessage("[1]. Savings Account\n[2]. Checking Account\n[3]. Exit");
+            this.EndLine();
+        }
+
+        /// <summary>
+        /// Writes a message to the console output.
         /// </summary>
         /// <param name="message">string message</param>
         public void ShowMessage(string? message)
@@ -17,7 +38,7 @@ namespace OopsAssignment
         }
 
         /// <summary>
-        /// Draws endline for improving console view.
+        /// Writes a visual separator line to the console for improved readability.
         /// </summary>
         public void EndLine()
         {
@@ -25,9 +46,9 @@ namespace OopsAssignment
         }
 
         /// <summary>
-        /// Reads user input from the console.
+        /// Reads a line of input from the console.
         /// </summary>
-        /// <returns>console readline to read input</returns>
+        /// <returns>The input entered by the user, or null, if no input is available.</returns>
         public string? ReadInput()
         {
             return Console.ReadLine();

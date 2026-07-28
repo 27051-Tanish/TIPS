@@ -27,10 +27,10 @@ namespace OopsAssignment.BankingSystem.BankModel
         {
             if (this.Balance - amount < 0)
             {
-                return $"Withdraw unsuccessful";
+                return $"Debit unsuccessful";
             }
 
-            return $"Withdraw operation successfully completed\nBalance :{this.Balance}";
+            return $"Debit operation successfully completed\nBalance :{this.Balance}";
         }
     }
 }

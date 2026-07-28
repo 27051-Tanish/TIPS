@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OopsAssignment.ShapeHierarchy.Models
+﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
     /// Inherits the Shapeinfo class and its methods and properties

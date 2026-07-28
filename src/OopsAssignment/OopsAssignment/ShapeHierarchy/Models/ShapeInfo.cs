@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OopsAssignment.ShapeHierarchy.Models
+﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
     /// Gets or sets color value for shape

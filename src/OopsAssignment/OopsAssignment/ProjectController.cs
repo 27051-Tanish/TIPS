@@ -1,12 +1,11 @@
-﻿using System;
-using OopsAssignment.BankingSystem.BankController;
+﻿using OopsAssignment.BankingSystem.BankController;
 using OopsAssignment.EmployeeHierarchy.EmployeeController;
 using OopsAssignment.ShapeHierarchy.Controller;
 
 namespace OopsAssignment
 {
     /// <summary>
-    /// Handles between different tasks.
+    /// Coordinates application flow by invoking the appropriate modules.
     /// </summary>
     public class ProjectController
     {
@@ -15,7 +14,7 @@ namespace OopsAssignment
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectController"/> class.
         /// </summary>
-        /// <param name="projectConsole">This is an instance for Project controller</param>
+        /// <param name="projectConsole">The console service used to interact with project output/input.</param>
         public ProjectController(ProjectConsoleView projectConsole)
         {
             this._projectConsole = projectConsole;
@@ -24,32 +23,26 @@ namespace OopsAssignment
         /// <summary>
         /// Runs the overall project.
         /// </summary>
-        public void RunProject()
+        public void Start()
         {
             int userInput;
-
+            MainMenu mainMenu;
             do
             {
-                this._projectConsole.ShowMessage("--Enter which task you want to run--");
-                this._projectConsole.EndLine();
-                this._projectConsole.ShowMessage("[1].Shape Hierarchy");
-                this._projectConsole.ShowMessage("[2].Employee Hierarchy");
-                this._projectConsole.ShowMessage("[3].Banking System");
-                this._projectConsole.ShowMessage("[4].Exit");
-                this._projectConsole.EndLine();
-
-                userInput = GetChoice();
-                MainMenu mainMenu = (MainMenu)userInput;
+                this._projectConsole.ShowMessage("--Please select the application--");
+                this._projectConsole.ApplicationMenu();
+                userInput = this.GetChoice();
+                mainMenu = (MainMenu)userInput;
                 switch (mainMenu)
                 {
                     case MainMenu.ShapeTask:
-                        GetShapeTask();
+                        StartShapeHierarchy();
                         break;
                     case MainMenu.EmployeeTask:
-                        GetEmployeeTask();
+                        StartEmployeeHierarchy();
                         break;
                     case MainMenu.BankTask:
-                        GetBankingTask();
+                        StartBankApplication();
                         break;
                     case MainMenu.Exit:
                         break;
@@ -58,41 +51,41 @@ namespace OopsAssignment
                         break;
                 }
             }
-            while (userInput != 4);
+            while (mainMenu != MainMenu.Exit);
 
-            void GetShapeTask()
+            void StartShapeHierarchy()
             {
                 ProjectConsoleView shapeConsoleView = new ();
                 ShapeController controller = new (shapeConsoleView);
-                controller.RunShape();
+                controller.StartShapeHierarchy();
             }
 
-            void GetEmployeeTask()
+            void StartEmployeeHierarchy()
             {
                 ProjectConsoleView employeeConsoleView = new ();
                 EmployeeControllerInfo employeeController = new (employeeConsoleView);
-                employeeController.RunEmployeeTask();
+                employeeController.StartEmployeeHierarchy();
             }
 
-            void GetBankingTask()
+            void StartBankApplication()
             {
                 ProjectConsoleView bankConsoleView = new ();
                 BankServiceController bankServiceController = new (bankConsoleView);
-                bankServiceController.RunBankAccount();
+                bankServiceController.StartBankingSystem();
             }
+        }
 
-            int GetChoice()
+        private int GetChoice()
+        {
+            while (true)
             {
-                while (true)
+                if (int.TryParse(this._projectConsole.ReadInput(), out int choiceValue))
                 {
-                    if (int.TryParse(this._projectConsole.ReadInput(), out int choiceValue))
-                    {
-                        return choiceValue;
-                    }
-                    else
-                    {
-                        this._projectConsole.ShowMessage("Please enter valid choice\nEnter your choice again :");
-                    }
+                    return choiceValue;
+                }
+                else
+                {
+                    this._projectConsole.ShowMessage("Please enter valid choice from [1 to 4]\nEnter your choice again :");
                 }
             }
         }

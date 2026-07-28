@@ -21,19 +21,14 @@ namespace OopsAssignment.BankingSystem.BankController
         }
 
         /// <summary>
-        /// Starts the execution of the bank program.
+        /// Starts the execution of the banking system application.
         /// </summary>
-        public void RunBankAccount()
+        public void StartBankingSystem()
         {
             int userInput;
             do
             {
-                this._consoleView.EndLine();
-                this._consoleView.ShowMessage("[1].Savings Account");
-                this._consoleView.ShowMessage("[2].Checking Account");
-                this._consoleView.ShowMessage("[3].Exit");
-                this._consoleView.EndLine();
-
+                this._consoleView.BankSystemMenu();
                 userInput = this.GetChoice();
                 BankMenu menuChoice = (BankMenu)userInput;
 
@@ -62,16 +57,19 @@ namespace OopsAssignment.BankingSystem.BankController
         public void GetSavingsAccount()
         {
             string? accountNumber;
-            do
+            while (true)
             {
                 this._consoleView.ShowMessage("Enter savings bank account number :");
                 accountNumber = this._consoleView.ReadInput();
-                if (!InputValidator.ValidateAccountNumber(accountNumber))
+
+                if (InputValidator.ValidateAccountNumber(accountNumber))
                 {
-                    this._consoleView.ShowMessage("Invalid account number: cannot be invalid length, null, empty, or whitespace.");
+                    break;
                 }
+
+                this._consoleView.ShowMessage("Invalid account number: cannot be invalid length, null, empty, or whitespace.");
             }
-            while (!InputValidator.ValidateAccountNumber(accountNumber));
+
             this._consoleView.ShowMessage("Enter savings account balance: ");
             decimal balance = this.GetInput();
 
@@ -79,7 +77,7 @@ namespace OopsAssignment.BankingSystem.BankController
             this._consoleView.EndLine();
             this._consoleView.ShowMessage(savingsAccount.PrintDetails());
 
-            this._consoleView.ShowMessage("--Which operation do you need to perform--");
+            this._consoleView.ShowMessage("--Please select a operation--");
 
             int choice;
             do
@@ -109,10 +107,10 @@ namespace OopsAssignment.BankingSystem.BankController
             {
                 this._consoleView.ShowMessage("Enter amount to deposit: ");
                 decimal amount = this.GetInput();
-                if (amount > 0)
+                if (amount > 0 && amount <= decimal.MaxValue)
                 {
-                    savingsAccount.Balance += amount;
-                    this._consoleView.ShowMessage("Deposit successfull");
+                    savingsAccount.Deposit(amount);
+                    this._consoleView.ShowMessage("Deposit successful");
                 }
                 else
                 {
@@ -136,13 +134,12 @@ namespace OopsAssignment.BankingSystem.BankController
                 }
                 else
                 {
-                    savingsAccount.Balance -= amount;
-                    this._consoleView.ShowMessage("Withdraw successfull");
+                    savingsAccount.Withdraw(amount);
                 }
 
                 this._consoleView.EndLine();
                 this._consoleView.ShowMessage(savingsAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Withdraw amount: {amount}");
+                this._consoleView.ShowMessage($"Debited amount: {amount}");
                 this._consoleView.EndLine();
             }
         }
@@ -153,16 +150,19 @@ namespace OopsAssignment.BankingSystem.BankController
         public void GetCheckingAccount()
         {
             string? accountNumber;
-            do
+            while (true)
             {
                 this._consoleView.ShowMessage("Enter checking bank account number :");
                 accountNumber = this._consoleView.ReadInput();
-                if (!InputValidator.ValidateAccountNumber(accountNumber))
+
+                if (InputValidator.ValidateAccountNumber(accountNumber))
                 {
-                    this._consoleView.ShowMessage("Invalid account number: cannot be invalid length, null, empty, or whitespace.");
+                    break;
                 }
+
+                this._consoleView.ShowMessage("Invalid account number: cannot be invalid length, null, empty, or whitespace.");
             }
-            while (!InputValidator.ValidateAccountNumber(accountNumber));
+
             this._consoleView.ShowMessage("Enter checking account balance: ");
             decimal balance = this.GetInput();
 
@@ -197,42 +197,42 @@ namespace OopsAssignment.BankingSystem.BankController
 
             void DepositAmount()
             {
-                this._consoleView.ShowMessage("Enter amount to deposit: ");
+                this._consoleView.ShowMessage("Enter amount to credit: ");
                 decimal amount = this.GetInput();
                 if (amount > 0)
                 {
-                    checkingAccount.Balance += amount;
-                    this._consoleView.ShowMessage("Deposit successfull");
+                    checkingAccount.Deposit(amount);
+                    this._consoleView.ShowMessage("Amount credited successfully");
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Invalid input to deposit amount");
+                    this._consoleView.ShowMessage("Invalid input to credit amount");
                 }
 
                 this._consoleView.EndLine();
                 this._consoleView.ShowMessage(checkingAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Deposit amount: {amount}");
+                this._consoleView.ShowMessage($"Credited amount: {amount}");
                 this._consoleView.EndLine();
             }
 
             void WithdrawAmount()
             {
-                this._consoleView.ShowMessage("Enter amount to withdraw: ");
+                this._consoleView.ShowMessage("Enter amount to debit: ");
                 decimal amount = this.GetInput();
 
                 if (amount > 0 && amount <= checkingAccount.Balance)
                 {
-                    checkingAccount.Balance -= amount;
-                    this._consoleView.ShowMessage("Deposit successfull");
+                    checkingAccount.Withdraw(amount);
+                    this._consoleView.ShowMessage("Amount debited successfully");
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Invalid input to withdraw amount");
+                    this._consoleView.ShowMessage("Invalid input to debit amount");
                 }
 
                 this._consoleView.EndLine();
                 this._consoleView.ShowMessage(checkingAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Withdraw amount: {amount}");
+                this._consoleView.ShowMessage($"Debited amount: {amount}");
                 this._consoleView.EndLine();
             }
         }

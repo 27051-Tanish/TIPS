@@ -25,7 +25,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         /// <summary>
         /// Starts the execution of the Shape project.
         /// </summary>
-        public void RunShape()
+        public void StartShapeHierarchy()
         {
             int userChoice;
             do
