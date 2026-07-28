@@ -9,7 +9,7 @@
         /// Gets or sets color.
         /// </summary>
         /// <value>
-        /// Color of the circle as string.
+        /// Color of the circle.
         /// </value>
         public string? Color { get; set; }
 
