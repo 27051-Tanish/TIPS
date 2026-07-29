@@ -86,6 +86,16 @@ namespace Assignment1.Services
         }
 
         /// <summary>
+        /// Checks whether a contact already exists based on Name, Phone Number, or Email Address.
+        /// </summary>
+        /// <param name="contact">The contact information to validate.</param>
+        /// <returns>True if a contact with the same Name, Phone Number,Email already exists, otherwise false</returns>
+        public bool IsDuplicateContact(ContactInfo contact)
+        {
+            return this._repo.IsDuplicate(contact);
+        }
+
+        /// <summary>
         /// Search by keyword for a contact from contact manager.
         /// </summary>
         /// <param name="searchValue">search a contact</param>

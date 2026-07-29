@@ -69,7 +69,7 @@ namespace Assignment1
             /// <summary>
             /// Add new contact information.
             /// </summary>
-            /// <returns>Object of the ContactInfo class with values for the properties</returns>
+            /// <returns>Contact information with values for all the properties.</returns>
             ContactInfo AddContact()
             {
                 ContactInfo contact = new ContactInfo();
@@ -78,33 +78,51 @@ namespace Assignment1
                 Console.WriteLine();
                 do
                 {
-                    this._consoleView.ShowMessage("Enter name of the contact :");
+                    this._consoleView.ShowMessage("Enter name of the contact:");
                     contact.Name = this._consoleView.ReadInput();
+
                     if (!InputValidater.IsValidName(contact.Name))
                     {
                         this._consoleView.ShowMessage("Invalid Name");
+                    }
+                    else if (this._manager.IsDuplicateContact(contact))
+                    {
+                        this._consoleView.ShowMessage("Contact name already exists");
+                        contact.Name = string.Empty;
                     }
                 }
                 while (!InputValidater.IsValidName(contact.Name));
 
                 do
                 {
-                    this._consoleView.ShowMessage("Enter Phone Number :");
+                    this._consoleView.ShowMessage("Enter Phone Number:");
                     contact.PhoneNumber = this._consoleView.ReadInput();
+
                     if (!InputValidater.IsValidNumber(contact.PhoneNumber))
                     {
                         this._consoleView.ShowMessage("Invalid Phone Number");
+                    }
+                    else if (this._manager.IsDuplicateContact(contact))
+                    {
+                        this._consoleView.ShowMessage("Phone Number already exists");
+                        contact.PhoneNumber = string.Empty;
                     }
                 }
                 while (!InputValidater.IsValidNumber(contact.PhoneNumber));
 
                 do
                 {
-                    this._consoleView.ShowMessage("Enter email address :");
+                    this._consoleView.ShowMessage("Enter email address:");
                     contact.Email = this._consoleView.ReadInput();
+
                     if (!InputValidater.IsValidEmail(contact.Email))
                     {
-                        this._consoleView.ShowMessage("Invalid email");
+                        this._consoleView.ShowMessage("Invalid Email");
+                    }
+                    else if (this._manager.IsDuplicateContact(contact))
+                    {
+                        this._consoleView.ShowMessage("Email already exists");
+                        contact.Email = string.Empty;
                     }
                 }
                 while (!InputValidater.IsValidEmail(contact.Email));
@@ -115,9 +133,19 @@ namespace Assignment1
                 return contact;
             }
 
+            /// <summary>
+            /// Edit existing contact information.
+            /// </summary>
             void EditContact()
             {
                 List<ContactInfo> contacts = this._manager.GetAllContact();
+                if (contacts.Count == 0)
+                {
+                    this._consoleView.ShowMessage("No contact available");
+                    return;
+                }
+
+                this._consoleView.DisplayAll(contacts);
                 this._consoleView.ShowMessage("Enter serial number of the contact to edit: ");
                 int serialNumber = GetChoice();
                 if (serialNumber <= 0 || serialNumber > contacts.Count)
@@ -146,6 +174,11 @@ namespace Assignment1
                                     {
                                         this._consoleView.ShowMessage("Invalid Name");
                                     }
+                                    else if (this._manager.IsDuplicateContact(newContact))
+                                    {
+                                        this._consoleView.ShowMessage("Contact name already exists");
+                                        newContact.Name = string.Empty;
+                                    }
                                 }
                                 while (!InputValidater.IsValidName(newContact.Name));
                                 isEdit = true;
@@ -159,6 +192,11 @@ namespace Assignment1
                                     {
                                         this._consoleView.ShowMessage("Invalid Phone Number");
                                     }
+                                    else if (this._manager.IsDuplicateContact(newContact))
+                                    {
+                                        this._consoleView.ShowMessage("Phone Number already exists");
+                                        newContact.PhoneNumber = string.Empty;
+                                    }
                                 }
                                 while (!InputValidater.IsValidNumber(newContact.PhoneNumber));
                                 isEdit = true;
@@ -171,6 +209,11 @@ namespace Assignment1
                                     if (!InputValidater.IsValidEmail(newContact.Email))
                                     {
                                         this._consoleView.ShowMessage("Invalid email");
+                                    }
+                                    else if (this._manager.IsDuplicateContact(newContact))
+                                    {
+                                        this._consoleView.ShowMessage("Email already exists");
+                                        newContact.Email = string.Empty;
                                     }
                                 }
                                 while (!InputValidater.IsValidEmail(newContact.Email));
@@ -193,6 +236,9 @@ namespace Assignment1
                 }
             }
 
+            /// <summary>
+            /// Deletes existing contact information.
+            /// </summary>
             void DeleteContact()
             {
                 List<ContactInfo> contacts = this._manager.GetAllContact();
@@ -202,7 +248,8 @@ namespace Assignment1
                     return;
                 }
 
-                this._consoleView.ShowMessage("Enter delete ID of the contact: ");
+                this._consoleView.DisplayAll(contacts);
+                this._consoleView.ShowMessage("Enter serial number of the contact to delete: ");
                 int deleteId = GetChoice();
                 if (deleteId < 1 || deleteId > contacts.Count)
                 {
@@ -223,6 +270,9 @@ namespace Assignment1
                 }
             }
 
+            /// <summary>
+            /// Search specific contact information.
+            /// </summary>
             void SearchContact()
             {
                 this._consoleView.ShowMessage("---Search Here---");

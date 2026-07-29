@@ -60,5 +60,18 @@ namespace Assignment1.Persistence
         {
             return this._contacts.Find(c => c.ID == id);
         }
+
+        /// <summary>
+        /// Checks whether a contact already exists based on Name, Phone Number, or Email Address.
+        /// </summary>
+        /// <param name="contact">The contact information to validate.</param>
+        /// <returns>True if a contact with the same Name, Phone Number,Email already exists, otherwise false.</returns>
+        public bool IsDuplicate(ContactInfo contact)
+        {
+            return this._contacts.Any(c =>
+                c.Name.Equals(contact.Name, StringComparison.OrdinalIgnoreCase) ||
+                c.PhoneNumber == contact.PhoneNumber ||
+                c.Email.Equals(contact.Email, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

@@ -50,8 +50,10 @@ namespace Assignment1.Services
             }
             else
             {
+                int serialNumber = 1;
                 foreach (var contact in contacts)
                 {
+                    Console.WriteLine($"Serial Number : {serialNumber++}");
                     this.DisplayContact(contact);
                 }
             }
