@@ -1,4 +1,4 @@
-﻿using System;
+﻿using InventoryManagement.Exceptions;
 using InventoryManagement.Model;
 using InventoryManagement.Repository;
 
@@ -17,6 +17,11 @@ namespace InventoryManagement.Service
         /// <param name="item">object of inventory class with values of all the properties</param>
         public void AddNewItems(InventoryInfo item)
         {
+            if (this._storage.GetItemById(item.Id) != null)
+            {
+                throw new DuplicateIdException(item.Id);
+            }
+
             this._storage.AddItems(item);
         }
 

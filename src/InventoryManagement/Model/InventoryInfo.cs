@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InventoryManagement.Model
+﻿namespace InventoryManagement.Model
 {
     /// <summary>
     /// Defines the properties of the inventory management.

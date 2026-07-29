@@ -1,5 +1,4 @@
-﻿using System;
-using InventoryManagement.Helper;
+﻿using InventoryManagement.Helper;
 using InventoryManagement.Model;
 using InventoryManagement.Model.Enum;
 using InventoryManagement.Service;
@@ -11,8 +10,6 @@ namespace InventoryManagement
     /// </summary>
     public class ProjectController
     {
-        private const decimal MaximumPriceValue = 10000000m;
-        private const int MaximumQuantity = 1000;
         private readonly ProjectConsoleView _consoleView;
         private readonly InventoryManager _projectManager;
 
@@ -34,12 +31,13 @@ namespace InventoryManagement
         {
             this._consoleView.ShowMessage("Welcome to console-based Inventory management");
             int choiceValue;
+            MenuEnum menu;
             do
             {
                 this._consoleView.ShowMenu();
                 this._consoleView.ShowMessage("Please select the option to perform :");
                 choiceValue = this.GetChoice();
-                MenuEnum menu = (MenuEnum)choiceValue;
+                menu = (MenuEnum)choiceValue;
                 switch (menu)
                 {
                     case MenuEnum.Insert:
@@ -64,7 +62,7 @@ namespace InventoryManagement
                         break;
                 }
             }
-            while (choiceValue != 6);
+            while (menu != MenuEnum.Exit);
         }
 
         private void AddProduct()
@@ -109,7 +107,7 @@ namespace InventoryManagement
                     }
 
                     this._consoleView.ShowMessage("Invalid price! Price cannot be empty or negative.\nPrice should be positive and within the limit.\n" +
-                        $"Price Limit : {MaximumPriceValue} ");
+                        $"Price Limit : {ConstantVariables.MaximumPriceValue} ");
                 }
 
                 while (true)
@@ -123,15 +121,20 @@ namespace InventoryManagement
                     }
 
                     this._consoleView.ShowMessage("Invalid input for quantity! Quantity should be positive and within the limit." +
-                        $"Quantity limit : {MaximumQuantity}");
+                        $"Quantity limit : {ConstantVariables.MaximumQuantity}");
                 }
+
+                this._projectManager.AddNewItems(product);
+                this._consoleView.ShowMessage("Product added successfully");
+            }
+            catch (DuplicateWaitObjectException ex)
+            {
+                this._consoleView.ShowMessage(ex.Message);
             }
             catch (Exception ex)
             {
                 this._consoleView.ShowMessage($"Error: {ex.Message}");
             }
-
-            this._projectManager.AddNewItems(product);
         }
 
         private void ViewProducts()
@@ -175,15 +178,16 @@ namespace InventoryManagement
 
             InventoryInfo? product = this._projectManager.GetProduct(id);
             int choice;
+            EditMenu editMenu;
             do
             {
                 this._consoleView.ShowMessage("Choose fields to edit :");
                 this._consoleView.ShowMessage("[1]. Name\n[2]. Price\n[3]. Quantity\n[4]. Exit");
                 choice = this.GetChoice();
-
-                switch (choice)
+                editMenu = (EditMenu)choice;
+                switch (editMenu)
                 {
-                    case 1:
+                    case EditMenu.Name:
                         while (true)
                         {
                             this._consoleView.ShowMessage("Enter product name: ");
@@ -198,7 +202,7 @@ namespace InventoryManagement
                         }
 
                         break;
-                    case 2:
+                    case EditMenu.Price:
                         while (true)
                         {
                             this._consoleView.ShowMessage("Enter new product price: ");
@@ -213,7 +217,7 @@ namespace InventoryManagement
                         }
 
                         break;
-                    case 3:
+                    case EditMenu.Quantity:
                         while (true)
                         {
                             this._consoleView.ShowMessage("Enter new product quantity: ");
@@ -228,14 +232,14 @@ namespace InventoryManagement
                         }
 
                         break;
-                    case 4:
+                    case EditMenu.Exit:
                         break;
                     default:
                         this._consoleView.ShowMessage("Invalid choice\nPlease select from menu [1 to 4].");
                         break;
                 }
             }
-            while (choice != 4);
+            while (editMenu != EditMenu.Exit);
 
             this._projectManager.EditItems(product);
             this._consoleView.ShowMessage("Updated successfully");
@@ -330,7 +334,7 @@ namespace InventoryManagement
                 {
                     this._consoleView.ShowMessage("Please enter valid input for quantity.\n" +
                         "Quantity should be positive and within the limit." +
-                        $"Quantity limit : {MaximumQuantity}");
+                        $"Quantity limit : {ConstantVariables.MaximumQuantity}");
                 }
             }
         }
@@ -361,7 +365,7 @@ namespace InventoryManagement
                 else
                 {
                     this._consoleView.ShowMessage("Invalid input for price.\nPrice should be positive and within the limit.\n" +
-                        $"Price Limit : {MaximumPriceValue} ");
+                        $"Price Limit : {ConstantVariables.MaximumPriceValue} ");
                 }
             }
         }

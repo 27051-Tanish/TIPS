@@ -1,5 +1,5 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using InventoryManagement.Helper;
 
 namespace InventoryManagement.Helper
 {
@@ -8,11 +8,6 @@ namespace InventoryManagement.Helper
     /// </summary>
     public static class InputValidator
     {
-        private const decimal MinimumPriceValue = 0m;
-        private const decimal MaximumPriceValue = 10000000m;
-        private const int MinimumQuantity = 0;
-        private const int MaximumQuantity = 1000;
-
         /// <summary>
         /// Validates that the name is not null/whitespace and matches the pattern.
         /// </summary>
@@ -56,7 +51,7 @@ namespace InventoryManagement.Helper
         /// <returns>True if the price is valid, otherwise false</returns>
         public static bool ValidPrice(decimal price)
         {
-            return price > MinimumPriceValue && price <= MaximumPriceValue;
+            return price > ConstantVariables.MinimumPriceValue && price <= ConstantVariables.MaximumPriceValue;
         }
 
         /// <summary>
@@ -66,7 +61,7 @@ namespace InventoryManagement.Helper
         /// <returns>True if the quantity is valid, otherwise false</returns>
         public static bool ValidateQuantity(int quantity)
         {
-            return quantity > MinimumQuantity && quantity <= MaximumQuantity;
+            return quantity > ConstantVariables.MinimumQuantity && quantity <= ConstantVariables.MaximumQuantity;
         }
     }
 }

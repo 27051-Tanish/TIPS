@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InventoryManagement.Model.Enum
+﻿namespace InventoryManagement.Model.Enum
 {
     /// <summary>
-    /// Enum for representing values for switch case.
+    /// Enum for representing menu values.
     /// </summary>
     public enum MenuEnum
     {
@@ -38,6 +32,32 @@ namespace InventoryManagement.Model.Enum
 
         /// <summary>
         /// Number representing exit function in menu
+        /// </summary>
+        Exit,
+    }
+
+    /// <summary>
+    /// Enum for representing edit menu values.
+    /// </summary>
+    public enum EditMenu
+    {
+        /// <summary>
+        /// Number representing edit operation of name.
+        /// </summary>
+        Name = 1,
+
+        /// <summary>
+        /// Number representing edit operation of price.
+        /// </summary>
+        Price,
+
+        /// <summary>
+        /// Number representing edit operation of quantity.
+        /// </summary>
+        Quantity,
+
+        /// <summary>
+        /// Number representing exit operation.
         /// </summary>
         Exit,
     }
