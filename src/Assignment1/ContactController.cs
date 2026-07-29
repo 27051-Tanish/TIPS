@@ -1,5 +1,4 @@
-﻿using System;
-using Assignment1.Models;
+﻿using Assignment1.Models;
 using Assignment1.Services;
 
 namespace Assignment1
@@ -19,8 +18,8 @@ namespace Assignment1
         /// Initializes a new instance of the <see cref="ContactController"/> class.
         /// Constructor to pass objects of manager and console.
         /// </summary>
-        /// <param name="view">view</param>
-        /// <param name="manager">manager</param>
+        /// <param name="view">The console view instance used for user interaction.</param>
+        /// <param name="manager">The manager instance responsible for business logic.</param>
         public ContactController(ConsoleActivity view, ContactManager manager)
         {
             this._consoleView = view;
@@ -271,7 +270,7 @@ namespace Assignment1
             }
 
             /// <summary>
-            /// Search specific contact information.
+            /// Search specific contact information from the contact log.
             /// </summary>
             void SearchContact()
             {

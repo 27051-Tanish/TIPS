@@ -10,8 +10,8 @@ namespace Assignment1
         /// <summary>
         /// Validates name of the contact.
         /// </summary>
-        /// <param name="name">name of the contact in the contact manager</param>
-        /// <returns>bool representing the correctness of the name</returns>
+        /// <param name="name">The contact name to validate.</param>
+        /// <returns>True, if the name is valid, otherwise false.</returns>
         public static bool IsValidName(string? name)
         {
             if (!string.IsNullOrWhiteSpace(name))
@@ -23,10 +23,10 @@ namespace Assignment1
         }
 
         /// <summary>
-        /// Checks phone number entered by the user.
+        /// validates the phone number of the contact information.
         /// </summary>
-        /// <param name="number">number</param>
-        /// <returns>bool representing the correctness of the phone number</returns>
+        /// <param name="number">The contact number to validate.</param>
+        /// <returns>True, if the number is valid otherwise false.</returns>
         public static bool IsValidNumber(string? number)
         {
             if (number == null)
@@ -39,9 +39,9 @@ namespace Assignment1
         }
 
         /// <summary>
-        /// Checks for valid email.
+        /// Validates the email of the contact information.
         /// </summary>
-        /// <param name="email">email</param>
+        /// <param name="email">The email to validate.</param>
         /// <returns>bool representing the correctness of the email</returns>
         public static bool IsValidEmail(string? email)
         {
@@ -57,7 +57,7 @@ namespace Assignment1
         /// <summary>
         /// Checks if the search value is null or not.
         /// </summary>
-        /// <param name="searchKey">Search value provided by user</param>
+        /// <param name="searchKey">Search value provided by user.</param>
         /// <returns>True if search value is not null, otherwise false.</returns>
         public static bool IsValidSearchKey(string? searchKey)
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using Assignment1.Services;
+﻿using Assignment1.Services;
 
 namespace Assignment1
 {
@@ -12,8 +11,7 @@ namespace Assignment1
         /// Entry point of the project.
         /// Initializes core components and starts the contact manager.
         /// </summary>
-        /// <param name="args">Console-Based Contact Manager</param>
-        public static void Main(string[] args)
+        public static void Main()
         {
             ContactManager manager = new ContactManager();
             ConsoleActivity activity = new ConsoleActivity();

@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace Assignment1.Models
+﻿namespace Assignment1.Models
 {
     /// <summary>
-    /// Store contactInfo
+    /// Represents basic contact details for a person.
     /// </summary>
     public class ContactInfo
     {
         /// <summary>
-        /// Gets or sets GUID
+        /// Gets or sets GUID.
         /// </summary>
         /// <value>
         /// Id of the contact.
@@ -16,7 +14,7 @@ namespace Assignment1.Models
         public Guid? ID { get; set; }
 
         /// <summary>
-        /// Gets or sets  Name
+        /// Gets or sets Name.
         /// </summary>
         /// <value>
         /// Name of the contact.
@@ -24,7 +22,7 @@ namespace Assignment1.Models
         public string? Name { get; set; }
 
         /// <summary>
-        /// Gets or sets email
+        /// Gets or sets email.
         /// </summary>
         /// <value>
         /// Email of the contact.
@@ -32,7 +30,7 @@ namespace Assignment1.Models
         public string? Email { get; set; }
 
         /// <summary>
-        /// Gets or sets phone
+        /// Gets or sets phone.
         /// </summary>
         /// <value>
         /// Phone number of the contact.
@@ -40,7 +38,7 @@ namespace Assignment1.Models
         public string? PhoneNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets notes
+        /// Gets or sets notes.
         /// </summary>
         /// <value>
         /// Notes of the contact.

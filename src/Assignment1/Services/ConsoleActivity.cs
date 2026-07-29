@@ -1,5 +1,4 @@
-﻿using System;
-using Assignment1.Models;
+﻿using Assignment1.Models;
 using Assignment1.Persistence;
 
 namespace Assignment1.Services
@@ -14,14 +13,14 @@ namespace Assignment1.Services
         /// </summary>
         public void ShowMenu()
         {
-            Console.WriteLine("===========================================");
-            Console.WriteLine("[1]. To Add New Contact");
-            Console.WriteLine("[2]. To View Contact");
-            Console.WriteLine("[3]. To Edit Contact");
-            Console.WriteLine("[4]. To Delete Contact");
-            Console.WriteLine("[5]. To Search Contact");
-            Console.WriteLine("[6]. To Exit");
-            Console.WriteLine("===========================================");
+            this.ShowMessage("===========================================");
+            this.ShowMessage("[1]. To Add New Contact");
+            this.ShowMessage("[2]. To View Contact");
+            this.ShowMessage("[3]. To Edit Contact");
+            this.ShowMessage("[4]. To Delete Contact");
+            this.ShowMessage("[5]. To Search Contact");
+            this.ShowMessage("[6]. To Exit");
+            this.ShowMessage("===========================================");
         }
 
         /// <summary>
@@ -30,12 +29,12 @@ namespace Assignment1.Services
         /// <param name="contact">object with values of its properties</param>
         public void DisplayContact(ContactInfo contact)
         {
-            Console.WriteLine("---------------------------------------");
-            Console.WriteLine($"Name : {contact.Name}");
-            Console.WriteLine($"Phone Number : {contact.PhoneNumber}");
-            Console.WriteLine($"Email : {contact.Email}");
-            Console.WriteLine($"Note : {contact.Note}");
-            Console.WriteLine("---------------------------------------");
+            this.ShowMessage("---------------------------------------");
+            this.ShowMessage($"Name : {contact.Name}");
+            this.ShowMessage($"Phone Number : {contact.PhoneNumber}");
+            this.ShowMessage($"Email : {contact.Email}");
+            this.ShowMessage($"Note : {contact.Note}");
+            this.ShowMessage("---------------------------------------");
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace Assignment1.Services
         {
             if (contacts == null || contacts.Count == 0)
             {
-                Console.WriteLine("No results found.");
+                this.ShowMessage("No results found.");
                 return;
             }
 
@@ -54,7 +53,7 @@ namespace Assignment1.Services
 
             foreach (var contact in contacts)
             {
-                Console.WriteLine($"Serial Number : {serialNumber++}");
+                this.ShowMessage($"Serial Number : {serialNumber++}");
                 this.DisplayContact(contact);
             }
         }

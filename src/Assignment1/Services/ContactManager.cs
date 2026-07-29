@@ -1,5 +1,4 @@
-﻿using System;
-using Assignment1.Models;
+﻿using Assignment1.Models;
 using Assignment1.Persistence;
 
 namespace Assignment1.Services
@@ -14,7 +13,7 @@ namespace Assignment1.Services
         /// <summary>
         /// Add new contact details to contact log.
         /// </summary>
-        /// <param name="contact">add new contact information</param>
+        /// <param name="contact">Contact information that needs to be added.</param>
         public void AddContactInfo(ContactInfo contact)
         {
             contact.ID = Guid.NewGuid();
@@ -24,7 +23,7 @@ namespace Assignment1.Services
         /// <summary>
         /// Gets all contact details from the list.
         /// </summary>
-        /// <returns>list of contact details</returns>
+        /// <returns>List of contact details</returns>
         public List<ContactInfo> GetAllContact()
         {
             List<ContactInfo> contact = (List<ContactInfo>)this._repo.GetContacts();
@@ -36,7 +35,7 @@ namespace Assignment1.Services
         /// Remove contact by id from the list.
         /// </summary>
         /// <param name="id">remove existing contact by id</param>
-        /// <returns>bool representing deletion of contact</returns>
+        /// <returns>True, if contact removed.</returns>
         public bool RemoveContactInfo(Guid? id)
         {
             ContactInfo contact = this._repo.GetById(id);
@@ -47,42 +46,31 @@ namespace Assignment1.Services
         /// <summary>
         /// Edit contact by id from the list.
         /// </summary>
-        /// <param name="id">id and new contact information to edit</param>
-        /// <param name="newContact">newContact</param>
-        /// <returns>bool</returns>
-        public string EditContactInfo(Guid? id,  ContactInfo newContact)
+        /// <param name="id">Id of the old contact and new contact information to edit.</param>
+        /// <param name="newContact">New contact information.</param>
+        public void EditContactInfo(Guid? id,  ContactInfo newContact)
         {
             ContactInfo contact = this._repo.GetById(id);
-            if (contact == null)
-            {
-                return "Invalid ID (or) Cannot edit";
-            }
 
             if (newContact.Name != null)
             {
                 contact.Name = newContact.Name;
-                return "Name edited successfully";
             }
 
             if (newContact.Email != null)
             {
                 contact.Email = newContact.Email;
-                return "Email edited successfully";
             }
 
             if (newContact.PhoneNumber != null)
             {
                 contact.PhoneNumber = newContact.PhoneNumber;
-                return "PhoneNumber edited successfully";
             }
 
             if (newContact.Note != null)
             {
                 contact.Note = newContact.Note;
-                return "Note edited successfully";
             }
-
-            return "No update in contact log";
         }
 
         /// <summary>
