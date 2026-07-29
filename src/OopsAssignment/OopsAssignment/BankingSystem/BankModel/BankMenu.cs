@@ -1,45 +1,43 @@
-﻿using System;
-
-namespace OopsAssignment.BankingSystem.BankModel
+﻿namespace OopsAssignment.BankingSystem.BankModel
 {
     /// <summary>
-    /// Enum for implementing bank menu.
+    /// Defines menu for bank types.
     /// </summary>
     public enum BankMenu
     {
         /// <summary>
-        /// Number representing the enum of savings account.
+        /// Selects savings account for performing banking operations.
         /// </summary>
         Savings = 1,
 
         /// <summary>
-        /// Number representing the enum of checking account.
+        /// Selects checking account for performing banking operations.
         /// </summary>
         Checking,
 
         /// <summary>
-        /// Number representing the enum for exiting.
+        /// Exits the banking application.
         /// </summary>
         Exit,
     }
 
     /// <summary>
-    /// Enum for implementing bank operations.
+    /// Defines menu for banking operations.
     /// </summary>
     public enum BankOperations
     {
         /// <summary>
-        /// Number representing deposit method.
+        /// Selects deposit operation.
         /// </summary>
         Deposit = 1,
 
         /// <summary>
-        /// Number representing withdraw method
+        /// Selects withdraw operation.
         /// </summary>
         Withdraw,
 
         /// <summary>
-        /// Number representing the enum for exiting.
+        /// Exits from banking operation menu.
         /// </summary>
         Exit,
     }

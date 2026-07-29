@@ -1,6 +1,4 @@
-﻿using System;
-using System.Transactions;
-using OopsAssignment;
+﻿using OopsAssignment;
 using OopsAssignment.ShapeHierarchy.Models;
 using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
 
@@ -48,10 +46,10 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                         this.GetCircle();
                         break;
                     case ShapeMenu.Exit:
-                        this._view.ShowMessage("Exiting program...");
+                        this._view.ShowMessage("Closing shape hierarchy application.");
                         break;
                     default:
-                        this._view.ShowMessage("Invalid input: Please enter 1, 2, or 3");
+                        this._view.ShowMessage("Invalid input: Please enter 1, 2, or 3.");
                         break;
                 }
             }
@@ -66,7 +64,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             Rectangle rectangle = new ();
             do
             {
-                this._view.ShowMessage("Enter color of the rectangle: ");
+                this._view.ShowMessage("Enter color of the rectangle :");
                 rectangle.Color = this._view.ReadInput();
                 if (!InputValidator.ValidateName(rectangle.Color))
                 {
@@ -74,42 +72,38 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 }
             }
             while (!InputValidator.ValidateName(rectangle.Color));
-            this._view.ShowMessage("Enter the Length of the rectangle");
+            this._view.ShowMessage("Enter the length of the rectangle :");
             rectangle.Length = this.GetShapeDimensions();
-            this._view.ShowMessage("Enter the Width of the rectangle");
+            this._view.ShowMessage("Enter the width of the rectangle :");
             rectangle.Width = this.GetShapeDimensions();
 
-            rectangle.GetShapeType();
-            rectangle.CalculateArea();
             this._view.ShowMessage(rectangle.PrintDetails());
         }
 
         /// <summary>
-        /// Performs calculation logic for circle class
+        /// Performs calculation logic for circle class.
         /// </summary>
         public void GetCircle()
         {
             Circle circle = new ();
             do
             {
-                this._view.ShowMessage("Enter color of the rectangle: ");
+                this._view.ShowMessage("Enter color of the circle :");
                 circle.Color = this._view.ReadInput();
                 if (!InputValidator.ValidateName(circle.Color))
                 {
-                    this._view.ShowMessage("Invalid input for color");
+                    this._view.ShowMessage("Invalid input for color.");
                 }
             }
             while (!InputValidator.ValidateName(circle.Color));
-            this._view.ShowMessage("Enter the radius of the circle");
+            this._view.ShowMessage("Enter the radius of the circle :");
             circle.Radius = this.GetShapeDimensions();
 
-            circle.GetShapeType();
-            circle.CalculateArea();
             this._view.ShowMessage(circle.PrintDetails());
         }
 
         /// <summary>
-        /// Gets user input for switch case choice.
+        /// Gets the user input for shape hierarchy application menu.
         /// </summary>
         /// <returns>Int value representing choice from menu</returns>
         public int GetChoice()

@@ -1,22 +1,22 @@
 ﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
-    /// Enum for implementing shape menu.
+    /// Defines shape menu navigation options.
     /// </summary>
     public enum ShapeMenu
     {
         /// <summary>
-        /// Number representing rectangle from menu
+        /// Selects rectangle as shape type.
         /// </summary>
         Rectangle = 1,
 
         /// <summary>
-        /// Number representing circle from menu.
+        /// Selects circle as shape type.
         /// </summary>
         Circle,
 
         /// <summary>
-        /// Number representing exit from menu.
+        /// Exits the shape menu.
         /// </summary>
         Exit,
     }

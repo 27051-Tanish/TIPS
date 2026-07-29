@@ -35,14 +35,5 @@
         {
             return Pi * this.Radius * this.Radius;
         }
-
-        /// <summary>
-        /// Prints the details of circle.
-        /// </summary>
-        /// <returns>string containing circle details</returns>
-        public override string PrintDetails()
-        {
-            return $"Color: {this.Color}\nArea: {this.CalculateArea()}\nShape Type: {this.GetShapeType()}";
-        }
     }
 }

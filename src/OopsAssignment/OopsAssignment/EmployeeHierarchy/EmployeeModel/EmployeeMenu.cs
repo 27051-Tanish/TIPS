@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
+﻿namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
     /// <summary>
-    /// Enum for switch case in employee menu.
+    /// Defines employee application menu navigation option.
     /// </summary>
     public enum EmployeeMenu
     {
         /// <summary>
-        /// Number representing display manager details.
+        /// Selects manager as employee type to perform operation.
         /// </summary>
         Manager = 1,
 
         /// <summary>
-        /// Number representing display developer details.
+        /// Selects developer as employee type to perform operation.
         /// </summary>
         Developer,
 
         /// <summary>
-        /// Number representing exit operation.
+        /// Exits employee hierarchy application.
         /// </summary>
         Exit,
     }

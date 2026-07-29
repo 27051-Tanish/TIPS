@@ -14,7 +14,7 @@ namespace OopsAssignment
         /// <returns>bool for verifying the correct name</returns>
         public static bool ValidateName(string? name)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return false;
             }

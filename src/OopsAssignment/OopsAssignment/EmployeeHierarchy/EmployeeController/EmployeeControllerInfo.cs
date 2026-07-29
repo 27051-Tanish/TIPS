@@ -1,5 +1,4 @@
-﻿using System;
-using OopsAssignment;
+﻿using OopsAssignment;
 using OopsAssignment.EmployeeHierarchy.EmployeeModel;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeController
@@ -26,6 +25,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         public void StartEmployeeHierarchy()
         {
             int userInput;
+            EmployeeMenu employeeMenu;
             do
             {
                 this._employeeView.EndLine();
@@ -35,7 +35,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 this._employeeView.EndLine();
 
                 userInput = this.GetChoice();
-                EmployeeMenu employeeMenu = (EmployeeMenu)userInput;
+                employeeMenu = (EmployeeMenu)userInput;
 
                 switch (employeeMenu)
                 {
@@ -46,27 +46,27 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                         this.GetDeveloperDetails();
                         break;
                     case EmployeeMenu.Exit:
-                        this._employeeView.ShowMessage("Exiting...");
+                        this._employeeView.ShowMessage("Closing employee hierarchy application.");
                         break;
                     default:
-                        this._employeeView.ShowMessage("Invalid input: select 1, 2, or 3");
+                        this._employeeView.ShowMessage("Invalid input: please select 1, 2, or 3");
                         break;
                 }
             }
-            while (userInput != 3);
+            while (employeeMenu != EmployeeMenu.Exit);
         }
 
         /// <summary>
         /// Gets employee inputs such as name and salary.
         /// </summary>
-        /// <param name="type">type referring to type of employee</param>
-        /// <returns>Name of the employee and salary of the employee</returns>
-        public (string? name, decimal salary) GetEmployeeDetails(string type)
+        /// <param name="employeeType">Type of the employee.</param>
+        /// <returns>Name and salary of the employee</returns>
+        public (string? name, decimal salary) GetEmployeeDetails(string employeeType)
         {
             string? name;
             do
             {
-                this._employeeView.ShowMessage($"Enter name of the {type}: ");
+                this._employeeView.ShowMessage($"Enter name of the {employeeType}: ");
                 name = this._employeeView.ReadInput();
                 if (!InputValidator.ValidateName(name))
                 {
@@ -74,7 +74,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 }
             }
             while (!InputValidator.ValidateName(name));
-            this._employeeView.ShowMessage($"Enter salary of the {type}: ");
+            this._employeeView.ShowMessage($"Enter salary of the {employeeType}: ");
             decimal salary = this.GetSalary();
             return (name, salary);
         }
@@ -84,8 +84,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// </summary>
         public void GetManagerDetails()
         {
-            var result = this.GetEmployeeDetails("Manager");
-            Manager manager = new (result.name, result.salary);
+            var employee = this.GetEmployeeDetails("Manager");
+            Manager manager = new (employee.name, employee.salary);
             this._employeeView.EndLine();
             this._employeeView.ShowMessage(manager.PrintDetails());
         }
@@ -95,8 +95,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// </summary>
         public void GetDeveloperDetails()
         {
-            var result = this.GetEmployeeDetails("Developer");
-            Developer developer = new (result.name, result.salary);
+            var employee = this.GetEmployeeDetails("Developer");
+            Developer developer = new (employee.name, employee.salary);
             this._employeeView.EndLine();
             this._employeeView.ShowMessage(developer.PrintDetails());
         }

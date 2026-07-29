@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OopsAssignment
+﻿namespace OopsAssignment
 {
     /// <summary>
-    /// Enum for main menu used in switch case.
+    /// Defines the main menu navigation options.
     /// </summary>
     public enum MainMenu
     {
         /// <summary>
-        /// Number representing the function call of shape hierarchy.
+        /// Selects shape hierarchy application.
         /// </summary>
-        ShapeTask = 1,
+        ShapeHierarchy = 1,
 
         /// <summary>
-        /// Number representing the function call of employee hierarchy.
+        /// Selects employee hierarchy application.
         /// </summary>
-        EmployeeTask,
+        EmployeeHierarchy,
 
         /// <summary>
-        /// Number representing the function call of banking system.
+        /// Selects banking system application.
         /// </summary>
-        BankTask,
+        BankingSystem,
 
         /// <summary>
-        /// Number representing exit operation.
+        /// Exits the application.
         /// </summary>
         Exit,
     }

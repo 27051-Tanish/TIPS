@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
+﻿namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
     /// <summary>
     /// Gets or sets employee information
@@ -11,7 +9,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// Gets or sets name.
         /// </summary>
         /// <value>
-        /// Name as string.
+        /// Name of the employee.
         /// </value>
         public string? Name { get; set; }
 
@@ -19,20 +17,20 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// Gets or sets salary.
         /// </summary>
         /// <value>
-        /// Salary as decimal.
+        /// Salary of the employee.
         /// </value>
         public decimal Salary { get; set; }
 
         /// <summary>
         /// Calculates the employee bonus.
         /// </summary>
-        /// <returns>decimal value of the bonus</returns>
+        /// <returns>Bonus of the employee</returns>
         public abstract decimal CalculateBonus();
 
         /// <summary>
         /// Returns the position of the employee.
         /// </summary>
-        /// <returns>string representing position of the employee</returns>
+        /// <returns>Position of the employee</returns>
         public abstract string GetEmployeePosition();
 
         /// <summary>

@@ -37,14 +37,5 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
             const decimal developerBonus = 0.10m;
             return this.Salary * developerBonus;
         }
-
-        /// <summary>
-        /// Prints the developer details.
-        /// </summary>
-        /// <returns>string representing manager details</returns>
-        public override string PrintDetails()
-        {
-            return $"Name: {this.Name}\nSalary: {this.Salary}\nBonus: {this.CalculateBonus()}\nPosition: {this.GetEmployeePosition()}";
-        }
     }
 }

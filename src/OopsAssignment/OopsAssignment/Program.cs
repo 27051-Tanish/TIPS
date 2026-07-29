@@ -6,12 +6,12 @@ using OopsAssignment.ShapeHierarchy.Controller;
 namespace OopsAssignment
 {
     /// <summary>
-    /// Entry point of the program
+    /// Contains the main execution logic for the application.
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// Entry point of the program
+        /// Serves as the primary entry point of the program.
         /// </summary>
         public static void Main()
         {

@@ -41,7 +41,7 @@ namespace OopsAssignment.BankingSystem.BankController
                         this.GetCheckingAccount();
                         break;
                     case BankMenu.Exit:
-                        this._consoleView.ShowMessage("Exiting...");
+                        this._consoleView.ShowMessage("Closing banking system application.");
                         break;
                     default:
                         this._consoleView.ShowMessage("Invalid input: select 1, 2, or 3");

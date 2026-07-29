@@ -35,13 +35,13 @@ namespace OopsAssignment
                 mainMenu = (MainMenu)userInput;
                 switch (mainMenu)
                 {
-                    case MainMenu.ShapeTask:
+                    case MainMenu.ShapeHierarchy:
                         StartShapeHierarchy();
                         break;
-                    case MainMenu.EmployeeTask:
+                    case MainMenu.EmployeeHierarchy:
                         StartEmployeeHierarchy();
                         break;
-                    case MainMenu.BankTask:
+                    case MainMenu.BankingSystem:
                         StartBankApplication();
                         break;
                     case MainMenu.Exit:

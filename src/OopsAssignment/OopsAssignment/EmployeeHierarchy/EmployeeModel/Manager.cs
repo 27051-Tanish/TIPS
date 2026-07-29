@@ -12,8 +12,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <summary>
         /// Initializes a new instance of the <see cref="Manager"/> class.
         /// </summary>
-        /// <param name="name">string name of the manager</param>
-        /// <param name="salary">decimal salary of the manager</param>
+        /// <param name="name">Name of the manager.</param>
+        /// <param name="salary">Salary of the manager.</param>
         public Manager(string? name, decimal salary)
         {
             this.Name = name;
@@ -23,7 +23,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <summary>
         /// Returns the position of the Employee.
         /// </summary>
-        /// <returns>string representing the position</returns>
+        /// <returns>Position of the employee.</returns>
         public override string GetEmployeePosition()
         {
             return "Manager";
@@ -32,20 +32,11 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <summary>
         /// Calculates the bonus of the manager.
         /// </summary>
-        /// <returns>decimal representing the bonus</returns>
+        /// <returns>Bonus amount of the employee.</returns>
         public override decimal CalculateBonus()
         {
             const decimal managerBonus = 0.20m;
             return this.Salary * managerBonus;
-        }
-
-        /// <summary>
-        /// Prints the manager details.
-        /// </summary>
-        /// <returns>string representing manager details</returns>
-        public override string PrintDetails()
-        {
-            return $"Name: {this.Name}\nSalary: {this.Salary}\nBonus: {this.CalculateBonus()}\nPosition: {this.GetEmployeePosition()}";
         }
     }
 }

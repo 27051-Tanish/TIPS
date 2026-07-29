@@ -43,14 +43,5 @@
 
             return null;
         }
-
-        /// <summary>
-        /// Prints the details of rectangle.
-        /// </summary>
-        /// <returns>string containing rectangle details</returns>
-        public override string PrintDetails()
-        {
-            return $"Color: {this.Color}\nArea: {this.CalculateArea()}\nShape Type: {this.GetShapeType()}";
-        }
     }
 }
