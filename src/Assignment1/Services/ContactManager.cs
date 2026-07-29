@@ -100,15 +100,20 @@ namespace Assignment1.Services
         /// </summary>
         /// <param name="searchValue">search a contact</param>
         /// <returns>List of contacts</returns>
-        public List<ContactInfo>? SearchContactInfo(string? searchValue)
+        public List<ContactInfo> SearchContactInfo(string? searchValue)
         {
-            if (!string.IsNullOrWhiteSpace(searchValue))
+            if (string.IsNullOrWhiteSpace(searchValue))
             {
-                return this._repo.GetContacts().Where(s => s.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
-                s.PhoneNumber.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Email.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || s.Note.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                return new List<ContactInfo>();
             }
 
-            return null;
+            return this._repo.GetContacts()
+                .Where(s =>
+                    (s.Name?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (s.PhoneNumber?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (s.Email?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (s.Note?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false))
+                .ToList();
         }
     }
 }

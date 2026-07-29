@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Assignment1
 {
@@ -53,6 +52,21 @@ namespace Assignment1
 
             string pattern = @"^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$";
             return Regex.IsMatch(email, pattern);
+        }
+
+        /// <summary>
+        /// Checks if the search value is null or not.
+        /// </summary>
+        /// <param name="searchKey">Search value provided by user</param>
+        /// <returns>True if search value is not null, otherwise false.</returns>
+        public static bool IsValidSearchKey(string? searchKey)
+        {
+            if (searchKey == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

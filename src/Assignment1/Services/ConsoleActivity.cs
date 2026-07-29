@@ -42,20 +42,20 @@ namespace Assignment1.Services
         /// Shows all the contact information.
         /// </summary>
         /// <param name="contacts">list of objects of the contactInfo class</param>
-        public void DisplayAll(List<ContactInfo> contacts)
+        public void DisplayAll(List<ContactInfo>? contacts)
         {
-            if (contacts.Count == 0)
+            if (contacts == null || contacts.Count == 0)
             {
-                Console.WriteLine("Contact log is empty");
+                Console.WriteLine("No results found.");
+                return;
             }
-            else
+
+            int serialNumber = 1;
+
+            foreach (var contact in contacts)
             {
-                int serialNumber = 1;
-                foreach (var contact in contacts)
-                {
-                    Console.WriteLine($"Serial Number : {serialNumber++}");
-                    this.DisplayContact(contact);
-                }
+                Console.WriteLine($"Serial Number : {serialNumber++}");
+                this.DisplayContact(contact);
             }
         }
 

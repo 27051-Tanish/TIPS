@@ -275,10 +275,25 @@ namespace Assignment1
             /// </summary>
             void SearchContact()
             {
+                List<ContactInfo> contacts = this._manager.GetAllContact();
+                if (contacts == null || contacts.Count == 0)
+                {
+                    this._consoleView.ShowMessage("No contact available");
+                    return;
+                }
+
                 this._consoleView.ShowMessage("---Search Here---");
                 string? keyword = this._consoleView.ReadInput();
-                List<ContactInfo> contactInfos = this._manager.SearchContactInfo(keyword);
-                this._consoleView.DisplayAll(contactInfos);
+
+                if (InputValidater.IsValidSearchKey(keyword))
+                {
+                    List<ContactInfo>? contactInfos = this._manager.SearchContactInfo(keyword);
+                    this._consoleView.DisplayAll(contactInfos);
+                }
+                else
+                {
+                    this._consoleView.ShowMessage("No results found.");
+                }
             }
 
             int GetChoice()
