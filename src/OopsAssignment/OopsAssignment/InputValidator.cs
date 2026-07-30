@@ -54,5 +54,41 @@ namespace OopsAssignment
 
             return true;
         }
+
+        /// <summary>
+        /// Validates whether a deposit amount falls within a permissible range.
+        /// </summary>
+        /// <param name="amount">The deposit amount to validate.</param>
+        /// <returns>True if the amount is greater than or equal to zero; otherwise, false.</returns>
+        public static bool ValidateDepositAmount(decimal amount)
+        {
+            if (amount < 0 || amount > decimal.MaxValue)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Determines if adding a transaction amount to the balance causes an overflow.
+        /// </summary>
+        /// <param name="amount">The transaction amount to add.</param>
+        /// <param name="balance">The current bank balance.</param>
+        /// <returns>True if the total stays within valid decimal limits; otherwise, false.</returns>
+        public static bool CheckBankBalance(decimal amount, decimal balance)
+        {
+            if (amount > 0 && balance > decimal.MaxValue - amount)
+            {
+                return false;
+            }
+
+            if (amount < 0 && balance < decimal.MinValue - amount)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -11,10 +11,10 @@
         public const double Pi = Math.PI;
 
         /// <summary>
-        /// Gets or sets radius of the circle
+        /// Gets or sets radius of the circle.
         /// </summary>
         /// <value>
-        /// Radius of the circle with the type double.
+        /// Radius of the circle.
         /// </value>
         public double? Radius { get; set; }
 
@@ -30,7 +30,7 @@
         /// <summary>
         /// Calculates the area of circle.
         /// </summary>
-        /// <returns>double reperesenting area of circle</returns>s
+        /// <returns>double representing area of circle</returns>s
         public override double? CalculateArea()
         {
             return Pi * this.Radius * this.Radius;
