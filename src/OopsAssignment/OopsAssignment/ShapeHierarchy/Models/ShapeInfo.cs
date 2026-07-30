@@ -1,7 +1,7 @@
 ﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
-    /// Gets or sets color value for shape
+    /// Provides a base contract and shared properties for shape objects.
     /// </summary>
     public abstract class ShapeInfo
     {
@@ -14,21 +14,21 @@
         public string? Color { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the shape.
+        /// Gets the specific type of the shape.
         /// </summary>
-        /// <returns>string representing the shape type</returns>
+        /// <returns>Specific type of shape.</returns>
         public abstract string GetShapeType();
 
         /// <summary>
-        /// Gets or sets the values and calculates the area.
+        /// Calculates the area of the shape.
         /// </summary>
-        /// <returns>double value representing area</returns>
+        /// <returns>The calculated area of a shape.</returns>
         public abstract double? CalculateArea();
 
         /// <summary>
         /// Prints details of the shape.
         /// </summary>
-        /// <returns>string representing the shape details</returns>
+        /// <returns>Details of specific shape.</returns>
         public virtual string PrintDetails()
         {
             return $"Color: {this.Color}\nArea: {this.CalculateArea()}\nShape Type: {this.GetShapeType()}";

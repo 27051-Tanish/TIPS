@@ -28,12 +28,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             EmployeeMenu employeeMenu;
             do
             {
-                this._employeeView.EndLine();
-                this._employeeView.ShowMessage("[1].Manager");
-                this._employeeView.ShowMessage("[2].Developer");
-                this._employeeView.ShowMessage("[3].Exit");
-                this._employeeView.EndLine();
-
+                this._employeeView.EmployeeHierarchyMenu();
                 userInput = this.GetChoice();
                 employeeMenu = (EmployeeMenu)userInput;
 
@@ -54,29 +49,6 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 }
             }
             while (employeeMenu != EmployeeMenu.Exit);
-        }
-
-        /// <summary>
-        /// Gets employee inputs such as name and salary.
-        /// </summary>
-        /// <param name="employeeType">Type of the employee.</param>
-        /// <returns>Name and salary of the employee</returns>
-        public (string? name, decimal salary) GetEmployeeDetails(string employeeType)
-        {
-            string? name;
-            do
-            {
-                this._employeeView.ShowMessage($"Enter name of the {employeeType}: ");
-                name = this._employeeView.ReadInput();
-                if (!InputValidator.ValidateName(name))
-                {
-                    this._employeeView.ShowMessage("Invalid input for name");
-                }
-            }
-            while (!InputValidator.ValidateName(name));
-            this._employeeView.ShowMessage($"Enter salary of the {employeeType}: ");
-            decimal salary = this.GetSalary();
-            return (name, salary);
         }
 
         /// <summary>
@@ -102,9 +74,9 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         }
 
         /// <summary>
-        /// Gets user input for switch case choice.
+        /// Prompts the user and reads a validated integer menu choice from the console.
         /// </summary>
-        /// <returns>Int value representing choice from menu</returns>
+        /// <returns>The validated integer value representing the user's selected option.</returns>
         public int GetChoice()
         {
             while (true)
@@ -115,15 +87,15 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 }
                 else
                 {
-                    this._employeeView.ShowMessage("Please enter valid choice");
+                    this._employeeView.ShowMessage("Please enter valid choice from [1 to 3]\nPlease enter again :");
                 }
             }
         }
 
         /// <summary>
-        /// Gets user input for salary.
+        /// Reads a validated decimal for salary.
         /// </summary>
-        /// <returns>double representing the value of salary</returns>
+        /// <returns>The validated decimal value as the salary.</returns>
         public decimal GetSalary()
         {
             while (true)
@@ -134,9 +106,47 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 }
                 else
                 {
-                    this._employeeView.ShowMessage("Please enter valid salary :");
+                    this._employeeView.ShowMessage("Salary should not contains characters and should not exceed the limit.\nPlease enter valid salary :");
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets employee inputs such as name and salary.
+        /// </summary>
+        /// <param name="employeeType">Type of the employee.</param>
+        /// <returns>Name and salary of the employee</returns>
+        private (string? name, decimal salary) GetEmployeeDetails(string employeeType)
+        {
+            string? name;
+            while (true)
+            {
+                this._employeeView.ShowMessage($"Enter name of the {employeeType}: ");
+                name = this._employeeView.ReadInput();
+
+                if (InputValidator.ValidateName(name))
+                {
+                    break;
+                }
+
+                this._employeeView.ShowMessage("Invalid entry for name.");
+            }
+
+            decimal salary;
+            while (true)
+            {
+                this._employeeView.ShowMessage($"Enter salary of the {employeeType}: ");
+                salary = this.GetSalary();
+
+                if (InputValidator.ValidateSalary(salary))
+                {
+                    break;
+                }
+
+                this._employeeView.ShowMessage($"Salary cannot be negative or greater than the limit\nSalary limit :{decimal.MaxValue}");
+            }
+
+            return (name, salary);
         }
     }
 }

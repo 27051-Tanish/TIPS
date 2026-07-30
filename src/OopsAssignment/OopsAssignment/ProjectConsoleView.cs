@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OopsAssignment
+﻿namespace OopsAssignment
 {
     /// <summary>
     /// Provides console-based UI methods for displaying menus, messages,
@@ -25,6 +23,26 @@ namespace OopsAssignment
         {
             this.EndLine();
             this.ShowMessage("[1]. Savings Account\n[2]. Checking Account\n[3]. Exit");
+            this.EndLine();
+        }
+
+        /// <summary>
+        /// Provides different shape type as menu for performing area calculation.
+        /// </summary>
+        public void ShapeHierarchyMenu()
+        {
+            this.EndLine();
+            this.ShowMessage("[1].Rectangle\n[2].Circle\n[3].Exit");
+            this.EndLine();
+        }
+
+        /// <summary>
+        /// Provides different employee type as menu for performing bonus calculation.
+        /// </summary>
+        public void EmployeeHierarchyMenu()
+        {
+            this.EndLine();
+            this.ShowMessage("[1]. Manager\n[2]. Developer\n[3]. Exit");
             this.EndLine();
         }
 

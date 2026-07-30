@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OopsAssignment
+﻿namespace OopsAssignment
 {
     /// <summary>
     /// Validates the user input.
@@ -19,7 +17,37 @@ namespace OopsAssignment
                 return false;
             }
 
-            if (name.All(c => char.IsDigit(c)))
+            if (name.Any(c => char.IsDigit(c)))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates the dimensions of the shape.
+        /// </summary>
+        /// <param name="dimensions">The dimension of the shape to validate.</param>
+        /// <returns>True if the dimensions are valid, otherwise false.</returns>
+        public static bool ValidateDimensions(double dimensions)
+        {
+            if (dimensions < 0 || dimensions > double.MaxValue)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Validates the salary of the employee.
+        /// </summary>
+        /// <param name="salary">Salary of the employee to validate</param>
+        /// <returns>True if the salary is valid, otherwise false.</returns>
+        public static bool ValidateSalary(decimal salary)
+        {
+            if (salary < 0 || salary > decimal.MaxValue)
             {
                 return false;
             }
@@ -30,14 +58,14 @@ namespace OopsAssignment
         /// <summary>
         /// Validates the account number of the user.
         /// </summary>
-        /// <param name="accountNumber">account number to validate</param>
+        /// <param name="accountNumber">Account number to validate</param>
         /// <returns>bool for verifying the correctness of the account number</returns>
         public static bool ValidateAccountNumber(string? accountNumber)
         {
             int minimumAccountNumberLength = 9;
             int maximumAccountNumberLength = 18;
 
-            if (string.IsNullOrEmpty(accountNumber) || string.IsNullOrWhiteSpace(accountNumber))
+            if (string.IsNullOrWhiteSpace(accountNumber))
             {
                 return false;
             }

@@ -25,11 +25,12 @@ namespace OopsAssignment.BankingSystem.BankController
         public void StartBankingSystem()
         {
             int userInput;
+            BankMenu menuChoice;
             do
             {
                 this._consoleView.BankSystemMenu();
                 userInput = this.GetChoice();
-                BankMenu menuChoice = (BankMenu)userInput;
+                menuChoice = (BankMenu)userInput;
 
                 switch (menuChoice)
                 {
@@ -47,7 +48,7 @@ namespace OopsAssignment.BankingSystem.BankController
                         break;
                 }
             }
-            while (userInput != 3);
+            while (menuChoice != BankMenu.Exit);
         }
 
         /// <summary>
@@ -93,11 +94,12 @@ namespace OopsAssignment.BankingSystem.BankController
             this._consoleView.ShowMessage("--Please select a operation--");
 
             int choice;
+            BankOperations menuChoice;
             do
             {
                 this._consoleView.ShowMessage("[1]. Deposit\n[2]. Withdraw\n[3]. Exit");
                 choice = this.GetChoice();
-                BankOperations menuChoice = (BankOperations)choice;
+                menuChoice = (BankOperations)choice;
                 switch (menuChoice)
                 {
                     case BankOperations.Deposit:
@@ -114,7 +116,7 @@ namespace OopsAssignment.BankingSystem.BankController
                         break;
                 }
             }
-            while (choice != 3);
+            while (menuChoice != BankOperations.Exit);
 
             void DepositAmount()
             {
@@ -185,11 +187,12 @@ namespace OopsAssignment.BankingSystem.BankController
 
             this._consoleView.ShowMessage("--Which operation do you need to perform--");
             int choice;
+            BankOperations menuChoice;
             do
             {
                 this._consoleView.ShowMessage("[1]. Deposit\n[2]. Withdraw\n[3]. Exit");
                 choice = this.GetChoice();
-                BankOperations menuChoice = (BankOperations)choice;
+                menuChoice = (BankOperations)choice;
                 switch (menuChoice)
                 {
                     case BankOperations.Deposit:
@@ -206,7 +209,7 @@ namespace OopsAssignment.BankingSystem.BankController
                         break;
                 }
             }
-            while (choice != 3);
+            while (menuChoice != BankOperations.Exit);
 
             void DepositAmount()
             {

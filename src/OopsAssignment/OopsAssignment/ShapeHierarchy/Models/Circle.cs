@@ -1,7 +1,7 @@
 ﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
-    /// Inherits the Shapeinfo class and its methods and properties
+    /// Represents a circle shape, inheriting shared shape properties and behaviors.
     /// </summary>
     public class Circle : ShapeInfo
     {
@@ -16,12 +16,12 @@
         /// <value>
         /// Radius of the circle.
         /// </value>
-        public double? Radius { get; set; }
+        public double Radius { get; set; }
 
         /// <summary>
         /// Prints the type of the shape.
         /// </summary>
-        /// <returns>string representing circle</returns>
+        /// <returns>Name of the shape type.</returns>
         public override string GetShapeType()
         {
             return "Circle";
@@ -30,7 +30,7 @@
         /// <summary>
         /// Calculates the area of circle.
         /// </summary>
-        /// <returns>double representing area of circle</returns>s
+        /// <returns>The calculated area of circle.</returns>s
         public override double? CalculateArea()
         {
             return Pi * this.Radius * this.Radius;
