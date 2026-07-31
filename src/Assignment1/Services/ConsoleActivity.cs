@@ -45,7 +45,7 @@ namespace Assignment1.Services
         {
             if (contacts == null || contacts.Count == 0)
             {
-                this.ShowMessage("No results found.");
+                this.ShowMessage("Contact list is empty.\nNo results found.");
                 return;
             }
 
@@ -70,7 +70,6 @@ namespace Assignment1.Services
         /// <summary>
         /// Reads user input from console.
         /// </summary>
-        /// <param name="input">input</param>
         /// <returns>the value read from the console</returns>
         public string? ReadInput()
         {

@@ -71,7 +71,7 @@ namespace Assignment1
             /// <returns>Contact information with values for all the properties.</returns>
             ContactInfo AddContact()
             {
-                ContactInfo contact = new ContactInfo();
+                ContactInfo contact = new ();
 
                 this._consoleView.ShowMessage("Add New Contact:");
                 Console.WriteLine();
@@ -149,12 +149,12 @@ namespace Assignment1
                 int serialNumber = GetChoice();
                 if (serialNumber <= 0 || serialNumber > contacts.Count)
                 {
-                    this._consoleView.ShowMessage("Invalid serial number.");
+                    this._consoleView.ShowMessage($"There is no contact with the serial number :{serialNumber}");
                     return;
                 }
                 else
                 {
-                    ContactInfo newContact = new ContactInfo();
+                    ContactInfo newContact = new ();
                     bool isEdit = false;
                     while (!isEdit)
                     {
@@ -289,9 +289,13 @@ namespace Assignment1
                     List<ContactInfo>? contactInfos = this._manager.SearchContactInfo(keyword);
                     this._consoleView.DisplayAll(contactInfos);
                 }
+                else if (string.IsNullOrWhiteSpace(keyword))
+                {
+                    this._consoleView.ShowMessage("Empty input is invalid.");
+                }
                 else
                 {
-                    this._consoleView.ShowMessage("No results found.");
+                    this._consoleView.ShowMessage("No result found.");
                 }
             }
 

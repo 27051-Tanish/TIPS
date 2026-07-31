@@ -61,6 +61,11 @@ namespace Assignment1
         /// <returns>True if search value is not null, otherwise false.</returns>
         public static bool IsValidSearchKey(string? searchKey)
         {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                return false;
+            }
+
             if (searchKey == null)
             {
                 return false;
