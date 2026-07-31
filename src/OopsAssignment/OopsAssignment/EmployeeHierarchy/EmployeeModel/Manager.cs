@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using OopsAssignment.EmployeeHierarchy.EmployeeModel;
+﻿using OopsAssignment.EmployeeHierarchy.EmployeeModel;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {

@@ -1,4 +1,4 @@
-﻿namespace OopsAssignment
+﻿namespace OopsAssignment.Helper
 {
     /// <summary>
     /// Validates the user input.
@@ -9,7 +9,7 @@
         /// Validates the name of the user.
         /// </summary>
         /// <param name="name">name to validate</param>
-        /// <returns>bool for verifying the correct name</returns>
+        /// <returns>True, if the name is valid otherwise false.</returns>
         public static bool ValidateName(string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -59,7 +59,7 @@
         /// Validates the account number of the user.
         /// </summary>
         /// <param name="accountNumber">Account number to validate</param>
-        /// <returns>bool for verifying the correctness of the account number</returns>
+        /// <returns>True if the account number is valid otherwise false.</returns>
         public static bool ValidateAccountNumber(string? accountNumber)
         {
             int minimumAccountNumberLength = 9;

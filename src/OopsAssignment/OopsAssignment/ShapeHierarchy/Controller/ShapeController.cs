@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using OopsAssignment;
+﻿using OopsAssignment.Helper;
+using OopsAssignment.Helper.CustomException;
 using OopsAssignment.ShapeHierarchy.Models;
 using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
 
@@ -98,7 +98,14 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 this._view.ShowMessage("Invalid entry for width.\nWidth should be positive and should not exceed the limit.");
             }
 
-            this._view.ShowMessage(rectangle.PrintDetails());
+            try
+            {
+                this._view.ShowMessage(rectangle.PrintDetails());
+            }
+            catch (MaxValueException ex)
+            {
+                this._view.ShowMessage($"Error :{ex.Message}");
+            }
         }
 
         /// <summary>
@@ -133,13 +140,20 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 this._view.ShowMessage("Invalid entry for radius.\nRadius should be positive and should not exceed the limit.");
             }
 
-            this._view.ShowMessage(circle.PrintDetails());
+            try
+            {
+                this._view.ShowMessage(circle.PrintDetails());
+            }
+            catch (MaxValueException ex)
+            {
+                this._view.ShowMessage($"Error :{ex.Message}");
+            }
         }
 
         /// <summary>
         /// Gets the user input for shape hierarchy application menu.
         /// </summary>
-        /// <returns>Int value representing choice from menu</returns>
+        /// <returns>Number representing choice from menu</returns>
         public int GetChoice()
         {
             while (true)
@@ -158,7 +172,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
         /// <summary>
         /// Gets user input for length, width, and radius.
         /// </summary>
-        /// <returns>double representing the dimensions</returns>
+        /// <returns>Dimensions of the shape.</returns>
         public double GetInput()
         {
             while (true)

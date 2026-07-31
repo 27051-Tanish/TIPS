@@ -1,4 +1,6 @@
-﻿namespace OopsAssignment.ShapeHierarchy.Models
+﻿using OopsAssignment.Helper.CustomException;
+
+namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
     /// Represents a rectangular shape, inheriting shared shape properties and behaviors.
@@ -36,6 +38,11 @@
         /// <returns>The calculated area of rectangle.</returns>
         public override double? CalculateArea()
         {
+            if (this.Length > 0 && this.Width > double.MaxValue / this.Length)
+            {
+                throw new MaxValueException("The dimensions are too large to calculate area of the rectangle.");
+            }
+
             return this.Length * this.Width;
         }
     }

@@ -1,5 +1,5 @@
-﻿using OopsAssignment;
-using OopsAssignment.BankingSystem.BankModel;
+﻿using OopsAssignment.BankingSystem.BankModel;
+using OopsAssignment.Helper;
 
 namespace OopsAssignment.BankingSystem.BankController
 {
@@ -13,7 +13,7 @@ namespace OopsAssignment.BankingSystem.BankController
         /// <summary>
         /// Initializes a new instance of the <see cref="BankServiceController"/> class.
         /// </summary>
-        /// <param name="consoleView">The view is instance</param>
+        /// <param name="consoleView">The console view instance.</param>
         public BankServiceController(ProjectConsoleView consoleView)
         {
             this._consoleView = consoleView;
@@ -52,7 +52,7 @@ namespace OopsAssignment.BankingSystem.BankController
         }
 
         /// <summary>
-        /// Perform deposit and withdraw operation and Display savings account details.
+        /// Perform deposit and withdraw operation and display savings account details.
         /// </summary>
         public void GetSavingsAccount()
         {
@@ -76,7 +76,7 @@ namespace OopsAssignment.BankingSystem.BankController
             {
                 this._consoleView.ShowMessage("Enter savings account balance: ");
                 balance = this.GetValidAmountInput();
-                if (balance >= SavingsAccount.MinimumBalance)
+                if (balance >= ConstantVariables.MinimumBalance)
                 {
                     isValidBalance = true;
                     break;
@@ -143,9 +143,9 @@ namespace OopsAssignment.BankingSystem.BankController
                 this._consoleView.ShowMessage("Enter amount to withdraw: ");
                 decimal amount = this.GetValidAmountInput();
 
-                if ((savingsAccount.Balance - amount) < SavingsAccount.MinimumBalance)
+                if ((savingsAccount.Balance - amount) < ConstantVariables.MinimumBalance)
                 {
-                    this._consoleView.ShowMessage("No minimum balance available to withdraw");
+                    this._consoleView.ShowMessage("No minimum balance available to withdraw.\nAtleast 1000 should be in balance.");
                 }
                 else
                 {
@@ -160,7 +160,7 @@ namespace OopsAssignment.BankingSystem.BankController
         }
 
         /// <summary>
-        /// Perform deposit and withdraw operation and Display checking account details.
+        /// Perform deposit and withdraw operation and display checking account details.
         /// </summary>
         public void GetCheckingAccount()
         {

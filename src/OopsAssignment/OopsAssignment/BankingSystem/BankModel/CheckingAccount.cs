@@ -10,8 +10,8 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckingAccount"/> class.
         /// </summary>
-        /// <param name="accountNumber">string represent account number</param>
-        /// <param name="balance">decimal represent balance</param>
+        /// <param name="accountNumber">Account number to be stored.</param>
+        /// <param name="balance">Balance to be stored.</param>
         public CheckingAccount(string? accountNumber, decimal balance)
         {
             this.AccountNumber = accountNumber;
@@ -21,7 +21,7 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// <summary>
         /// Performs withdraw operation, deduct amount from the account.
         /// </summary>
-        /// <param name="amount">decimal amount representing the withdraw amount</param>
+        /// <param name="amount">The amount to debit from the balance.</param>
         /// <returns>string message indicating withdraw operation outcome</returns>
         public override string Withdraw(decimal amount)
         {

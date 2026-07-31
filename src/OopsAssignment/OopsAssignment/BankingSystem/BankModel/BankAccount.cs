@@ -3,7 +3,7 @@
 namespace OopsAssignment.BankingSystem.BankModel
 {
     /// <summary>
-    /// Base class for project.
+    /// Provides a base contract and shared properties for banking system objects.
     /// </summary>
     public abstract class BankAccount
     {

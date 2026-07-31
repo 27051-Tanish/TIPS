@@ -8,15 +8,10 @@ namespace OopsAssignment.BankingSystem.BankModel
     public class SavingsAccount : BankAccount
     {
         /// <summary>
-        /// Stores the minimum balance value.
-        /// </summary>
-        public const decimal MinimumBalance = 1000m;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SavingsAccount"/> class.
         /// </summary>
-        /// <param name="accountNumber">string represent account number</param>
-        /// <param name="balance">decimal represent balance</param>
+        /// <param name="accountNumber">Account number to be stored.</param>
+        /// <param name="balance">Bank balance to be stored.</param>
         public SavingsAccount(string? accountNumber, decimal balance)
         {
             this.AccountNumber = accountNumber;
@@ -26,8 +21,8 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// <summary>
         /// Performs withdraw operation, deduct amount from the account.
         /// </summary>
-        /// <param name="amount">decimal amount representing the withdraw amount</param>
-        /// <returns>string message indicating withdraw operation outcome</returns>
+        /// <param name="amount">The amount to be debited from the account balance.</param>
+        /// <returns>Message regarding withdrawal operation.</returns>
         public override string Withdraw(decimal amount)
         {
             if (this.Balance - amount < 0)

@@ -1,5 +1,5 @@
-﻿using OopsAssignment;
-using OopsAssignment.EmployeeHierarchy.EmployeeModel;
+﻿using OopsAssignment.EmployeeHierarchy.EmployeeModel;
+using OopsAssignment.Helper;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeController
 {

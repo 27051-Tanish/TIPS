@@ -1,5 +1,4 @@
-﻿using System;
-using OopsAssignment.EmployeeHierarchy.EmployeeModel;
+﻿using OopsAssignment.EmployeeHierarchy.EmployeeModel;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
@@ -11,8 +10,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <summary>
         /// Initializes a new instance of the <see cref="Developer"/> class.
         /// </summary>
-        /// <param name="name">string name of the developer</param>
-        /// <param name="salary">decimal salary of the developer</param>
+        /// <param name="name">Name of the employee.</param>
+        /// <param name="salary">Salary of the employee.</param>
         public Developer(string? name, decimal salary)
         {
             this.Name = name;
@@ -20,18 +19,18 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         }
 
         /// <summary>
-        /// Returns the position of the Employee.
+        /// Gets employee position.
         /// </summary>
-        /// <returns>string representing the position</returns>
+        /// <returns>Position of the employee.</returns>
         public override string GetEmployeePosition()
         {
             return "Developer";
         }
 
         /// <summary>
-        /// Calculates the bonus of the developer.
+        /// Calculates the bonus of the employee.
         /// </summary>
-        /// <returns>decimal representing the bonus</returns>
+        /// <returns>Bonus amount of the employee.</returns>
         public override decimal CalculateBonus()
         {
             const decimal developerBonus = 0.10m;

@@ -1,7 +1,7 @@
 ﻿namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
     /// <summary>
-    /// Gets or sets employee information
+    /// Provides a base contract and shared properties for employee objects.
     /// </summary>
     public abstract class EmployeeInfo
     {
@@ -36,7 +36,7 @@
         /// <summary>
         /// Prints the details of the employee.
         /// </summary>
-        /// <returns>string of details</returns>
+        /// <returns>Details of the employee.</returns>
         public virtual string PrintDetails()
         {
             return $"Name: {this.Name}\nSalary: {this.Salary}\nBonus: {this.CalculateBonus()}\nPosition: {this.GetEmployeePosition()}";

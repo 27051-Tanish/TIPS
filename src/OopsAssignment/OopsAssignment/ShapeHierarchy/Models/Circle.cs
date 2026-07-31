@@ -1,15 +1,12 @@
-﻿namespace OopsAssignment.ShapeHierarchy.Models
+﻿using OopsAssignment.Helper.CustomException;
+
+namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
     /// Represents a circle shape, inheriting shared shape properties and behaviors.
     /// </summary>
     public class Circle : ShapeInfo
     {
-        /// <summary>
-        /// Stores the value of pi.
-        /// </summary>
-        public const double Pi = Math.PI;
-
         /// <summary>
         /// Gets or sets radius of the circle.
         /// </summary>
@@ -33,7 +30,13 @@
         /// <returns>The calculated area of circle.</returns>s
         public override double? CalculateArea()
         {
-            return Pi * this.Radius * this.Radius;
+            double maxRadius = Math.Sqrt(double.MaxValue / Math.PI);
+            if (this.Radius > maxRadius)
+            {
+                throw new MaxValueException("The radius is too big to calculate area of the circle");
+            }
+
+            return Math.PI * this.Radius * this.Radius;
         }
     }
 }
