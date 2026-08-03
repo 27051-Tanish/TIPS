@@ -21,9 +21,9 @@ namespace OopsAssignment
         }
 
         /// <summary>
-        /// Runs the overall project.
+        /// Runs the overall application.
         /// </summary>
-        public void Start()
+        public void RunApplication()
         {
             int userInput;
             MainMenu mainMenu;

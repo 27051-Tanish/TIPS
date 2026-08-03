@@ -17,7 +17,7 @@ namespace OopsAssignment
         {
             ProjectConsoleView view = new ();
             ProjectController controller = new (view);
-            controller.Start();
+            controller.RunApplication();
         }
     }
 }
