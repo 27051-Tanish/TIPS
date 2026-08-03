@@ -11,7 +11,7 @@ namespace InventoryManagement.Helper
         /// <summary>
         /// Validates that the name is not null/whitespace and matches the pattern.
         /// </summary>
-        /// <param name="name">Name of the item/product</param>
+        /// <param name="name">Name of the item/product.</param>
         /// <returns>True if the name is valid, otherwise false.</returns>
         public static bool ValidateName(string? name)
         {
@@ -31,8 +31,8 @@ namespace InventoryManagement.Helper
         /// <summary>
         /// Validates the id of the item/product.
         /// </summary>
-        /// <param name="id">Id of the item/product</param>
-        /// <returns>True if the ID is valid, otherwise false</returns>
+        /// <param name="id">Id of the item/product.</param>
+        /// <returns>True if the ID is valid, otherwise false.</returns>
         public static bool ValidateId(string? id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -47,8 +47,8 @@ namespace InventoryManagement.Helper
         /// <summary>
         /// Validates the price of the item/product
         /// </summary>
-        /// <param name="price">Price of the item/product</param>
-        /// <returns>True if the price is valid, otherwise false</returns>
+        /// <param name="price">Price of the item/product.</param>
+        /// <returns>True if the price is valid, otherwise false.</returns>
         public static bool ValidPrice(decimal price)
         {
             return price > ConstantVariables.MinimumPriceValue && price <= ConstantVariables.MaximumPriceValue;
@@ -57,8 +57,8 @@ namespace InventoryManagement.Helper
         /// <summary>
         /// Validates the quantity of the item/product.
         /// </summary>
-        /// <param name="quantity">Quantity of the item/product</param>
-        /// <returns>True if the quantity is valid, otherwise false</returns>
+        /// <param name="quantity">Quantity of the item/product.</param>
+        /// <returns>True if the quantity is valid, otherwise false.</returns>
         public static bool ValidateQuantity(int quantity)
         {
             return quantity >= ConstantVariables.MinimumQuantity && quantity <= ConstantVariables.MaximumQuantity;

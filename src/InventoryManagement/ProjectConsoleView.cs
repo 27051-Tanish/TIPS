@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Model;
+﻿using ConsoleTables;
+using InventoryManagement.Model;
 
 namespace InventoryManagement
 {
@@ -26,34 +27,23 @@ namespace InventoryManagement
         /// <summary>
         /// Shows a product information in the inventory log.
         /// </summary>
-        /// <param name="item">Item that needs to be displayed.</param>
-        public void DisplayProduct(InventoryInfo item)
-        {
-            Console.WriteLine("---------------------------------------");
-            Console.WriteLine($"ID : {item.Id}");
-            Console.WriteLine($"Product Name : {item.Name}");
-            Console.WriteLine($"Product Price : {item.Price}");
-            Console.WriteLine($"Quantity : {item.Quantity}");
-            Console.WriteLine("---------------------------------------");
-        }
-
-        /// <summary>
-        /// Displays all the product details from the list.
-        /// </summary>
-        /// <param name="items">List of items to display.</param>
+        /// <param name="items">Items that needs to be displayed.</param>
         public void DisplayAll(List<InventoryInfo> items)
         {
             if (items.Count == 0)
             {
                 Console.WriteLine("Inventory log is empty");
+                return;
             }
-            else
+
+            var table = new ConsoleTable("ID", "Product Name", "Price", "Quantity");
+
+            foreach (var item in items)
             {
-                foreach (var item in items)
-                {
-                    this.DisplayProduct(item);
-                }
+                table.AddRow(item.Id, item.Name, item.Price, item.Quantity);
             }
+
+            table.Write();
         }
 
         /// <summary>
