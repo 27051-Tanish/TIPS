@@ -11,8 +11,8 @@ namespace InventoryManagement.Helper
         /// <summary>
         /// Validates that the name is not null/whitespace and matches the pattern.
         /// </summary>
-        /// <param name="name">Name representing the item/product</param>
-        /// <returns>bool indicating the correctness of the input</returns>
+        /// <param name="name">Name of the item/product</param>
+        /// <returns>True if the name is valid, otherwise false.</returns>
         public static bool ValidateName(string? name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -20,7 +20,7 @@ namespace InventoryManagement.Helper
                 return false;
             }
 
-            if (name.Length < 2 || name.Length >= 50)
+            if (name.Length < ConstantVariables.MinimumNameLength || name.Length >= ConstantVariables.MaximumNameLength)
             {
                 return false;
             }
@@ -40,7 +40,7 @@ namespace InventoryManagement.Helper
                 return false;
             }
 
-            string? pattern = @"^[A-Za-z]{2}\d{3}$";
+            string? pattern = @"^[A-Z]{2}\d{3}$";
             return Regex.IsMatch(id, pattern);
         }
 
@@ -61,7 +61,7 @@ namespace InventoryManagement.Helper
         /// <returns>True if the quantity is valid, otherwise false</returns>
         public static bool ValidateQuantity(int quantity)
         {
-            return quantity > ConstantVariables.MinimumQuantity && quantity <= ConstantVariables.MaximumQuantity;
+            return quantity >= ConstantVariables.MinimumQuantity && quantity <= ConstantVariables.MaximumQuantity;
         }
     }
 }

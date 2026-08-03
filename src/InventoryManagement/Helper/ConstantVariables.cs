@@ -6,6 +6,16 @@
     public static class ConstantVariables
     {
         /// <summary>
+        /// Stores the constant value of minimum length of the name.
+        /// </summary>
+        public const int MinimumNameLength = 2;
+
+        /// <summary>
+        /// Stores the constant value of maximum length of the name.
+        /// </summary>
+        public const int MaximumNameLength = 50;
+
+        /// <summary>
         /// Stores the constant value of minimum price value.
         /// </summary>
         public const decimal MinimumPriceValue = 0m;

@@ -25,9 +25,9 @@ namespace InventoryManagement
         }
 
         /// <summary>
-        /// Starts the execution of the program.
+        /// Starts the execution of the inventory management application.
         /// </summary>
-        public void Start()
+        public void RunInventoryManagement()
         {
             this._consoleView.ShowMessage("Welcome to console-based Inventory management");
             int choiceValue;

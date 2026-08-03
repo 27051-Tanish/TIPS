@@ -14,7 +14,7 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Add new product details to the inventory log.
         /// </summary>
-        /// <param name="item">object of inventory class with values of all the properties</param>
+        /// <param name="item">Item that should be added to the list.</param>
         public void AddNewItems(InventoryInfo item)
         {
             if (this._storage.GetItemById(item.Id) != null)
@@ -28,8 +28,8 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Delete product details from inventory log by id.
         /// </summary>
-        /// <param name="id">Product Id for deleting a item from lis</param>
-        /// <returns>bool value representing deletion of product</returns>
+        /// <param name="id">Id of the product that needs to be deleted from the list.</param>
+        /// <returns>True if the item is deleted from the list.</returns>
         public bool DeleteItems(string? id)
         {
             InventoryInfo? item = this._storage.GetItemById(id);
@@ -40,7 +40,7 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Gets all the product details from the inventory management.
         /// </summary>
-        /// <returns>list of product details</returns>
+        /// <returns>List of sorted product details.</returns>
         public List<InventoryInfo> GetItems()
         {
             List<InventoryInfo> items = (List<InventoryInfo>)this._storage.GetAllItems();
@@ -51,7 +51,7 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Updates the product information of given item.
         /// </summary>
-        /// <param name="newItem">object of the inventory class with new value for the properties</param>
+        /// <param name="newItem">Item that needs its properties to be updated.</param>
         public void EditItems(InventoryInfo? newItem)
         {
             this._storage.UpdateItems(newItem);
@@ -60,8 +60,8 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Search for product details from log by name.
         /// </summary>
-        /// <param name="name">name representing the product name</param>
-        /// <returns>list of product details of the given name</returns>
+        /// <param name="name">Name of the product.</param>
+        /// <returns>List of product details of the given name.</returns>
         public List<InventoryInfo> SearchItem(string? name)
         {
             return this._storage.GetAllItems().Where(s => s.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -70,8 +70,8 @@ namespace InventoryManagement.Service
         /// <summary>
         /// Gets the item with the given id.
         /// </summary>
-        /// <param name="id">id of the product</param>
-        /// <returns>product information with the values of given id</returns>
+        /// <param name="id">Id of the product.</param>
+        /// <returns>Product information with the values of given id.</returns>
         public InventoryInfo GetProduct(string id)
         {
             InventoryInfo? item = this._storage.GetItemById(id);

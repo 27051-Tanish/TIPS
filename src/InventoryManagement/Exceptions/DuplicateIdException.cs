@@ -1,7 +1,7 @@
 ﻿namespace InventoryManagement.Exceptions
 {
     /// <summary>
-    /// Throws exception when the product id already exists.
+    /// Custom exception that inherits the shared methods and properties.
     /// </summary>
     public class DuplicateIdException : Exception
     {

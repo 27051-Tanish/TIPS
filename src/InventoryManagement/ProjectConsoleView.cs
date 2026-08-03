@@ -3,7 +3,8 @@
 namespace InventoryManagement
 {
     /// <summary>
-    /// Acts as view layer for project controller.
+    /// Provides console-based UI methods for displaying menus, messages,
+    /// and reading user input for various application modules.
     /// </summary>
     public class ProjectConsoleView
     {
@@ -25,7 +26,7 @@ namespace InventoryManagement
         /// <summary>
         /// Shows a product information in the inventory log.
         /// </summary>
-        /// <param name="item">object with values of its properties</param>
+        /// <param name="item">Item that needs to be displayed.</param>
         public void DisplayProduct(InventoryInfo item)
         {
             Console.WriteLine("---------------------------------------");
@@ -39,7 +40,7 @@ namespace InventoryManagement
         /// <summary>
         /// Displays all the product details from the list.
         /// </summary>
-        /// <param name="items">list of objects with values for properties</param>
+        /// <param name="items">List of items to display.</param>
         public void DisplayAll(List<InventoryInfo> items)
         {
             if (items.Count == 0)
@@ -58,7 +59,7 @@ namespace InventoryManagement
         /// <summary>
         /// Display message in the console.
         /// </summary>
-        /// <param name="message">string message that user wants to display</param>
+        /// <param name="message">Message that user wants to display.</param>
         public void ShowMessage(string message)
         {
             Console.WriteLine(message);
@@ -67,14 +68,14 @@ namespace InventoryManagement
         /// <summary>
         /// Reads user input from the console.
         /// </summary>
-        /// <returns>the value read from the console</returns>
+        /// <returns>The string of characters typed by the user, or null if no more lines are available.</returns>
         public string? ReadInput()
         {
             return Console.ReadLine();
         }
 
         /// <summary>
-        /// Draws endline for improving console view.
+        /// Writes a visual separator line to the console to improve console readability.
         /// </summary>
         public void EndLine()
         {

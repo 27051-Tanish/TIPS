@@ -12,7 +12,7 @@ namespace InventoryManagement.Repository
         /// <summary>
         /// Add new product to the list.
         /// </summary>
-        /// <param name="item">Object of the class that contains the properties</param>
+        /// <param name="item">Item that needs to be added to the list.</param>
         public void AddItems(InventoryInfo item)
         {
             this._inventories.Add(item);
@@ -21,7 +21,7 @@ namespace InventoryManagement.Repository
         /// <summary>
         /// Remove a product/item from the list.
         /// </summary>
-        /// <param name="item">Object of the class that contains the properties</param>
+        /// <param name="item">Item that needs to be removed from the list.</param>
         public void RemoveItems(InventoryInfo item)
         {
             this._inventories.Remove(item);
@@ -30,7 +30,7 @@ namespace InventoryManagement.Repository
         /// <summary>
         /// Copies the in-memory repository to a duplicate list.
         /// </summary>
-        /// <returns>list of item details from original repository</returns>
+        /// <returns>Copy of original list.</returns>
         public IEnumerable<InventoryInfo> GetAllItems()
         {
             List<InventoryInfo> copyList = new List<InventoryInfo>();
@@ -50,9 +50,9 @@ namespace InventoryManagement.Repository
         }
 
         /// <summary>
-        /// Edit product details from the list
+        /// Edit product details from the list.
         /// </summary>
-        /// <param name="item">object of the class which needs to update</param>
+        /// <param name="item">Item that needs to be updated.</param>
         public void UpdateItems(InventoryInfo item)
         {
             InventoryInfo? oldItem = this.GetItemById(item.Id);
@@ -67,8 +67,8 @@ namespace InventoryManagement.Repository
         /// <summary>
         /// Get item information by product id.
         /// </summary>
-        /// <param name="id">product id of string type</param>
-        /// <returns>Product information of given id</returns>
+        /// <param name="id">Id of the product.</param>
+        /// <returns>Product information of given id.</returns>
         public InventoryInfo? GetItemById(string? id)
         {
             return this._inventories.Find(item => item.Id == id);

@@ -17,7 +17,7 @@ namespace Assignments
             InventoryManager inventoryManager = new InventoryManager();
 
             ProjectController controller = new ProjectController(consoleView, inventoryManager);
-            controller.Start();
+            controller.RunInventoryManagement();
         }
     }
 }
