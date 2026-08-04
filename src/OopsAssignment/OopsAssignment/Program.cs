@@ -1,9 +1,4 @@
-﻿using OopsAssignment;
-using OopsAssignment.BankingSystem.BankController;
-using OopsAssignment.EmployeeHierarchy.EmployeeController;
-using OopsAssignment.ShapeHierarchy.Controller;
-
-namespace OopsAssignment
+﻿namespace OopsAssignment
 {
     /// <summary>
     /// Contains the main execution logic for the application.

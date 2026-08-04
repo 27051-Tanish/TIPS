@@ -1,4 +1,6 @@
-﻿namespace OopsAssignment.Helper
+﻿using OopsAssignment.Helper.ConstantVariables;
+
+namespace OopsAssignment.Helper
 {
     /// <summary>
     /// Validates the user input.
@@ -28,11 +30,11 @@
         /// <summary>
         /// Validates the dimensions of the shape.
         /// </summary>
-        /// <param name="dimensions">The dimension of the shape to validate.</param>
+        /// <param name="dimension">The dimension of the shape to validate.</param>
         /// <returns>True if the dimensions are valid, otherwise false.</returns>
-        public static bool ValidateDimensions(double dimensions)
+        public static bool ValidateDimension(double dimension)
         {
-            if (dimensions < 0 || dimensions > double.MaxValue)
+            if (dimension < 0 || dimension > double.MaxValue || double.IsNaN(dimension))
             {
                 return false;
             }
@@ -41,13 +43,13 @@
         }
 
         /// <summary>
-        /// Validates the salary of the employee.
+        /// Validates the amount read from the console.
         /// </summary>
-        /// <param name="salary">Salary of the employee to validate</param>
-        /// <returns>True if the salary is valid, otherwise false.</returns>
-        public static bool ValidateSalary(decimal salary)
+        /// <param name="amount">Amount to be validated.</param>
+        /// <returns>True if the amount is valid, otherwise false.</returns>
+        public static bool ValidateAmount(decimal amount)
         {
-            if (salary < 0 || salary > decimal.MaxValue)
+            if (amount < 0 || amount > decimal.MaxValue)
             {
                 return false;
             }
@@ -62,35 +64,9 @@
         /// <returns>True if the account number is valid otherwise false.</returns>
         public static bool ValidateAccountNumber(string? accountNumber)
         {
-            int minimumAccountNumberLength = 9;
-            int maximumAccountNumberLength = 18;
-
-            if (string.IsNullOrWhiteSpace(accountNumber))
-            {
-                return false;
-            }
-
-            if (accountNumber.Length < minimumAccountNumberLength || accountNumber.Length > maximumAccountNumberLength)
-            {
-                return false;
-            }
-
-            if (!accountNumber.All(c => char.IsDigit(c)))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Validates whether a deposit amount falls within a permissible range.
-        /// </summary>
-        /// <param name="amount">The deposit amount to validate.</param>
-        /// <returns>True if the amount is greater than or equal to zero; otherwise, false.</returns>
-        public static bool ValidateDepositAmount(decimal amount)
-        {
-            if (amount < 0 || amount > decimal.MaxValue)
+            if (string.IsNullOrWhiteSpace(accountNumber) ||
+               (accountNumber.Length < AccountConstants.MinimumAccountNumberLength || accountNumber.Length > AccountConstants.MaximumAccountNumberLength) ||
+               (!accountNumber.All(c => char.IsDigit(c))))
             {
                 return false;
             }
@@ -106,17 +82,23 @@
         /// <returns>True if the total stays within valid decimal limits; otherwise, false.</returns>
         public static bool CheckBankBalance(decimal amount, decimal balance)
         {
-            if (amount > 0 && balance > decimal.MaxValue - amount)
-            {
-                return false;
-            }
-
-            if (amount < 0 && balance < decimal.MinValue - amount)
+            if ((amount > 0 && balance > decimal.MaxValue - amount) || (amount < 0 && balance < decimal.MinValue - amount))
             {
                 return false;
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Attempts to parse the provided input as a valid integer choice.
+        /// </summary>
+        /// <param name="input">The user input to validate.</param>
+        /// <param name="choice">Contains the parsed integer value if the conversion succeeded.</param>
+        /// <returns>True if the input is parsed, otherwise false.</returns>
+        public static bool TryGetChoice(string input, out int choice)
+        {
+            return int.TryParse(input, out choice);
         }
     }
 }

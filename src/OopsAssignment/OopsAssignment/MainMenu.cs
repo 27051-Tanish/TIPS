@@ -6,22 +6,22 @@
     public enum MainMenu
     {
         /// <summary>
-        /// Selects shape hierarchy application.
+        /// Represents shape hierarchy application.
         /// </summary>
         ShapeHierarchy = 1,
 
         /// <summary>
-        /// Selects employee hierarchy application.
+        /// Represents employee hierarchy application.
         /// </summary>
         EmployeeHierarchy,
 
         /// <summary>
-        /// Selects banking system application.
+        /// Represents banking system application.
         /// </summary>
         BankingSystem,
 
         /// <summary>
-        /// Exits the application.
+        /// Represents exit operation of the application.
         /// </summary>
         Exit,
     }

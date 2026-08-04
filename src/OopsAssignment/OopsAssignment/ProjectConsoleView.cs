@@ -7,49 +7,20 @@
     public class ProjectConsoleView
     {
         /// <summary>
-        /// Provides different applications as a menu for user.
+        /// Display different menu information.
         /// </summary>
-        public void ApplicationMenu()
+        /// <param name="message">Menu information to be displayed.</param>
+        public void ShowMenu(string message)
         {
             this.EndLine();
-            this.ShowMessage("[1]. Shape Hierarchy\n[2]. Employee Hierarchy\n[3]. Banking System\n[4]. Exit");
+            this.ShowMessage(message);
             this.EndLine();
         }
 
         /// <summary>
-        /// Provides different account types as menu for performing banking operations.
+        /// Writes a message to the console.
         /// </summary>
-        public void BankSystemMenu()
-        {
-            this.EndLine();
-            this.ShowMessage("[1]. Savings Account\n[2]. Checking Account\n[3]. Exit");
-            this.EndLine();
-        }
-
-        /// <summary>
-        /// Provides different shape type as menu for performing area calculation.
-        /// </summary>
-        public void ShapeHierarchyMenu()
-        {
-            this.EndLine();
-            this.ShowMessage("[1].Rectangle\n[2].Circle\n[3].Exit");
-            this.EndLine();
-        }
-
-        /// <summary>
-        /// Provides different employee type as menu for performing bonus calculation.
-        /// </summary>
-        public void EmployeeHierarchyMenu()
-        {
-            this.EndLine();
-            this.ShowMessage("[1]. Manager\n[2]. Developer\n[3]. Exit");
-            this.EndLine();
-        }
-
-        /// <summary>
-        /// Writes a message to the console output.
-        /// </summary>
-        /// <param name="message">string message</param>
+        /// <param name="message">The message to display.</param>
         public void ShowMessage(string? message)
         {
             Console.WriteLine(message);
@@ -60,7 +31,7 @@
         /// </summary>
         public void EndLine()
         {
-            Console.WriteLine("===========================");
+            Console.WriteLine(new string('=', 25));
         }
 
         /// <summary>
@@ -70,6 +41,26 @@
         public string? ReadInput()
         {
             return Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Attempts to parse the user input.
+        /// </summary>
+        /// <param name="message">The message needed to displayed.</param>
+        /// <returns>Choice of required type if true, otherwise the error</returns>
+        public int GetChoice(string message)
+        {
+            while (true)
+            {
+                if (int.TryParse(this.ReadInput(), out int choiceValue))
+                {
+                    return choiceValue;
+                }
+                else
+                {
+                    this.ShowMessage(message);
+                }
+            }
         }
     }
 }

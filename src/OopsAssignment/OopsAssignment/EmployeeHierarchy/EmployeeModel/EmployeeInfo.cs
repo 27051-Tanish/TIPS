@@ -6,6 +6,17 @@
     public abstract class EmployeeInfo
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="EmployeeInfo"/> class.
+        /// </summary>
+        /// <param name="name">The name of the employee.</param>
+        /// <param name="salary">The salary of the employee.</param>
+        public EmployeeInfo(string? name, decimal salary)
+        {
+            this.Name = name;
+            this.Salary = salary;
+        }
+
+        /// <summary>
         /// Gets or sets name.
         /// </summary>
         /// <value>

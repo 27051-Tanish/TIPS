@@ -1,12 +1,23 @@
-﻿using OopsAssignment.Helper.CustomException;
-
-namespace OopsAssignment.ShapeHierarchy.Models
+﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
     /// Represents a rectangular shape, inheriting shared shape properties and behaviors.
     /// </summary>
     public class Rectangle : ShapeInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Rectangle"/> class.
+        /// </summary>
+        /// <param name="color">Color of the rectangle.</param>
+        /// <param name="length">Length of the rectangle.</param>
+        /// <param name="width">Width of the rectangle.</param>
+        public Rectangle(string? color, double length, double width)
+        {
+            this.Color = color;
+            this.Length = length;
+            this.Width = width;
+        }
+
         /// <summary>
         /// Gets or sets length.
         /// </summary>
@@ -40,7 +51,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
         {
             if (this.Length > 0 && this.Width > double.MaxValue / this.Length)
             {
-                throw new MaxValueException("The dimensions are too large to calculate area of the rectangle.");
+                throw new OverflowException("The dimensions are too large to calculate the area of the rectangle.");
             }
 
             return this.Length * this.Width;

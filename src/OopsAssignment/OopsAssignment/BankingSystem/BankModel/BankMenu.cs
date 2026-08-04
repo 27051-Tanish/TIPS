@@ -6,17 +6,17 @@
     public enum BankMenu
     {
         /// <summary>
-        /// Selects savings account for performing banking operations.
+        /// Represents savings account for performing banking operations.
         /// </summary>
         Savings = 1,
 
         /// <summary>
-        /// Selects checking account for performing banking operations.
+        /// Represents checking account for performing banking operations.
         /// </summary>
         Checking,
 
         /// <summary>
-        /// Exits the banking application.
+        /// Represent exit operation of the banking application.
         /// </summary>
         Exit,
     }
@@ -27,17 +27,17 @@
     public enum BankOperations
     {
         /// <summary>
-        /// Selects deposit operation.
+        /// Represents deposit operation.
         /// </summary>
         Deposit = 1,
 
         /// <summary>
-        /// Selects withdraw operation.
+        /// Represents withdraw operation.
         /// </summary>
         Withdraw,
 
         /// <summary>
-        /// Exits from banking operation menu.
+        /// Represent exit operation from banking operation menu.
         /// </summary>
         Exit,
     }

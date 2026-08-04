@@ -1,4 +1,4 @@
-﻿using System;
+﻿using OopsAssignment.Helper.ConstantVariables;
 
 namespace OopsAssignment.BankingSystem.BankModel
 {
@@ -27,10 +27,11 @@ namespace OopsAssignment.BankingSystem.BankModel
         {
             if (this.Balance - amount < 0)
             {
-                return $"Debit unsuccessful";
+                return TransactionResponse.GetFailureMessage();
             }
 
-            return $"Debit operation successfully completed\nBalance :{this.Balance}";
+            this.Balance -= amount;
+            return TransactionResponse.GetSuccessMessage(this.Balance);
         }
     }
 }

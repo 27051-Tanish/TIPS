@@ -4,7 +4,7 @@ using OopsAssignment.Helper;
 namespace OopsAssignment.EmployeeHierarchy.EmployeeController
 {
     /// <summary>
-    /// Handles the communication between view and models.
+    /// Controls data flow and communication between the employee view and model components.
     /// </summary>
     public class EmployeeControllerInfo
     {
@@ -28,8 +28,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             EmployeeMenu employeeMenu;
             do
             {
-                this._employeeView.EmployeeHierarchyMenu();
-                userInput = this.GetChoice();
+                this._employeeView.ShowMenu("[1]. Manager\n[2]. Developer\n[3]. Exit");
+                userInput = this._employeeView.GetChoice("Please enter valid choice from [1 to 3]\nPlease enter again :");
                 employeeMenu = (EmployeeMenu)userInput;
 
                 switch (employeeMenu)
@@ -73,30 +73,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             this._employeeView.ShowMessage(developer.PrintDetails());
         }
 
-        /// <summary>
-        /// Prompts the user and reads a validated integer menu choice from the console.
-        /// </summary>
-        /// <returns>The validated integer value representing the user's selected option.</returns>
-        public int GetChoice()
-        {
-            while (true)
-            {
-                if (int.TryParse(this._employeeView.ReadInput(), out int choiceValue))
-                {
-                    return choiceValue;
-                }
-                else
-                {
-                    this._employeeView.ShowMessage("Please enter valid choice from [1 to 3]\nPlease enter again :");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Reads a validated decimal for salary.
-        /// </summary>
-        /// <returns>The validated decimal value as the salary.</returns>
-        public decimal GetSalary()
+        private decimal GetSalary()
         {
             while (true)
             {
@@ -106,7 +83,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 }
                 else
                 {
-                    this._employeeView.ShowMessage("Salary should not contains characters and should not exceed the limit.\nPlease enter valid salary :");
+                    this._employeeView.ShowMessage($"Salary should not contains characters and should not exceed the limit.\nSalary limit :{decimal.MaxValue}\nPlease enter valid salary :");
                 }
             }
         }
@@ -138,7 +115,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 this._employeeView.ShowMessage($"Enter salary of the {employeeType}: ");
                 salary = this.GetSalary();
 
-                if (InputValidator.ValidateSalary(salary))
+                if (InputValidator.ValidateAmount(salary))
                 {
                     break;
                 }

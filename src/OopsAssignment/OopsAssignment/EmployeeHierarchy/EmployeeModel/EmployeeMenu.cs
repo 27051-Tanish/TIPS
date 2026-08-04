@@ -6,17 +6,17 @@
     public enum EmployeeMenu
     {
         /// <summary>
-        /// Selects manager as employee type to perform operation.
+        /// Represents manager as employee type to perform operation.
         /// </summary>
         Manager = 1,
 
         /// <summary>
-        /// Selects developer as employee type to perform operation.
+        /// Represents developer as employee type to perform operation.
         /// </summary>
         Developer,
 
         /// <summary>
-        /// Exits employee hierarchy application.
+        /// Represents exit operation from the employee hierarchy application.
         /// </summary>
         Exit,
     }

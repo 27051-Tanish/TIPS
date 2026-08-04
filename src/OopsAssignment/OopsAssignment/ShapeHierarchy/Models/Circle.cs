@@ -1,12 +1,21 @@
-﻿using OopsAssignment.Helper.CustomException;
-
-namespace OopsAssignment.ShapeHierarchy.Models
+﻿namespace OopsAssignment.ShapeHierarchy.Models
 {
     /// <summary>
     /// Represents a circle shape, inheriting shared shape properties and behaviors.
     /// </summary>
     public class Circle : ShapeInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Circle"/> class.
+        /// </summary>
+        /// <param name="color">Color of the circle.</param>
+        /// <param name="radius">Radius of the circle.</param>
+        public Circle(string? color, double radius)
+        {
+            this.Color = color;
+            this.Radius = radius;
+        }
+
         /// <summary>
         /// Gets or sets radius of the circle.
         /// </summary>
@@ -33,7 +42,7 @@ namespace OopsAssignment.ShapeHierarchy.Models
             double maxRadius = Math.Sqrt(double.MaxValue / Math.PI);
             if (this.Radius > maxRadius)
             {
-                throw new MaxValueException("The radius is too big to calculate area of the circle");
+                throw new OverflowException("The radius is too big to calculate area of the circle");
             }
 
             return Math.PI * this.Radius * this.Radius;

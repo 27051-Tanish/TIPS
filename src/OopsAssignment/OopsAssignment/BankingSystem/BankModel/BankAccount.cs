@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OopsAssignment.BankingSystem.BankModel
+﻿namespace OopsAssignment.BankingSystem.BankModel
 {
     /// <summary>
     /// Provides a base contract and shared properties for banking system objects.

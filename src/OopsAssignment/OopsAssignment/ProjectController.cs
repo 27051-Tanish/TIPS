@@ -30,19 +30,19 @@ namespace OopsAssignment
             do
             {
                 this._projectConsole.ShowMessage("--Please select the application--");
-                this._projectConsole.ApplicationMenu();
-                userInput = this.GetChoice();
+                this._projectConsole.ShowMenu("[1]. Shape Hierarchy\n[2]. Employee Hierarchy\n[3]. Banking System\n[4]. Exit");
+                userInput = this._projectConsole.GetChoice("Please select from [1 to 4]\nEnter again :");
                 mainMenu = (MainMenu)userInput;
                 switch (mainMenu)
                 {
                     case MainMenu.ShapeHierarchy:
-                        StartShapeHierarchy();
+                        this.StartShapeHierarchy();
                         break;
                     case MainMenu.EmployeeHierarchy:
-                        StartEmployeeHierarchy();
+                        this.StartEmployeeHierarchy();
                         break;
                     case MainMenu.BankingSystem:
-                        StartBankApplication();
+                        this.StartBankApplication();
                         break;
                     case MainMenu.Exit:
                         break;
@@ -52,42 +52,27 @@ namespace OopsAssignment
                 }
             }
             while (mainMenu != MainMenu.Exit);
-
-            void StartShapeHierarchy()
-            {
-                ProjectConsoleView shapeConsoleView = new ();
-                ShapeController controller = new (shapeConsoleView);
-                controller.StartShapeHierarchy();
-            }
-
-            void StartEmployeeHierarchy()
-            {
-                ProjectConsoleView employeeConsoleView = new ();
-                EmployeeControllerInfo employeeController = new (employeeConsoleView);
-                employeeController.StartEmployeeHierarchy();
-            }
-
-            void StartBankApplication()
-            {
-                ProjectConsoleView bankConsoleView = new ();
-                BankServiceController bankServiceController = new (bankConsoleView);
-                bankServiceController.StartBankingSystem();
-            }
         }
 
-        private int GetChoice()
+        private void StartShapeHierarchy()
         {
-            while (true)
-            {
-                if (int.TryParse(this._projectConsole.ReadInput(), out int choiceValue))
-                {
-                    return choiceValue;
-                }
-                else
-                {
-                    this._projectConsole.ShowMessage("Please enter valid choice from [1 to 4]\nEnter your choice again :");
-                }
-            }
+            ProjectConsoleView shapeConsoleView = new ();
+            ShapeController controller = new (shapeConsoleView);
+            controller.StartShapeHierarchy();
+        }
+
+        private void StartEmployeeHierarchy()
+        {
+            ProjectConsoleView employeeConsoleView = new ();
+            EmployeeControllerInfo employeeController = new (employeeConsoleView);
+            employeeController.StartEmployeeHierarchy();
+        }
+
+        private void StartBankApplication()
+        {
+            ProjectConsoleView bankConsoleView = new ();
+            BankServiceController bankServiceController = new (bankConsoleView);
+            bankServiceController.StartBankingSystem();
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿using OopsAssignment.Helper;
-using OopsAssignment.Helper.CustomException;
 using OopsAssignment.ShapeHierarchy.Models;
 using Rectangle = OopsAssignment.ShapeHierarchy.Models.Rectangle;
 
 namespace OopsAssignment.ShapeHierarchy.Controller
 {
     /// <summary>
-    /// Handles the communication between view and models.
+    /// Controls the communication between view and shape model components.
     /// </summary>
     public class ShapeController
     {
@@ -30,8 +29,8 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             ShapeMenu shapeMenu;
             do
             {
-                this._view.ShapeHierarchyMenu();
-                userChoice = this.GetChoice();
+                this._view.ShowMenu("[1]. Rectangle\n[2]. Circle\n[3]. Exit");
+                userChoice = this._view.GetChoice("Please enter valid choice from [1 to 3]\nPlease enter again :");
                 shapeMenu = (ShapeMenu)userChoice;
 
                 switch (shapeMenu)
@@ -53,18 +52,16 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (shapeMenu != ShapeMenu.Exit);
         }
 
-        /// <summary>
-        /// Performs calculation logic for rectangle class.
-        /// </summary>
-        public void CreateRectangle()
+        private void CreateRectangle()
         {
-            Rectangle rectangle = new ();
+            string? color;
+            double length, width;
             while (true)
             {
                 this._view.ShowMessage("Enter color of the rectangle :");
-                rectangle.Color = this._view.ReadInput();
+                color = this._view.ReadInput();
 
-                if (InputValidator.ValidateName(rectangle.Color))
+                if (InputValidator.ValidateName(color))
                 {
                     break;
                 }
@@ -75,9 +72,9 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the length of the rectangle :");
-                rectangle.Length = this.GetInput();
+                length = this.GetInput();
 
-                if (InputValidator.ValidateDimensions(rectangle.Length))
+                if (InputValidator.ValidateDimension(length))
                 {
                     break;
                 }
@@ -88,9 +85,9 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the width of the rectangle :");
-                rectangle.Width = this.GetInput();
+                width = this.GetInput();
 
-                if (InputValidator.ValidateDimensions(rectangle.Width))
+                if (InputValidator.ValidateDimension(width))
                 {
                     break;
                 }
@@ -100,26 +97,25 @@ namespace OopsAssignment.ShapeHierarchy.Controller
 
             try
             {
+                Rectangle rectangle = new (color, length, width);
                 this._view.ShowMessage(rectangle.PrintDetails());
             }
-            catch (MaxValueException ex)
+            catch (OverflowException ex)
             {
                 this._view.ShowMessage($"Error :{ex.Message}");
             }
         }
 
-        /// <summary>
-        /// Performs calculation logic for circle class.
-        /// </summary>
-        public void CreateCircle()
+        private void CreateCircle()
         {
-            Circle circle = new ();
+            string? color;
+            double radius;
             while (true)
             {
                 this._view.ShowMessage("Enter color of the circle :");
-                circle.Color = this._view.ReadInput();
+                color = this._view.ReadInput();
 
-                if (InputValidator.ValidateName(circle.Color))
+                if (InputValidator.ValidateName(color))
                 {
                     break;
                 }
@@ -130,9 +126,9 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the radius of the circle :");
-                circle.Radius = this.GetInput();
+                radius = this.GetInput();
 
-                if (InputValidator.ValidateDimensions(circle.Radius))
+                if (InputValidator.ValidateDimension(radius))
                 {
                     break;
                 }
@@ -142,38 +138,16 @@ namespace OopsAssignment.ShapeHierarchy.Controller
 
             try
             {
+                Circle circle = new (color, radius);
                 this._view.ShowMessage(circle.PrintDetails());
             }
-            catch (MaxValueException ex)
+            catch (OverflowException ex)
             {
                 this._view.ShowMessage($"Error :{ex.Message}");
             }
         }
 
-        /// <summary>
-        /// Gets the user input for shape hierarchy application menu.
-        /// </summary>
-        /// <returns>Number representing choice from menu</returns>
-        public int GetChoice()
-        {
-            while (true)
-            {
-                if (int.TryParse(this._view.ReadInput(), out int choiceValue))
-                {
-                    return choiceValue;
-                }
-                else
-                {
-                    this._view.ShowMessage("Please enter valid choice");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets user input for length, width, and radius.
-        /// </summary>
-        /// <returns>Dimensions of the shape.</returns>
-        public double GetInput()
+        private double GetInput()
         {
             while (true)
             {
@@ -183,7 +157,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 }
                 else
                 {
-                    this._view.ShowMessage("Invalid dimension value\nEnter again :");
+                    this._view.ShowMessage("Invalid input for dimension.\nEnter again :");
                 }
             }
         }

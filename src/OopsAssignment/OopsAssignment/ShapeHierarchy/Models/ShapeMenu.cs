@@ -6,17 +6,17 @@
     public enum ShapeMenu
     {
         /// <summary>
-        /// Selects rectangle as shape type.
+        /// Represents rectangle as shape type.
         /// </summary>
         Rectangle = 1,
 
         /// <summary>
-        /// Selects circle as shape type.
+        /// Represents circle as shape type.
         /// </summary>
         Circle,
 
         /// <summary>
-        /// Exits the shape menu.
+        /// Represents exit operations from the shape menu.
         /// </summary>
         Exit,
     }

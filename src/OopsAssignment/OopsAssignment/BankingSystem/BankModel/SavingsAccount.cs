@@ -1,4 +1,4 @@
-﻿using System;
+﻿using OopsAssignment.Helper.ConstantVariables;
 
 namespace OopsAssignment.BankingSystem.BankModel
 {
@@ -25,12 +25,13 @@ namespace OopsAssignment.BankingSystem.BankModel
         /// <returns>Message regarding withdrawal operation.</returns>
         public override string Withdraw(decimal amount)
         {
-            if (this.Balance - amount < 0)
+            if (this.Balance - amount < AccountConstants.MinimumBalance)
             {
-                return $"Debit operation failed";
+                return $"Transaction Failed: A minimum balance of {AccountConstants.MinimumBalance} must be maintained.";
             }
 
-            return $"Debit operation successful\nBalance: {this.Balance}";
+            this.Balance -= amount;
+            return TransactionResponse.GetSuccessMessage(this.Balance);
         }
     }
 }

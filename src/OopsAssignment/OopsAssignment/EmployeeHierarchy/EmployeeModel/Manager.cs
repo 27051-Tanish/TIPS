@@ -1,4 +1,5 @@
 ﻿using OopsAssignment.EmployeeHierarchy.EmployeeModel;
+using OopsAssignment.Helper.ConstantVariables;
 
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
@@ -13,9 +14,8 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <param name="name">Name of the manager.</param>
         /// <param name="salary">Salary of the manager.</param>
         public Manager(string? name, decimal salary)
+            : base(name, salary)
         {
-            this.Name = name;
-            this.Salary = salary;
         }
 
         /// <summary>
@@ -33,8 +33,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
         /// <returns>Bonus amount of the employee.</returns>
         public override decimal CalculateBonus()
         {
-            const decimal managerBonus = 0.20m;
-            return this.Salary * managerBonus;
+            return this.Salary * BonusAmountConstant.ManagerBonus;
         }
     }
 }

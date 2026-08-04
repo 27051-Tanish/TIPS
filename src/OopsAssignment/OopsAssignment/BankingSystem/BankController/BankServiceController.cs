@@ -1,12 +1,13 @@
 ﻿using OopsAssignment.BankingSystem.BankModel;
 using OopsAssignment.Helper;
+using OopsAssignment.Helper.ConstantVariables;
 
 namespace OopsAssignment.BankingSystem.BankController
 {
     /// <summary>
-    /// Handles the communication between view and models.
+    /// Controls communication between view and model components.
     /// </summary>
-    internal class BankServiceController
+    public class BankServiceController
     {
         private readonly ProjectConsoleView _consoleView;
 
@@ -28,8 +29,8 @@ namespace OopsAssignment.BankingSystem.BankController
             BankMenu menuChoice;
             do
             {
-                this._consoleView.BankSystemMenu();
-                userInput = this.GetChoice();
+                this._consoleView.ShowMenu("[1]. Savings Account\n[2]. Checking Account\n[3]. Exit");
+                userInput = this._consoleView.GetChoice("Please enter valid choice from [1 to 3]\nPlease enter again :");
                 menuChoice = (BankMenu)userInput;
 
                 switch (menuChoice)
@@ -54,7 +55,7 @@ namespace OopsAssignment.BankingSystem.BankController
         /// <summary>
         /// Perform deposit and withdraw operation and display savings account details.
         /// </summary>
-        public void GetSavingsAccount()
+        private void GetSavingsAccount()
         {
             string? accountNumber;
             while (true)
@@ -71,20 +72,17 @@ namespace OopsAssignment.BankingSystem.BankController
             }
 
             decimal balance = 0;
-            bool isValidBalance = false;
-            while (!isValidBalance)
+            while (true)
             {
                 this._consoleView.ShowMessage("Enter savings account balance: ");
                 balance = this.GetValidAmountInput();
-                if (balance >= ConstantVariables.MinimumBalance)
+
+                if (balance >= AccountConstants.MinimumBalance)
                 {
-                    isValidBalance = true;
                     break;
                 }
-                else
-                {
-                    this._consoleView.ShowMessage("Minimum balance should be Rs.1000");
-                }
+
+                this._consoleView.ShowMessage($"Minimum balance should be Rs. {AccountConstants.MinimumBalance}");
             }
 
             SavingsAccount savingsAccount = new (accountNumber, balance);
@@ -98,7 +96,7 @@ namespace OopsAssignment.BankingSystem.BankController
             do
             {
                 this._consoleView.ShowMessage("[1]. Deposit\n[2]. Withdraw\n[3]. Exit");
-                choice = this.GetChoice();
+                choice = this._consoleView.GetChoice("Please enter valid choice from [1 to 3]\nPlease enter again :");
                 menuChoice = (BankOperations)choice;
                 switch (menuChoice)
                 {
@@ -143,26 +141,23 @@ namespace OopsAssignment.BankingSystem.BankController
                 this._consoleView.ShowMessage("Enter amount to withdraw: ");
                 decimal amount = this.GetValidAmountInput();
 
-                if ((savingsAccount.Balance - amount) < ConstantVariables.MinimumBalance)
-                {
-                    this._consoleView.ShowMessage("No minimum balance available to withdraw.\nAtleast 1000 should be in balance.");
-                }
-                else
-                {
-                    savingsAccount.Withdraw(amount);
-                }
+                string withdrawOperation = savingsAccount.Withdraw(amount);
+                this._consoleView.ShowMessage(withdrawOperation);
 
-                this._consoleView.EndLine();
-                this._consoleView.ShowMessage(savingsAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Debited amount: {amount}");
-                this._consoleView.EndLine();
+                if (withdrawOperation == TransactionResponse.GetSuccessMessage(savingsAccount.Balance))
+                {
+                    this._consoleView.EndLine();
+                    this._consoleView.ShowMessage(savingsAccount.PrintDetails());
+                    this._consoleView.ShowMessage($"Debited amount: {amount}");
+                    this._consoleView.EndLine();
+                }
             }
         }
 
         /// <summary>
         /// Perform deposit and withdraw operation and display checking account details.
         /// </summary>
-        public void GetCheckingAccount()
+        private void GetCheckingAccount()
         {
             string? accountNumber;
             while (true)
@@ -191,7 +186,7 @@ namespace OopsAssignment.BankingSystem.BankController
             do
             {
                 this._consoleView.ShowMessage("[1]. Deposit\n[2]. Withdraw\n[3]. Exit");
-                choice = this.GetChoice();
+                choice = this._consoleView.GetChoice("Please enter valid choice from [1 to 3]\nPlease enter again :");
                 menuChoice = (BankOperations)choice;
                 switch (menuChoice)
                 {
@@ -215,7 +210,7 @@ namespace OopsAssignment.BankingSystem.BankController
             {
                 this._consoleView.ShowMessage("Enter amount to credit: ");
                 decimal amount = this.GetValidAmountInput();
-                if (InputValidator.ValidateDepositAmount(amount) && InputValidator.CheckBankBalance(amount, checkingAccount.Balance))
+                if (InputValidator.ValidateAmount(amount) && InputValidator.CheckBankBalance(amount, checkingAccount.Balance))
                 {
                     checkingAccount.Deposit(amount);
                     this._consoleView.ShowMessage("Amount credited successfully");
@@ -239,7 +234,6 @@ namespace OopsAssignment.BankingSystem.BankController
                 if (amount > 0 && amount <= checkingAccount.Balance)
                 {
                     checkingAccount.Withdraw(amount);
-                    this._consoleView.ShowMessage("Amount debited successfully");
                 }
                 else
                 {
@@ -257,36 +251,17 @@ namespace OopsAssignment.BankingSystem.BankController
         /// Prompts the user via the console and validates a positive amount input value.
         /// </summary>
         /// <returns>A valid positive decimal value representing the user's input.</returns>
-        public decimal GetValidAmountInput()
+        private decimal GetValidAmountInput()
         {
             while (true)
             {
-                if (decimal.TryParse(this._consoleView.ReadInput(), out decimal balance) && InputValidator.ValidateDepositAmount(balance))
+                if (decimal.TryParse(this._consoleView.ReadInput(), out decimal balance) && InputValidator.ValidateAmount(balance))
                 {
                     return balance;
                 }
                 else
                 {
                     this._consoleView.ShowMessage($"Credit failed.\nAmount should be positive and within the limit\nAmount limit :{decimal.MaxValue}\nEnter again: ");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Prompts the user and reads a validated integer menu choice from the console.
-        /// </summary>
-        /// <returns>The validated integer value representing the user's selected option.</returns>
-        public int GetChoice()
-        {
-            while (true)
-            {
-                if (int.TryParse(this._consoleView.ReadInput(), out int choiceValue))
-                {
-                    return choiceValue;
-                }
-                else
-                {
-                    this._consoleView.ShowMessage("Please enter valid choice\nEnter the choice again :");
                 }
             }
         }
