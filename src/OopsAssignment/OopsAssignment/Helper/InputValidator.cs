@@ -14,12 +14,7 @@ namespace OopsAssignment.Helper
         /// <returns>True, if the name is valid otherwise false.</returns>
         public static bool ValidateName(string? name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return false;
-            }
-
-            if (name.Any(c => char.IsDigit(c)))
+            if (string.IsNullOrWhiteSpace(name) || name.Any(c => char.IsDigit(c)))
             {
                 return false;
             }
