@@ -1,10 +1,24 @@
-﻿namespace Assignments
+﻿using ExpenseTracker;
+using ExpenseTracker.Service;
+using ExpenseTracker.View;
+
+namespace Assignments
 {
-    internal class Program
+    /// <summary>
+    /// Contains the main execution logic of the expense tracker.
+    /// </summary>
+    public class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Serves as the primary entry point of the application.
+        /// </summary>
+        public static void Main()
         {
-            Console.WriteLine("Hello, World!");
+            TrackerView view = new TrackerView();
+            TrackerManager manager = new TrackerManager();
+
+            TrackerController controller = new TrackerController(view, manager);
+            controller.RunExpenseTrackerApp();
         }
     }
 }
