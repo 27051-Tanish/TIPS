@@ -6,12 +6,12 @@
     public static class BonusAmountConstant
     {
         /// <summary>
-        /// Bonus amount of developer.
+        /// Bonus percentage of developer.
         /// </summary>
         public const decimal DeveloperBonus = 0.10m;
 
         /// <summary>
-        /// Bonus amount of manager.
+        /// Bonus percentage of manager.
         /// </summary>
         public const decimal ManagerBonus = 0.20m;
     }

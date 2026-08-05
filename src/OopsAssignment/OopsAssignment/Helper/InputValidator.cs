@@ -84,16 +84,5 @@ namespace OopsAssignment.Helper
 
             return true;
         }
-
-        /// <summary>
-        /// Attempts to parse the provided input as a valid integer choice.
-        /// </summary>
-        /// <param name="input">The user input to validate.</param>
-        /// <param name="choice">Contains the parsed integer value if the conversion succeeded.</param>
-        /// <returns>True if the input is parsed, otherwise false.</returns>
-        public static bool TryGetChoice(string input, out int choice)
-        {
-            return int.TryParse(input, out choice);
-        }
     }
 }

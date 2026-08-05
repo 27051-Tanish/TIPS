@@ -47,7 +47,7 @@
         /// Attempts to parse the user input.
         /// </summary>
         /// <param name="message">The message needed to displayed.</param>
-        /// <returns>Choice of required type if true, otherwise the error</returns>
+        /// <returns>Choice of required type if true, otherwise the error message.</returns>
         public int GetChoice(string message)
         {
             while (true)

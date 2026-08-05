@@ -5,7 +5,7 @@ using OopsAssignment.Helper.ConstantVariables;
 namespace OopsAssignment.BankingSystem.BankController
 {
     /// <summary>
-    /// Controls communication between view and model components.
+    /// Controls data flow and communication between view and model components.
     /// </summary>
     public class BankServiceController
     {
@@ -52,9 +52,6 @@ namespace OopsAssignment.BankingSystem.BankController
             while (menuChoice != BankMenu.Exit);
         }
 
-        /// <summary>
-        /// Perform deposit and withdraw operation and display savings account details.
-        /// </summary>
         private void GetSavingsAccount()
         {
             string? accountNumber;
@@ -154,9 +151,6 @@ namespace OopsAssignment.BankingSystem.BankController
             }
         }
 
-        /// <summary>
-        /// Perform deposit and withdraw operation and display checking account details.
-        /// </summary>
         private void GetCheckingAccount()
         {
             string? accountNumber;
@@ -247,10 +241,6 @@ namespace OopsAssignment.BankingSystem.BankController
             }
         }
 
-        /// <summary>
-        /// Prompts the user via the console and validates a positive amount input value.
-        /// </summary>
-        /// <returns>A valid positive decimal value representing the user's input.</returns>
         private decimal GetValidAmountInput()
         {
             while (true)

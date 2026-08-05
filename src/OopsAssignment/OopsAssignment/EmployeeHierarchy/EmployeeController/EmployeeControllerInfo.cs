@@ -88,11 +88,6 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             }
         }
 
-        /// <summary>
-        /// Gets employee inputs such as name and salary.
-        /// </summary>
-        /// <param name="employeeType">Type of the employee.</param>
-        /// <returns>Name and salary of the employee</returns>
         private (string? name, decimal salary) GetEmployeeDetails(string employeeType)
         {
             string? name;
