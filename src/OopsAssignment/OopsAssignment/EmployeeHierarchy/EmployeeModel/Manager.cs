@@ -4,7 +4,7 @@ using OopsAssignment.Helper.ConstantVariables;
 namespace OopsAssignment.EmployeeHierarchy.EmployeeModel
 {
     /// <summary>
-    /// Manager class inherits EmployeeInfo.
+    /// Inherits the EmployeeInfo class and its shared methods and properties.
     /// </summary>
     public class Manager : EmployeeInfo
     {

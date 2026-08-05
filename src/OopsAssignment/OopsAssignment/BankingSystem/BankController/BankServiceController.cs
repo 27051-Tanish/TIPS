@@ -98,10 +98,10 @@ namespace OopsAssignment.BankingSystem.BankController
                 switch (menuChoice)
                 {
                     case BankOperations.Deposit:
-                        DepositAmount();
+                        this.DepositToSavingsAccount(savingsAccount);
                         break;
                     case BankOperations.Withdraw:
-                        WithdrawAmount();
+                        this.WithdrawFromSavingsAccount(savingsAccount);
                         break;
                     case BankOperations.Exit:
                         this._consoleView.ShowMessage("Closing banking operations.");
@@ -112,42 +112,43 @@ namespace OopsAssignment.BankingSystem.BankController
                 }
             }
             while (menuChoice != BankOperations.Exit);
+        }
 
-            void DepositAmount()
+        private void DepositToSavingsAccount(SavingsAccount savingsAccount)
+        {
+            this._consoleView.ShowMessage("Enter amount to credit: ");
+            decimal amount = this.GetValidAmountInput();
+
+            if (InputValidator.CheckBankBalance(amount, savingsAccount.Balance))
             {
-                this._consoleView.ShowMessage("Enter amount to credit: ");
-                decimal amount = this.GetValidAmountInput();
-                if (InputValidator.CheckBankBalance(amount, savingsAccount.Balance))
-                {
-                    savingsAccount.Deposit(amount);
-                    this._consoleView.ShowMessage("Amount credited successfully.");
-                }
-                else
-                {
-                    this._consoleView.ShowMessage($"Invalid input for credit\nBalance limit :{decimal.MaxValue}");
-                }
-
-                this._consoleView.EndLine();
-                this._consoleView.ShowMessage(savingsAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Deposit amount: {amount}");
-                this._consoleView.EndLine();
+                savingsAccount.Deposit(amount);
+                this._consoleView.ShowMessage("Amount credited successfully.");
+            }
+            else
+            {
+                this._consoleView.ShowMessage($"Invalid input for credit\nBalance limit :{decimal.MaxValue}");
             }
 
-            void WithdrawAmount()
+            this._consoleView.EndLine();
+            this._consoleView.ShowMessage(savingsAccount.PrintDetails());
+            this._consoleView.ShowMessage($"Deposit amount: {amount}");
+            this._consoleView.EndLine();
+        }
+
+        private void WithdrawFromSavingsAccount(SavingsAccount savingsAccount)
+        {
+            this._consoleView.ShowMessage("Enter amount to withdraw: ");
+            decimal amount = this.GetValidAmountInput();
+
+            string withdrawOperation = savingsAccount.Withdraw(amount);
+            this._consoleView.ShowMessage(withdrawOperation);
+
+            if (withdrawOperation == TransactionResponse.GetSuccessMessage(savingsAccount.Balance))
             {
-                this._consoleView.ShowMessage("Enter amount to withdraw: ");
-                decimal amount = this.GetValidAmountInput();
-
-                string withdrawOperation = savingsAccount.Withdraw(amount);
-                this._consoleView.ShowMessage(withdrawOperation);
-
-                if (withdrawOperation == TransactionResponse.GetSuccessMessage(savingsAccount.Balance))
-                {
-                    this._consoleView.EndLine();
-                    this._consoleView.ShowMessage(savingsAccount.PrintDetails());
-                    this._consoleView.ShowMessage($"Debited amount: {amount}");
-                    this._consoleView.EndLine();
-                }
+                this._consoleView.EndLine();
+                this._consoleView.ShowMessage(savingsAccount.PrintDetails());
+                this._consoleView.ShowMessage($"Debited amount: {amount}");
+                this._consoleView.EndLine();
             }
         }
 
@@ -185,10 +186,10 @@ namespace OopsAssignment.BankingSystem.BankController
                 switch (menuChoice)
                 {
                     case BankOperations.Deposit:
-                        DepositAmount();
+                        this.DepositAmount(checkingAccount);
                         break;
                     case BankOperations.Withdraw:
-                        WithdrawAmount();
+                        this.WithdrawAmount(checkingAccount);
                         break;
                     case BankOperations.Exit:
                         this._consoleView.ShowMessage("Closing banking operations.");
@@ -199,9 +200,10 @@ namespace OopsAssignment.BankingSystem.BankController
                 }
             }
             while (menuChoice != BankOperations.Exit);
+        }
 
-            void DepositAmount()
-            {
+        private void DepositAmount(CheckingAccount checkingAccount)
+        {
                 this._consoleView.ShowMessage("Enter amount to credit: ");
                 decimal amount = this.GetValidAmountInput();
                 if (InputValidator.ValidateAmount(amount) && InputValidator.CheckBankBalance(amount, checkingAccount.Balance))
@@ -218,10 +220,10 @@ namespace OopsAssignment.BankingSystem.BankController
                 this._consoleView.ShowMessage(checkingAccount.PrintDetails());
                 this._consoleView.ShowMessage($"Credited amount: {amount}");
                 this._consoleView.EndLine();
-            }
+        }
 
-            void WithdrawAmount()
-            {
+        private void WithdrawAmount(CheckingAccount checkingAccount)
+        {
                 this._consoleView.ShowMessage("Enter amount to debit: ");
                 decimal amount = this.GetValidAmountInput();
 
@@ -231,14 +233,13 @@ namespace OopsAssignment.BankingSystem.BankController
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Invalid input to debit amount");
+                    this._consoleView.ShowMessage("Invalid input to debit amount\nBalance should be positive.");
                 }
 
                 this._consoleView.EndLine();
                 this._consoleView.ShowMessage(checkingAccount.PrintDetails());
                 this._consoleView.ShowMessage($"Debited amount: {amount}");
                 this._consoleView.EndLine();
-            }
         }
 
         private decimal GetValidAmountInput()
