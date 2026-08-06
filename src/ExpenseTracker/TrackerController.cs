@@ -50,13 +50,18 @@ namespace ExpenseTracker
                         this.ViewTracker();
                         break;
                     case TrackerMenu.Edit:
+                        this.EditTracker();
                         break;
                     case TrackerMenu.Delete:
+                        this.DeleteRecord();
+                        break;
+                    case TrackerMenu.Summary:
+                        this.RetrieveSummary();
                         break;
                     case TrackerMenu.Exit:
                         break;
                     default:
-                        this._trackerView.ShowMessage("Please enter valid choice from [1 to 3].");
+                        this._trackerView.ShowMessage("Please enter valid choice from [1 to 7].\nEnter your choice again :");
                         break;
                 }
             }
@@ -169,17 +174,144 @@ namespace ExpenseTracker
 
         private void EditTracker()
         {
-            List<TrackerInfo> trackerInfo = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
-            if (trackerInfo.Count == 0)
+            List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
+            if (records.Count == 0)
             {
                 this._trackerView.ShowMessage("Tracker is empty.");
                 return;
             }
 
-            this._trackerView.ShowMessage("Enter which section you need to edit :");
+            this._trackerView.DisplayTracker(records);
+            this._trackerView.ShowMessage("Enter the serial number of the record to edit :");
+            int serialNumber = this.GetChoice();
+
+            if (serialNumber < 0 || serialNumber > records.Count)
+            {
+                this._trackerView.ShowMessage($"There is no record with the serial number :{serialNumber}");
+            }
+            else
+            {
+                Guid selectedId = (Guid)records[serialNumber - 1].Id;
+                TrackerInfo tracker = this._trackerManager.GetByGuid(selectedId);
+                this._trackerView.ShowMessage("Enter which section you need to edit :");
+                this._trackerView.ShowMessage("[1]. Source/Category\n[2]. Amount\n[3]. Date");
+                int choice;
+                EditMenu menu;
+                do
+                {
+                    choice = this.GetChoice();
+                    menu = (EditMenu)choice;
+                    switch (menu)
+                    {
+                        case EditMenu.Category:
+                            while (true)
+                            {
+                                this._trackerView.ShowMessage("Enter new source/category :");
+                                tracker.Category = this._trackerView.ReadInput();
+                                if (InputValidator.ValidateCategory(tracker.Category))
+                                {
+                                    break;
+                                }
+
+                                this._trackerView.ShowMessage("Invalid input for source/category.\nEnter again :");
+                            }
+
+                            break;
+                        case EditMenu.Amount:
+                            while (true)
+                            {
+                                this._trackerView.ShowMessage("Enter new amount :");
+                                tracker.Amount = this.GetAmount();
+                                if (InputValidator.ValidateAmount(tracker.Amount))
+                                {
+                                    break;
+                                }
+
+                                this._trackerView.ShowMessage("Invalid input for amount. Amount cannot be negative or null.\nEnter again :");
+                            }
+
+                            break;
+                        case EditMenu.Date:
+                            while (true)
+                            {
+                                this._trackerView.ShowMessage("Enter new date :");
+                                tracker.Date = this.GetDate();
+                                if (InputValidator.ValidateDate(tracker.Date))
+                                {
+                                    break;
+                                }
+
+                                this._trackerView.ShowMessage("Invalid input for date. Date cannot be in future.\nEnter again :");
+                            }
+
+                            break;
+                        default:
+                            this._trackerView.ShowMessage("Invalid input for choice\nPlease enter from [1 to 4].");
+                            break;
+                    }
+                }
+                while (menu != EditMenu.Exit);
+
+                this._trackerManager.UpdateTransaction(tracker);
+                this._trackerView.ShowMessage("Update successful");
+            }
+        }
+
+        private void DeleteRecord()
+        {
+            List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
+            if (records.Count == 0)
+            {
+                this._trackerView.ShowMessage("Tracker is empty.");
+                return;
+            }
+
+            this._trackerView.DisplayTracker(records);
 
             this._trackerView.ShowMessage("Enter the serial number of the record to edit :");
+            int serialNumber = this.GetChoice();
+            if (serialNumber < 0 || serialNumber > records.Count)
+            {
+                this._trackerView.ShowMessage($"There is no record with the serial number :{serialNumber}");
+            }
+            else
+            {
+                Guid selectedId = (Guid)records[serialNumber - 1].Id;
+                TrackerInfo tracker = this._trackerManager.GetByGuid(selectedId);
+                bool removed = this._trackerManager.DeleteTransaction(tracker);
+                if (removed)
+                {
+                    this._trackerView.ShowMessage($"Record :{serialNumber} deleted successfully.");
+                }
+                else
+                {
+                    this._trackerView.ShowMessage("Deletion failed.");
+                }
+            }
+        }
 
+        private void RetrieveSummary()
+        {
+            List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
+            if (records.Count == 0)
+            {
+                this._trackerView.ShowMessage("Tracker has no records.");
+                return;
+            }
+
+            decimal totalIncome = this._trackerManager.GetTotalIncome(records);
+            decimal totalExpense = this._trackerManager.GetTotalExpense(records);
+            decimal netBalance = this._trackerManager.TotalNetBalance(records);
+
+            if (totalIncome < totalExpense)
+            {
+                this._trackerView.ShowMessage("You have spent more than your income.");
+                this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
+            }
+            else
+            {
+                this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
+            }
         }
 
         private int GetChoice()
@@ -192,7 +324,7 @@ namespace ExpenseTracker
                 }
                 else
                 {
-                    this._trackerView.ShowMessage("Invalid entry for choice.\nEnter again :");
+                    this._trackerView.ShowMessage("Invalid entry.\nEnter again :");
                 }
             }
         }

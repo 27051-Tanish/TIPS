@@ -39,6 +39,16 @@ namespace ExpenseTracker.Service
         }
 
         /// <summary>
+        /// Retrieves the record from the tracker by unique id.
+        /// </summary>
+        /// <param name="id">The unique id of the record.</param>
+        /// <returns>The record from the tracker of the given id.</returns>
+        public TrackerInfo GetByGuid(Guid id)
+        {
+            return this._storage.GetById(id);
+        }
+
+        /// <summary>
         /// Update the details of the given transaction type in the tracker.
         /// </summary>
         /// <param name="transaction">Transaction which needed to be edited.</param>

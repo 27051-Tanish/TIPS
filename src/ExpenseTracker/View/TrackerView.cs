@@ -51,6 +51,19 @@ namespace ExpenseTracker.View
         }
 
         /// <summary>
+        /// Displays the total financial summary of the tracker.
+        /// </summary>
+        /// <param name="totalIncome">Total income from the records.</param>
+        /// <param name="totalExpense">Total expense from the records.</param>
+        /// <param name="netBalance">Net balance of the records.</param>
+        public void DisplaySummary(decimal totalIncome, decimal totalExpense, decimal netBalance)
+        {
+            ConsoleTable table = new ConsoleTable("Total Income", "Total Expense", "Net Balance");
+            table.AddRow(totalIncome, totalExpense, netBalance);
+            table.Write();
+        }
+
+        /// <summary>
         /// Writes a message to the console.
         /// </summary>
         /// <param name="message">The message to display.</param>
