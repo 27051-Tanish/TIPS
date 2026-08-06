@@ -1,6 +1,6 @@
-﻿using ExpenseTracker.Model.Enum;
+﻿using ExpenseTracker.Core.Model.Enum;
 
-namespace ExpenseTracker.Model
+namespace ExpenseTracker.Core.Model
 {
     /// <summary>
     /// Provides a base contract and shared properties for expense tracker objects.

@@ -1,4 +1,4 @@
-﻿namespace ExpenseTracker.Model.Enum
+﻿namespace ExpenseTracker.Core.Model.Enum
 {
     /// <summary>
     /// Defines the type of the transaction in the tracker.

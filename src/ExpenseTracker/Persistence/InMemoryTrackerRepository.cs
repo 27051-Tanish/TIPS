@@ -1,12 +1,12 @@
-﻿using ExpenseTracker.Model;
-using ExpenseTracker.Model.Enum;
+﻿using ExpenseTracker.Core.Model;
+using ExpenseTracker.Core.TrackerInterface;
 
 namespace ExpenseTracker.Persistence
 {
     /// <summary>
     /// Provides in-memory storage for tracking financial transactions.
     /// </summary>
-    public class InMemoryTrackerRepository
+    public class InMemoryTrackerRepository : ITrackerRepository
     {
         private readonly List<TrackerInfo> _repository;
 
@@ -19,46 +19,46 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <summary>
-        /// Add a new transaction record to the list.
+        /// Add a new tracker information to the record.
         /// </summary>
-        /// <param name="trackerInfo">The transaction record to be added.</param>
+        /// <param name="trackerInfo">The tracker record to be added.</param>
         public void AddTransactions(TrackerInfo trackerInfo)
         {
             this._repository.Add(trackerInfo);
         }
 
         /// <summary>
-        /// Remove a existing transaction record from the list.
+        /// Remove a existing tracker record from the list.
         /// </summary>
-        /// <param name="trackerInfo">Transaction needed to be deleted.</param>
+        /// <param name="trackerInfo">Tracker record needed to be deleted.</param>
         public void RemoveTransactions(TrackerInfo trackerInfo)
         {
             this._repository.Remove(trackerInfo);
         }
 
         /// <summary>
-        /// Copies the in-memory repository to a duplicate list.
+        /// Retrieves the tracker records information.
         /// </summary>
-        /// <returns>The copied list of transaction record.</returns>
+        /// <returns>The list of transaction record.</returns>
         public List<TrackerInfo> GetTransactions()
         {
             return this._repository;
         }
 
         /// <summary>
-        /// Retrieves the particular transaction using unique id.
+        /// Retrieves the particular tracker record using unique id.
         /// </summary>
-        /// <param name="id">Id of the transaction.</param>
-        /// <returns>The particular transaction.</returns>
-        public TrackerInfo GetById(Guid id)
+        /// <param name="id">Id of the tracker record.</param>
+        /// <returns>The particular tracker record.</returns>
+        public TrackerInfo? GetById(Guid id)
         {
             return this._repository.Find(i => i.Id == id);
         }
 
         /// <summary>
-        /// Update the transaction details.
+        /// Update the tracker details.
         /// </summary>
-        /// <param name="transaction">The transaction that needed to be updated.</param>
+        /// <param name="transaction">The record that needed to be updated.</param>
         public void UpdateTracker(TrackerInfo transaction)
         {
             TrackerInfo oldTransaction = this.GetById(transaction.Id);

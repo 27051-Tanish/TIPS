@@ -1,4 +1,4 @@
-﻿using ExpenseTracker.Model;
+﻿using ExpenseTracker.Core.Model;
 using ExpenseTracker.Persistence;
 
 namespace ExpenseTracker.Service

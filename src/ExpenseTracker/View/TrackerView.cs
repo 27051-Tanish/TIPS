@@ -1,5 +1,6 @@
 ﻿using ConsoleTables;
-using ExpenseTracker.Model;
+using ExpenseTracker.Core.Model;
+using ExpenseTracker.Core.TrackerInterface;
 
 namespace ExpenseTracker.View
 {
@@ -7,7 +8,7 @@ namespace ExpenseTracker.View
     /// Provides console-based UI methods for displaying menus, messages,
     /// and reading user input for various application modules.
     /// </summary>
-    public class TrackerView
+    public class TrackerView : ITrackerView
     {
         /// <summary>
         /// Shows menu to the user for selecting a operation.

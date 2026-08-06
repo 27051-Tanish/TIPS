@@ -1,6 +1,6 @@
-﻿using ExpenseTracker.Helper;
-using ExpenseTracker.Model;
-using ExpenseTracker.Model.Enum;
+﻿using ExpenseTracker.Core.Model;
+using ExpenseTracker.Core.Model.Enum;
+using ExpenseTracker.Helper;
 using ExpenseTracker.Service;
 using ExpenseTracker.View;
 
@@ -35,6 +35,7 @@ namespace ExpenseTracker
             do
             {
                 this._trackerView.ShowMenu();
+                this._trackerView.ShowMessage("Please enter your choice :");
                 choiceValue = this.GetChoice();
                 menu = (TrackerMenu)choiceValue;
 
@@ -78,6 +79,12 @@ namespace ExpenseTracker
             {
                 this._trackerView.ShowMessage("Enter source of the income :");
                 source = this._trackerView.ReadInput();
+
+                if (source != source.Trim())
+                {
+                    this._trackerView.ShowMessage("Source should not contain leading or trailing whitespace.");
+                    continue;
+                }
 
                 if (InputValidator.ValidateCategory(source))
                 {
@@ -131,6 +138,12 @@ namespace ExpenseTracker
                 if (InputValidator.ValidateCategory(category))
                 {
                     break;
+                }
+
+                if (category != category.Trim())
+                {
+                    this._trackerView.ShowMessage("Category should not contain leading or trailing whitespace.");
+                    continue;
                 }
 
                 this._trackerView.ShowMessage("Enter valid source.\n(Eg: food, transport, etc.)");
@@ -193,12 +206,13 @@ namespace ExpenseTracker
             {
                 Guid selectedId = (Guid)records[serialNumber - 1].Id;
                 TrackerInfo tracker = this._trackerManager.GetByGuid(selectedId);
-                this._trackerView.ShowMessage("Enter which section you need to edit :");
-                this._trackerView.ShowMessage("[1]. Source/Category\n[2]. Amount\n[3]. Date");
+
                 int choice;
                 EditMenu menu;
                 do
                 {
+                    this._trackerView.ShowMessage("[1]. Source/Category\n[2]. Amount\n[3]. Date\n[4]. Exit");
+                    this._trackerView.ShowMessage("Please enter an option :");
                     choice = this.GetChoice();
                     menu = (EditMenu)choice;
                     switch (menu)
@@ -354,7 +368,7 @@ namespace ExpenseTracker
                 }
                 else
                 {
-                    this._trackerView.ShowMessage("Invalid entry for date.\nPlease enter again :");
+                    this._trackerView.ShowMessage("Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
                 }
             }
         }
