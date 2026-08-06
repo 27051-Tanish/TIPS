@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines the type of the transaction in the tracker.
     /// </summary>
-    public enum TransactionType
+    public enum TrackerMenu
     {
         /// <summary>
         /// Represents the income tracking in the application.
