@@ -5,9 +5,9 @@ namespace InventoryManagement.Repository
     /// <summary>
     /// In-memory repository stores the list of products.
     /// </summary>
-    public class InMemoryStorage
+    public class InMemoryStorage : IInventoryRepository
     {
-        private List<InventoryInfo> _inventories = new List<InventoryInfo>();
+        private readonly List<InventoryInfo> _inventories = new ();
 
         /// <summary>
         /// Add new product to the list.
@@ -31,19 +31,12 @@ namespace InventoryManagement.Repository
         /// Copies the in-memory repository to a duplicate list.
         /// </summary>
         /// <returns>Copy of original list.</returns>
-        public IEnumerable<InventoryInfo> GetAllItems()
+        public List<InventoryInfo> GetAllItems()
         {
-            List<InventoryInfo> copyList = new List<InventoryInfo>();
-            for (int i = 0; i < this._inventories.Count; i++)
+            List<InventoryInfo> copyList = new ();
+            foreach (InventoryInfo item in this._inventories)
             {
-                InventoryInfo itemCopy = new InventoryInfo()
-                {
-                    Id = this._inventories[i].Id,
-                    Name = this._inventories[i].Name,
-                    Price = this._inventories[i].Price,
-                    Quantity = this._inventories[i].Quantity,
-                };
-                copyList.Add(itemCopy);
+                copyList.Add(item);
             }
 
             return copyList;

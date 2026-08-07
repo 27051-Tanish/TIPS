@@ -6,32 +6,32 @@
     public enum MenuEnum
     {
         /// <summary>
-        /// Selects add function in menu.
+        /// Represents add function in menu.
         /// </summary>
         Insert = 1,
 
         /// <summary>
-        /// Selects view function in menu.
+        /// Represents view function in menu.
         /// </summary>
         View,
 
         /// <summary>
-        /// Selects edit function in menu.
+        /// Represents edit function in menu.
         /// </summary>
         Edit,
 
         /// <summary>
-        /// Selects remove function in menu.
+        /// Represents remove function in menu.
         /// </summary>
         Remove,
 
         /// <summary>
-        /// Selects search function in menu.
+        /// Represents search function in menu.
         /// </summary>
         Search,
 
         /// <summary>
-        /// Selects exit function in menu.
+        /// Represents exit function in menu.
         /// </summary>
         Exit,
     }
@@ -42,22 +42,43 @@
     public enum EditMenu
     {
         /// <summary>
-        /// Selects edit operation of name.
+        /// Represents edit operation of name.
         /// </summary>
         Name = 1,
 
         /// <summary>
-        /// Selects edit operation of price.
+        /// Represents edit operation of price.
         /// </summary>
         Price,
 
         /// <summary>
-        /// Selects edit operation of quantity.
+        /// Represents edit operation of quantity.
         /// </summary>
         Quantity,
 
         /// <summary>
-        /// Selects exit operation.
+        /// Represents exit operation.
+        /// </summary>
+        Exit,
+    }
+
+    /// <summary>
+    /// Defines the category used to edit.
+    /// </summary>
+    public enum EditOption
+    {
+        /// <summary>
+        /// Represents the id option used for editing.
+        /// </summary>
+        Id = 1,
+
+        /// <summary>
+        /// Represents the name option used for editing.
+        /// </summary>
+        Name,
+
+        /// <summary>
+        /// Represents exit option used for editing.
         /// </summary>
         Exit,
     }

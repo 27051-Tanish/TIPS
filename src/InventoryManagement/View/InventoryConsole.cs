@@ -1,27 +1,27 @@
 ﻿using ConsoleTables;
 using InventoryManagement.Model;
 
-namespace InventoryManagement
+namespace InventoryManagement.View
 {
     /// <summary>
     /// Provides console-based UI methods for displaying menus, messages,
     /// and reading user input for various application modules.
     /// </summary>
-    public class ProjectConsoleView
+    public class InventoryConsole : IInventoryConsole
     {
         /// <summary>
         /// Shows menu to the user for selecting a operation.
         /// </summary>
         public void ShowMenu()
         {
-            Console.WriteLine("===========================================");
-            Console.WriteLine("[1]. To Add New product");
-            Console.WriteLine("[2]. To View product");
-            Console.WriteLine("[3]. To Edit product");
-            Console.WriteLine("[4]. To Delete product");
-            Console.WriteLine("[5]. To Search product");
-            Console.WriteLine("[6]. To Exit");
-            Console.WriteLine("===========================================");
+            this.EndLine();
+            this.ShowMessage("[1]. To Add New product");
+            this.ShowMessage("[2]. To View product");
+            this.ShowMessage("[3]. To Edit product");
+            this.ShowMessage("[4]. To Delete product");
+            this.ShowMessage("[5]. To Search product");
+            this.ShowMessage("[6]. To Exit");
+            this.EndLine();
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace InventoryManagement
         {
             if (items.Count == 0)
             {
-                Console.WriteLine("Inventory log is empty");
+                this.ShowMessage("Inventory log is empty");
                 return;
             }
 
@@ -69,7 +69,7 @@ namespace InventoryManagement
         /// </summary>
         public void EndLine()
         {
-            Console.WriteLine("=====================");
+            this.ShowMessage(new string('=', 25));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace InventoryManagement.Service
     /// </summary>
     public class InventoryManager
     {
-        private InMemoryStorage _storage = new InMemoryStorage();
+        private readonly InMemoryStorage _storage = new ();
 
         /// <summary>
         /// Add new product details to the inventory log.
@@ -33,8 +33,13 @@ namespace InventoryManagement.Service
         public bool DeleteItems(string? id)
         {
             InventoryInfo? item = this._storage.GetItemById(id);
-            this._storage.RemoveItems(item);
-            return true;
+            if (item != null)
+            {
+                this._storage.RemoveItems(item);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -43,7 +48,7 @@ namespace InventoryManagement.Service
         /// <returns>List of sorted product details.</returns>
         public List<InventoryInfo> GetItems()
         {
-            List<InventoryInfo> items = (List<InventoryInfo>)this._storage.GetAllItems();
+            List<InventoryInfo> items = this._storage.GetAllItems();
             items.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
             return items;
         }
@@ -54,7 +59,10 @@ namespace InventoryManagement.Service
         /// <param name="newItem">Item that needs its properties to be updated.</param>
         public void EditItems(InventoryInfo? newItem)
         {
-            this._storage.UpdateItems(newItem);
+            if (newItem != null)
+            {
+                this._storage.UpdateItems(newItem);
+            }
         }
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace InventoryManagement.Service
         /// </summary>
         /// <param name="id">Id of the product.</param>
         /// <returns>Product information with the values of given id.</returns>
-        public InventoryInfo GetProduct(string id)
+        public InventoryInfo? GetProduct(string? id)
         {
             InventoryInfo? item = this._storage.GetItemById(id);
             return item;

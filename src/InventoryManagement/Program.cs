@@ -1,7 +1,7 @@
-﻿using InventoryManagement;
-using InventoryManagement.Service;
+﻿using InventoryManagement.Service;
+using InventoryManagement.View;
 
-namespace Assignments
+namespace InventoryManagement
 {
     /// <summary>
     /// Serves as the entry point to inventory management.
@@ -13,11 +13,17 @@ namespace Assignments
         /// </summary>
         public static void Main()
         {
-            ProjectConsoleView consoleView = new ProjectConsoleView();
-            InventoryManager inventoryManager = new InventoryManager();
-
-            ProjectController controller = new ProjectController(consoleView, inventoryManager);
-            controller.RunInventoryManagement();
+            InventoryConsole consoleView = new ();
+            InventoryManager inventoryManager = new ();
+            try
+            {
+                InventoryController controller = new (consoleView, inventoryManager);
+                controller.RunInventoryManagement();
+            }
+            catch (Exception ex)
+            {
+                consoleView.ShowMessage($"Exception occurred :{ex.Message}");
+            }
         }
     }
 }

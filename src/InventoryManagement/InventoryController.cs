@@ -1,24 +1,26 @@
-﻿using InventoryManagement.Helper;
+﻿using System.Text.RegularExpressions;
+using InventoryManagement.Helper;
 using InventoryManagement.Model;
 using InventoryManagement.Model.Enum;
 using InventoryManagement.Service;
+using InventoryManagement.View;
 
 namespace InventoryManagement
 {
     /// <summary>
     /// Coordinates application flow by invoking the appropriate methods.
     /// </summary>
-    public class ProjectController
+    public class InventoryController
     {
-        private readonly ProjectConsoleView _consoleView;
+        private readonly InventoryConsole _consoleView;
         private readonly InventoryManager _projectManager;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectController"/> class.
+        /// Initializes a new instance of the <see cref="InventoryController"/> class.
         /// </summary>
         /// <param name="consoleView">The console view instance used for user interaction.</param>
         /// <param name="projectManager">The project manager instance used for managing inventory data.</param>
-        public ProjectController(ProjectConsoleView consoleView, InventoryManager projectManager)
+        public InventoryController(InventoryConsole consoleView, InventoryManager projectManager)
         {
             this._consoleView = consoleView;
             this._projectManager = projectManager;
@@ -65,17 +67,23 @@ namespace InventoryManagement
             while (menu != MenuEnum.Exit);
         }
 
+        /// <summary>
+        /// Adds a new product details to the inventory record.
+        /// </summary>
         private void AddProduct()
         {
-            InventoryInfo product = new InventoryInfo();
+            string? id;
+            string? name;
+            decimal price;
+            int quantity;
             try
             {
                 while (true)
                 {
                     this._consoleView.ShowMessage("Enter product id (example: 'AB123'): ");
-                    product.Id = this._consoleView.ReadInput();
+                    id = this._consoleView.ReadInput();
 
-                    if (InputValidator.ValidateId(product.Id))
+                    if (InputValidator.ValidateId(id))
                     {
                         break;
                     }
@@ -86,44 +94,45 @@ namespace InventoryManagement
                 while (true)
                 {
                     this._consoleView.ShowMessage("Enter product name: ");
-                    product.Name = this._consoleView.ReadInput();
+                    name = this._consoleView.ReadInput();
 
-                    if (InputValidator.ValidateName(product.Name))
+                    if (InputValidator.ValidateName(name))
                     {
                         break;
                     }
 
-                    this._consoleView.ShowMessage("Invalid product name! Name cannot be empty and name length should be between 2 to 50 characters.");
+                    this._consoleView.ShowMessage("Invalid product name!\nName length should be between 2 to 50 characters.");
                 }
 
                 while (true)
                 {
                     this._consoleView.ShowMessage("Enter product price: ");
-                    product.Price = this.GetPrice();
+                    price = this.GetPrice();
 
-                    if (InputValidator.ValidPrice(product.Price))
+                    if (InputValidator.ValidPrice(price))
                     {
                         break;
                     }
 
-                    this._consoleView.ShowMessage("Invalid price! Price cannot be empty or negative.\nPrice should be positive and within the limit.\n" +
+                    this._consoleView.ShowMessage("Invalid price!\nPrice should be positive and within the limit.\n" +
                         $"Price Limit : {ConstantVariables.MaximumPriceValue} ");
                 }
 
                 while (true)
                 {
                     this._consoleView.ShowMessage("Enter product quantity: ");
-                    product.Quantity = this.GetQuantity();
+                    quantity = this.GetQuantity();
 
-                    if (InputValidator.ValidateQuantity(product.Quantity))
+                    if (InputValidator.ValidateQuantity(quantity))
                     {
                         break;
                     }
 
-                    this._consoleView.ShowMessage("Invalid input for quantity! Quantity should be positive and within the limit." +
+                    this._consoleView.ShowMessage("Invalid input for quantity! Quantity should be positive and within the limit.\n" +
                         $"Quantity limit : {ConstantVariables.MaximumQuantity}");
                 }
 
+                InventoryInfo product = new (id, name, price, quantity);
                 this._projectManager.AddNewItems(product);
                 this._consoleView.ShowMessage("Product added successfully");
             }
@@ -137,11 +146,17 @@ namespace InventoryManagement
             }
         }
 
+        /// <summary>
+        /// Displays the product details from the inventory record.
+        /// </summary>
         private void ViewProducts()
         {
             this._consoleView.DisplayAll(this._projectManager.GetItems());
         }
 
+        /// <summary>
+        /// Update the existing product detail from the inventory record.
+        /// </summary>
         private void EditProduct()
         {
             List<InventoryInfo> items = this._projectManager.GetItems();
@@ -151,32 +166,34 @@ namespace InventoryManagement
                 return;
             }
 
-            this._consoleView.ShowMessage("Enter id of the product :");
-            string? id;
+            string? input;
+            InventoryInfo? product = null;
             while (true)
             {
-                this._consoleView.ShowMessage("Enter product id (example: 'AB123'): ");
-                id = this._consoleView.ReadInput();
+                this._consoleView.ShowMessage("Enter product ID or Name: ");
+                this._consoleView.ShowMessage("ID:(eg. AB123)");
+                input = this._consoleView.ReadInput();
 
-                if (!InputValidator.ValidateId(id))
+                if (!InputValidator.ValidateName(input) && !InputValidator.ValidateId(input))
                 {
-                    this._consoleView.ShowMessage("Invalid Id! Enter 2 letters followed by 3 digits.");
+                    this._consoleView.ShowMessage("Input cannot be null or white space.");
                     continue;
                 }
 
-                bool exists = items.Exists(item =>
-                    string.Equals(item.Id, id, StringComparison.OrdinalIgnoreCase));
+                InventoryInfo? matchedItem = items.Find(item =>
+                string.Equals(item.Id, input, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(item.Name, input, StringComparison.OrdinalIgnoreCase));
 
-                if (!exists)
+                if (matchedItem == null)
                 {
-                    this._consoleView.ShowMessage($"No product found with ID: {id}");
+                    this._consoleView.ShowMessage($"No product found matching: '{input}'");
                     continue;
                 }
 
+                product = this._projectManager.GetProduct(matchedItem.Id);
                 break;
             }
 
-            InventoryInfo? product = this._projectManager.GetProduct(id);
             int choice;
             EditMenu editMenu;
             do
@@ -195,6 +212,7 @@ namespace InventoryManagement
 
                             if (InputValidator.ValidateName(product.Name))
                             {
+                                this._consoleView.ShowMessage("Name updated successfully.");
                                 break;
                             }
 
@@ -210,10 +228,12 @@ namespace InventoryManagement
 
                             if (InputValidator.ValidPrice(product.Price))
                             {
+                                this._consoleView.ShowMessage("Price updated successfully.");
                                 break;
                             }
 
-                            this._consoleView.ShowMessage("Invalid price! Price cannot be empty or negative.");
+                            this._consoleView.ShowMessage("Invalid price!\nPrice should be positive and within the limit.\n" +
+                        $"Price Limit : {ConstantVariables.MaximumPriceValue} ");
                         }
 
                         break;
@@ -225,14 +245,17 @@ namespace InventoryManagement
 
                             if (InputValidator.ValidateQuantity(product.Quantity))
                             {
+                                this._consoleView.ShowMessage("Quantity updated successfully.");
                                 break;
                             }
 
-                            this._consoleView.ShowMessage("Invalid input for quantity! Quantity cannot be empty, negative or greater than 1000.");
+                            this._consoleView.ShowMessage("Invalid input for quantity! Quantity should be positive and within the limit.\n" +
+                            $"Quantity limit : {ConstantVariables.MaximumQuantity}");
                         }
 
                         break;
                     case EditMenu.Exit:
+                        this._consoleView.ShowMessage("Exiting edit menu.");
                         break;
                     default:
                         this._consoleView.ShowMessage("Invalid choice\nPlease select from menu [1 to 4].");
@@ -242,9 +265,11 @@ namespace InventoryManagement
             while (editMenu != EditMenu.Exit);
 
             this._projectManager.EditItems(product);
-            this._consoleView.ShowMessage("Updated successfully");
         }
 
+        /// <summary>
+        /// Deletes a existing product information from the inventory record.
+        /// </summary>
         private void DeleteProduct()
         {
             List<InventoryInfo> items = this._projectManager.GetItems();
@@ -290,6 +315,9 @@ namespace InventoryManagement
             }
         }
 
+        /// <summary>
+        /// Fetches a specific product details.
+        /// </summary>
         private void SearchProduct()
         {
             List<InventoryInfo> items = this._projectManager.GetItems();
@@ -299,17 +327,19 @@ namespace InventoryManagement
                 return;
             }
 
-            this._consoleView.ShowMessage("Enter name of the product :");
-            string? name = this._consoleView.ReadInput();
+            string? name;
             while (true)
             {
                 this._consoleView.ShowMessage("Enter name of the product :");
                 name = this._consoleView.ReadInput();
 
-                bool isExists = items.Exists(item =>
-                    string.Equals(item.Name, name, StringComparison.OrdinalIgnoreCase));
+                if (!InputValidator.IsValidSearchKey(name))
+                {
+                    this._consoleView.ShowMessage("Name cannot be null or white space.");
+                    continue;
+                }
 
-                if (!isExists)
+                if (!items.Exists(item => item.Name.Contains(name)))
                 {
                     this._consoleView.ShowMessage($"No product found with the name: {name}");
                     continue;
@@ -322,6 +352,10 @@ namespace InventoryManagement
             this._consoleView.DisplayAll(product);
         }
 
+        /// <summary>
+        /// Attempts to parse a user input.
+        /// </summary>
+        /// <returns>Quantity of desired type if true, otherwise false.</returns>
         private int GetQuantity()
         {
             while (true)
@@ -332,13 +366,15 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Please enter valid input for quantity.\n" +
-                        "Quantity should be positive and within the limit." +
-                        $"Quantity limit : {ConstantVariables.MaximumQuantity}");
+                    this._consoleView.ShowMessage("Please enter valid input for quantity.\nQuantity should not contain characters, white space, or null.");
                 }
             }
         }
 
+        /// <summary>
+        /// Attempts to parse a user input.
+        /// </summary>
+        /// <returns>Value of desired type if true, otherwise false.</returns>
         private int GetChoice()
         {
             while (true)
@@ -354,6 +390,10 @@ namespace InventoryManagement
             }
         }
 
+        /// <summary>
+        /// Attempts to parse a user input.
+        /// </summary>
+        /// <returns>Value of desired type if true, otherwise false.</returns>
         private decimal GetPrice()
         {
             while (true)
@@ -364,8 +404,7 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Invalid input for price.\nPrice should be positive and within the limit.\n" +
-                        $"Price Limit : {ConstantVariables.MaximumPriceValue} ");
+                    this._consoleView.ShowMessage("Please enter valid input for price.\nPrice should not contain characters, white space, or null.");
                 }
             }
         }

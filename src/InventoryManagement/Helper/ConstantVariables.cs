@@ -1,7 +1,7 @@
 ﻿namespace InventoryManagement.Helper
 {
     /// <summary>
-    /// Stores the values of constant variables.
+    /// Variables of constant values that used across the application.
     /// </summary>
     public static class ConstantVariables
     {
@@ -28,7 +28,7 @@
         /// <summary>
         /// Stores the constant value of minimum quantity value.
         /// </summary>
-        public const int MinimumQuantity = 0;
+        public const int MinimumQuantity = 1;
 
         /// <summary>
         /// Stores the constant value of maximum quantity value.

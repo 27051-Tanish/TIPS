@@ -6,6 +6,21 @@
     public class InventoryInfo
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="InventoryInfo"/> class.
+        /// </summary>
+        /// <param name="id">Id of the product.</param>
+        /// <param name="name">Name of the product.</param>
+        /// <param name="price">Price of the product.</param>
+        /// <param name="quantity">Quantity of the product.</param>
+        public InventoryInfo(string? id, string? name, decimal price, int quantity)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Price = price;
+            this.Quantity = quantity;
+        }
+
+        /// <summary>
         /// Gets or sets the Id of the product.
         /// </summary>
         /// <value>

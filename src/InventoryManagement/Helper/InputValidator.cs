@@ -63,5 +63,20 @@ namespace InventoryManagement.Helper
         {
             return quantity >= ConstantVariables.MinimumQuantity && quantity <= ConstantVariables.MaximumQuantity;
         }
+
+        /// <summary>
+        /// Validates the name entered by the user.
+        /// </summary>
+        /// <param name="searchKey">The search key from the user.</param>
+        /// <returns>True if the key is valid, otherwise false.</returns>
+        public static bool IsValidSearchKey(string searchKey)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
