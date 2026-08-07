@@ -246,9 +246,9 @@ namespace OopsAssignment.BankingSystem.BankController
         {
             while (true)
             {
-                if (decimal.TryParse(this._consoleView.ReadInput(), out decimal balance) && InputValidator.ValidateAmount(balance))
+                if (decimal.TryParse(this._consoleView.ReadInput(), out decimal amount) && InputValidator.ValidateAmount(amount))
                 {
-                    return balance;
+                    return amount;
                 }
                 else
                 {

@@ -35,10 +35,10 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 switch (employeeMenu)
                 {
                     case EmployeeMenu.Manager:
-                        this.GetManagerDetails();
+                        this.HandleManagerDetails();
                         break;
                     case EmployeeMenu.Developer:
-                        this.GetDeveloperDetails();
+                        this.HandleDeveloperDetails();
                         break;
                     case EmployeeMenu.Exit:
                         this._employeeView.ShowMessage("Closing employee hierarchy application.");
@@ -54,7 +54,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// <summary>
         /// Gets and prints manager details.
         /// </summary>
-        public void GetManagerDetails()
+        public void HandleManagerDetails()
         {
             var employee = this.GetEmployeeDetails("Manager");
             Manager manager = new (employee.name, employee.salary);
@@ -65,27 +65,12 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// <summary>
         /// Gets and prints developer details.
         /// </summary>
-        public void GetDeveloperDetails()
+        public void HandleDeveloperDetails()
         {
             var employee = this.GetEmployeeDetails("Developer");
             Developer developer = new (employee.name, employee.salary);
             this._employeeView.EndLine();
             this._employeeView.ShowMessage(developer.PrintDetails());
-        }
-
-        private decimal GetSalary()
-        {
-            while (true)
-            {
-                if (decimal.TryParse(this._employeeView.ReadInput(), out decimal salary))
-                {
-                    return salary;
-                }
-                else
-                {
-                    this._employeeView.ShowMessage($"Salary should not contains characters and should not exceed the limit.\nSalary limit :{decimal.MaxValue}\nPlease enter valid salary :");
-                }
-            }
         }
 
         private (string? name, decimal salary) GetEmployeeDetails(string employeeType)
@@ -108,7 +93,7 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             while (true)
             {
                 this._employeeView.ShowMessage($"Enter salary of the {employeeType}: ");
-                salary = this.GetSalary();
+                salary = this._employeeView.GetSalary();
 
                 if (InputValidator.ValidateAmount(salary))
                 {

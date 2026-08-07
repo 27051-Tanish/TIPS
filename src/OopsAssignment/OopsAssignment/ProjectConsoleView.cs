@@ -62,5 +62,43 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Attempts to parse the user input.
+        /// </summary>
+        /// <returns>Value of required type if true, otherwise the error message.</returns>
+        public double GetInput()
+        {
+            while (true)
+            {
+                if (double.TryParse(this.ReadInput(), out double value))
+                {
+                    return value;
+                }
+                else
+                {
+                    this.ShowMessage("Invalid input for dimension.\nEnter again :");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Attempts to parse the user input.
+        /// </summary>
+        /// <returns>Value of required type if true, otherwise the error message.</returns>
+        public decimal GetSalary()
+        {
+            while (true)
+            {
+                if (decimal.TryParse(this.ReadInput(), out decimal salary))
+                {
+                    return salary;
+                }
+                else
+                {
+                    this.ShowMessage($"Salary should not contains characters and should not exceed the limit.\nSalary limit :{decimal.MaxValue}\nPlease enter valid salary :");
+                }
+            }
+        }
     }
 }

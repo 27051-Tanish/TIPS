@@ -10,7 +10,7 @@ namespace OopsAssignment.Helper
         /// <summary>
         /// Validates the name of the user.
         /// </summary>
-        /// <param name="name">name to validate</param>
+        /// <param name="name">Name to validate.</param>
         /// <returns>True, if the name is valid otherwise false.</returns>
         public static bool ValidateName(string? name)
         {
