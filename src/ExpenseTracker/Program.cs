@@ -1,4 +1,6 @@
 ﻿using ExpenseTracker;
+using ExpenseTracker.Core.TrackerInterface;
+using ExpenseTracker.Persistence;
 using ExpenseTracker.Service;
 using ExpenseTracker.View;
 
@@ -14,8 +16,9 @@ namespace Assignments
         /// </summary>
         public static void Main()
         {
-            TrackerView view = new TrackerView();
-            TrackerManager manager = new TrackerManager();
+            ITrackerRepository repository = new InMemoryTrackerRepository();
+            TrackerManager manager = new TrackerManager(repository);
+            ITrackerView view = new TrackerView();
 
             TrackerController controller = new TrackerController(view, manager);
             controller.RunExpenseTrackerApp();

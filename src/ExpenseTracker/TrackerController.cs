@@ -1,5 +1,6 @@
 ﻿using ExpenseTracker.Core.Model;
 using ExpenseTracker.Core.Model.Enum;
+using ExpenseTracker.Core.TrackerInterface;
 using ExpenseTracker.Helper;
 using ExpenseTracker.Service;
 using ExpenseTracker.View;
@@ -11,7 +12,7 @@ namespace ExpenseTracker
     /// </summary>
     public class TrackerController
     {
-        private readonly TrackerView _trackerView;
+        private readonly ITrackerView _trackerView;
         private readonly TrackerManager _trackerManager;
 
         /// <summary>
@@ -19,7 +20,7 @@ namespace ExpenseTracker
         /// </summary>
         /// <param name="trackerView">The console view instance used for user interaction.</param>
         /// <param name="trackerManager">The project manager instance used for managing inventory data.</param>
-        public TrackerController(TrackerView trackerView, TrackerManager trackerManager)
+        public TrackerController(ITrackerView trackerView, TrackerManager trackerManager)
         {
             this._trackerView = trackerView;
             this._trackerManager = trackerManager;

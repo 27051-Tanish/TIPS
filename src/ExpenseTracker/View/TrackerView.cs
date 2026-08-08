@@ -62,10 +62,7 @@ namespace ExpenseTracker.View
         /// Writes a message to the console.
         /// </summary>
         /// <param name="message">The message to display.</param>
-        public void DisplayMessage(string message)
-        {
-            Console.WriteLine(message);
-        }
+        public void DisplayMessage(string message) => Console.WriteLine(message);
 
         /// <summary>
         /// Reads a line of input from the console.

@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Core.Model;
+using ExpenseTracker.Core.TrackerInterface;
 using ExpenseTracker.Persistence;
 
 namespace ExpenseTracker.Service
@@ -8,7 +9,16 @@ namespace ExpenseTracker.Service
     /// </summary>
     public class TrackerManager
     {
-        private readonly InMemoryTrackerRepository _repository = new ();
+        private readonly ITrackerRepository _repository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackerManager"/> class.
+        /// </summary>
+        /// <param name="repository">Contract of the data repository.</param>
+        public TrackerManager(ITrackerRepository repository)
+        {
+            this._repository = repository;
+        }
 
         /// <summary>
         /// Add new transaction details to the record.
