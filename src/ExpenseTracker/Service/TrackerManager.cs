@@ -1,6 +1,6 @@
 ﻿using ExpenseTracker.Core.Model;
+using ExpenseTracker.Core.Model.Enum;
 using ExpenseTracker.Core.TrackerInterface;
-using ExpenseTracker.Persistence;
 
 namespace ExpenseTracker.Service
 {
@@ -86,7 +86,7 @@ namespace ExpenseTracker.Service
             decimal totalIncome = 0;
             foreach (var transaction in trackerInfos)
             {
-                if (transaction.Type?.Equals("Income", StringComparison.OrdinalIgnoreCase) ?? false)
+                if (transaction.Type == RecordType.Income)
                 {
                     totalIncome += transaction.Amount;
                 }
@@ -105,7 +105,7 @@ namespace ExpenseTracker.Service
             decimal totalExpense = 0;
             foreach (var transaction in trackerInfos)
             {
-                if (transaction.Type?.Equals("Expense", StringComparison.OrdinalIgnoreCase) ?? false)
+                if (transaction.Type == RecordType.Expense)
                 {
                     totalExpense += transaction.Amount;
                 }

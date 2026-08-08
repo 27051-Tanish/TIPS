@@ -3,7 +3,6 @@ using ExpenseTracker.Core.Model.Enum;
 using ExpenseTracker.Core.TrackerInterface;
 using ExpenseTracker.Helper;
 using ExpenseTracker.Service;
-using ExpenseTracker.View;
 
 namespace ExpenseTracker
 {
@@ -25,6 +24,16 @@ namespace ExpenseTracker
             this._trackerView = trackerView;
             this._trackerManager = trackerManager;
         }
+
+        /// <summary>
+        /// Represents a delegate that attempts to convert the specified input.
+        /// </summary>
+        /// <typeparam name="T">The target type to which the input string is parsed.</typeparam>
+        /// <param name="input">The string value to parse.</param>
+        /// <param name="value">When this method returns, contains the parsed value if the conversion
+        /// succeeded; otherwise, contains the default value</param>
+        /// <returns>True if the input was successfully parsed; otherwise,false.</returns>
+        public delegate bool TryParseDelegate<T>(string input, out T value);
 
         /// <summary>
         /// Starts the execution of expense tracker application.
@@ -72,112 +81,12 @@ namespace ExpenseTracker
 
         private void AddIncome()
         {
-            string? source;
-            decimal amount;
-            DateOnly date;
-
-            while (true)
-            {
-                this._trackerView.DisplayMessage("Enter source of the income :");
-                source = this._trackerView.ReadInput();
-
-                if (source != source?.Trim())
-                {
-                    this._trackerView.DisplayMessage("Source should not contain leading or trailing whitespace.");
-                    continue;
-                }
-
-                if (InputValidator.ValidateCategory(source))
-                {
-                    break;
-                }
-
-                this._trackerView.DisplayMessage("Enter valid source.\n(Eg: salary, freelance, etc.)");
-            }
-
-            while (true)
-            {
-                this._trackerView.DisplayMessage("Enter amount of income :");
-                amount = this.GetAmount();
-
-                if (InputValidator.ValidateAmount(amount))
-                {
-                    break;
-                }
-
-                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
-            }
-
-            while (true)
-            {
-                this._trackerView.DisplayMessage("Enter the date of income (eg: dd/mm/yyyy) :");
-                date = this.GetDate();
-
-                if (InputValidator.ValidateDate(date))
-                {
-                    break;
-                }
-
-                this._trackerView.DisplayMessage("Please enter valid date\nDate cannot be in future.");
-            }
-
-            TrackerInfo tracker = new ("Income", source, amount, date);
-            this._trackerManager.AddNewTransaction(tracker);
+            this.AddRecord(RecordType.Income, "source", "income", "(Eg: salary, freelance, etc.)");
         }
 
         private void AddExpense()
         {
-            string? category;
-            decimal amount;
-            DateOnly date;
-
-            while (true)
-            {
-                this._trackerView.DisplayMessage("Enter category of the expense :");
-                category = this._trackerView.ReadInput();
-
-                if (InputValidator.ValidateCategory(category))
-                {
-                    break;
-                }
-
-                if (category != category?.Trim())
-                {
-                    this._trackerView.DisplayMessage("Category should not contain leading or trailing whitespace.");
-                    continue;
-                }
-
-                this._trackerView.DisplayMessage("Enter valid source.\n(Eg: food, transport, etc.)");
-            }
-
-            while (true)
-            {
-                this._trackerView.DisplayMessage("Enter amount of expense :");
-                amount = this.GetAmount();
-
-                if (InputValidator.ValidateAmount(amount))
-                {
-                    break;
-                }
-
-                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
-            }
-
-            while (true)
-            {
-                this._trackerView.DisplayMessage("Enter the date of expense (eg: dd/mm/yyyy) :");
-                date = this.GetDate();
-
-                if (InputValidator.ValidateDate(date))
-                {
-                    break;
-                }
-
-                this._trackerView.DisplayMessage("Please enter valid date\nDate cannot be in future.");
-            }
-
-            TrackerInfo tracker = new ("Expense", category, amount, date);
-            this._trackerManager.AddNewTransaction(tracker);
+            this.AddRecord(RecordType.Expense, "category", "expense", "(Eg: food, transport, etc.)");
         }
 
         private void ViewTracker()
@@ -337,47 +246,85 @@ namespace ExpenseTracker
 
         private int GetChoice()
         {
-            while (true)
-            {
-                if (int.TryParse(this._trackerView.ReadInput(), out int value))
-                {
-                    return value;
-                }
-                else
-                {
-                    this._trackerView.DisplayMessage("Invalid entry.\nEnter again :");
-                }
-            }
+            return this.GetValue<int>(int.TryParse, "Invalid choice\nPlease enter valid choice from the menu.");
         }
 
         private decimal GetAmount()
         {
-            while (true)
-            {
-                if (decimal.TryParse(this._trackerView.ReadInput(), out decimal value))
-                {
-                    return value;
-                }
-                else
-                {
-                    this._trackerView.DisplayMessage("Invalid entry for amount.\nPlease enter again :");
-                }
-            }
+            return this.GetValue<decimal>(decimal.TryParse, "Invalid entry for amount.\nPlease enter again :");
         }
 
         private DateOnly GetDate()
         {
+            return this.GetValue<DateOnly>(DateOnly.TryParse, "Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
+        }
+
+        private T GetValue<T>(TryParseDelegate<T> tryParse, string errorMessage)
+        {
             while (true)
             {
-                if (DateOnly.TryParse(this._trackerView.ReadInput(), out DateOnly value))
+                if (tryParse(this._trackerView.ReadInput(), out T value))
                 {
                     return value;
                 }
-                else
-                {
-                    this._trackerView.DisplayMessage("Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
-                }
+
+                this._trackerView.DisplayMessage(errorMessage);
             }
+        }
+
+        private void AddRecord(RecordType recordType, string fieldName, string recordName, string exampleMessage)
+        {
+            string? category;
+            decimal amount;
+            DateOnly date;
+            while (true)
+            {
+                this._trackerView.DisplayMessage($"Enter {fieldName} of the {recordName} :");
+                category = this._trackerView.ReadInput();
+
+                if (InputValidator.ValidateCategory(category))
+                {
+                    break;
+                }
+
+                if (category != category?.Trim())
+                {
+                    this._trackerView.DisplayMessage("Entry should not contain leading or trailing whitespace.");
+                    continue;
+                }
+
+                this._trackerView.DisplayMessage($"Enter valid {fieldName}.\n{exampleMessage}");
+            }
+
+            while (true)
+            {
+                this._trackerView.DisplayMessage($"Enter amount of {recordName} :");
+                amount = this.GetAmount();
+
+                if (InputValidator.ValidateAmount(amount))
+                {
+                    break;
+                }
+
+                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
+            }
+
+            while (true)
+            {
+                this._trackerView.DisplayMessage($"Enter the date of {recordName} (eg: dd/mm/yyyy) :");
+                date = this.GetDate();
+
+                if (InputValidator.ValidateDate(date))
+                {
+                    break;
+                }
+
+                this._trackerView.DisplayMessage("Please enter valid date\nDate cannot be in future.");
+            }
+
+            TrackerInfo tracker = new (recordType, category, amount, date);
+            this._trackerManager.AddNewTransaction(tracker);
+            this._trackerView.DisplayMessage("Record added successfully!");
         }
     }
 }
