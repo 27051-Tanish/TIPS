@@ -14,7 +14,7 @@ namespace ExpenseTracker.Core.Model
         /// <param name="category">The category in which the transaction takes place.</param>
         /// <param name="amount">The monetary value of the transaction.</param>
         /// <param name="date">The calendar date when the transaction occurred.</param>
-        public TrackerInfo(string type, string category, decimal amount, DateOnly date)
+        public TrackerInfo(string? type, string? category, decimal amount, DateOnly date)
         {
             this.Type = type;
             this.Category = category;
@@ -36,7 +36,7 @@ namespace ExpenseTracker.Core.Model
         /// <value>
         /// The type of transaction.
         /// </value>
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the category of the monetary transaction.
@@ -44,7 +44,7 @@ namespace ExpenseTracker.Core.Model
         /// <value>
         /// The category in which the transaction takes place.
         /// </value>
-        public string Category { get; set; }
+        public string? Category { get; set; }
 
         /// <summary>
         /// Gets or sets the monetary amount.

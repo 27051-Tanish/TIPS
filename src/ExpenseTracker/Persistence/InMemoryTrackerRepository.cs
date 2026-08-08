@@ -22,7 +22,7 @@ namespace ExpenseTracker.Persistence
         /// Add a new tracker information to the record.
         /// </summary>
         /// <param name="trackerInfo">The tracker record to be added.</param>
-        public void AddTransactions(TrackerInfo trackerInfo)
+        public void AddTransaction(TrackerInfo trackerInfo)
         {
             this._repository.Add(trackerInfo);
         }
@@ -31,7 +31,7 @@ namespace ExpenseTracker.Persistence
         /// Remove a existing tracker record from the list.
         /// </summary>
         /// <param name="trackerInfo">Tracker record needed to be deleted.</param>
-        public void RemoveTransactions(TrackerInfo trackerInfo)
+        public void RemoveTransaction(TrackerInfo trackerInfo)
         {
             this._repository.Remove(trackerInfo);
         }
@@ -61,7 +61,7 @@ namespace ExpenseTracker.Persistence
         /// <param name="transaction">The record that needed to be updated.</param>
         public void UpdateTracker(TrackerInfo transaction)
         {
-            TrackerInfo oldTransaction = this.GetById(transaction.Id);
+            TrackerInfo? oldTransaction = this.GetById(transaction.Id);
 
             if (oldTransaction != null)
             {

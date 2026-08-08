@@ -30,7 +30,7 @@ namespace ExpenseTracker.Core.TrackerInterface
         /// Writes the message to the UI.
         /// </summary>
         /// <param name="message">The message to be displayed.</param>
-        void ShowMessage(string message);
+        void DisplayMessage(string message);
 
         /// <summary>
         /// Reads an user input from the UI.

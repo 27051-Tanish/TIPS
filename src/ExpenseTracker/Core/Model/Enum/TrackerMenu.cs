@@ -16,17 +16,17 @@
         Expense,
 
         /// <summary>
-        /// Represents view operation in expense tracking application.
+        /// Represents view operation in tracker application.
         /// </summary>
         View,
 
         /// <summary>
-        /// Represents edit operation in expense tracking application.
+        /// Represents edit operation in tracker application.
         /// </summary>
         Edit,
 
         /// <summary>
-        /// Represents delete operation in expense tracking application.
+        /// Represents delete operation in tracker application.
         /// </summary>
         Delete,
 
@@ -36,33 +36,7 @@
         Summary,
 
         /// <summary>
-        /// Represents the exit operation in the application.
-        /// </summary>
-        Exit,
-    }
-
-    /// <summary>
-    /// Defines the edit menu for performing edit operation.
-    /// </summary>
-    public enum EditMenu
-    {
-        /// <summary>
-        /// Represents the update of category section.
-        /// </summary>
-        Category = 1,
-
-        /// <summary>
-        /// Represents the update of amount section.
-        /// </summary>
-        Amount,
-
-        /// <summary>
-        /// Represents the update of date section.
-        /// </summary>
-        Date,
-
-        /// <summary>
-        /// Represents the exit operation from the edit section.
+        /// Represents the exit operation of the application.
         /// </summary>
         Exit,
     }

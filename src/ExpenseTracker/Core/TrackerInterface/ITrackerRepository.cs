@@ -11,13 +11,13 @@ namespace ExpenseTracker.Core.TrackerInterface
          /// Adds new tracker information to the record.
          /// </summary>
          /// <param name="trackerInfo">The record that needs to be added to the tracker.</param>
-         void AddTransactions(TrackerInfo trackerInfo);
+         void AddTransaction(TrackerInfo trackerInfo);
 
          /// <summary>
          /// Removes the tracker information from the record.
          /// </summary>
          /// <param name="trackerInfo">The record that needs to be removed from the tracker.</param>
-         void RemoveTransactions(TrackerInfo trackerInfo);
+         void RemoveTransaction(TrackerInfo trackerInfo);
 
          /// <summary>
          /// Retrieves the tracker information from the record.
@@ -30,7 +30,7 @@ namespace ExpenseTracker.Core.TrackerInterface
          /// </summary>
          /// <param name="id">The unique id of the tracker record.</param>
          /// <returns>The tracker record of the id.</returns>
-         TrackerInfo GetById(Guid id);
+         TrackerInfo? GetById(Guid id);
 
          /// <summary>
          /// Update the tracker records.

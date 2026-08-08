@@ -15,14 +15,14 @@ namespace ExpenseTracker.View
         /// </summary>
         public void ShowMenu()
         {
-            this.ShowMessage("===Expense Tracker===");
-            this.ShowMessage("[1]. Add income.");
-            this.ShowMessage("[2]. Add expense.");
-            this.ShowMessage("[3]. View tracker.");
-            this.ShowMessage("[4]. Update tracker.");
-            this.ShowMessage("[5]. Delete tracker.");
-            this.ShowMessage("[6]. View summary.");
-            this.ShowMessage("[7]. Exit.");
+            this.DisplayMessage("===Expense Tracker===");
+            this.DisplayMessage("[1]. Add income.");
+            this.DisplayMessage("[2]. Add expense.");
+            this.DisplayMessage("[3]. View tracker.");
+            this.DisplayMessage("[4]. Update tracker.");
+            this.DisplayMessage("[5]. Delete tracker.");
+            this.DisplayMessage("[6]. View summary.");
+            this.DisplayMessage("[7]. Exit.");
             this.EndLine();
         }
 
@@ -32,15 +32,9 @@ namespace ExpenseTracker.View
         /// <param name="tracker">List of transaction records.</param>
         public void DisplayTracker(List<TrackerInfo> tracker)
         {
-            if (tracker.Count == 0)
-            {
-                this.ShowMessage("Tracker is empty.");
-                return;
-            }
-
             int serialNumber = 1;
 
-            ConsoleTable table = new ConsoleTable("Serial Number", "Type", "Category/Source", "Amount", "Date");
+            ConsoleTable table = new ("Serial Number", "Type", "Category/Source", "Amount", "Date");
 
             foreach (TrackerInfo trackerInfo in tracker)
             {
@@ -59,7 +53,7 @@ namespace ExpenseTracker.View
         /// <param name="netBalance">Net balance of the records.</param>
         public void DisplaySummary(decimal totalIncome, decimal totalExpense, decimal netBalance)
         {
-            ConsoleTable table = new ConsoleTable("Total Income", "Total Expense", "Net Balance");
+            ConsoleTable table = new ("Total Income", "Total Expense", "Net Balance");
             table.AddRow(totalIncome, totalExpense, netBalance);
             table.Write();
         }
@@ -68,7 +62,7 @@ namespace ExpenseTracker.View
         /// Writes a message to the console.
         /// </summary>
         /// <param name="message">The message to display.</param>
-        public void ShowMessage(string message)
+        public void DisplayMessage(string message)
         {
             Console.WriteLine(message);
         }
@@ -87,7 +81,7 @@ namespace ExpenseTracker.View
         /// </summary>
         public void EndLine()
         {
-            this.ShowMessage(new string('=', 25));
+            this.DisplayMessage(new string('=', 25));
         }
     }
 }

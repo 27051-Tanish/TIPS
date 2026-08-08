@@ -35,7 +35,7 @@ namespace ExpenseTracker
             do
             {
                 this._trackerView.ShowMenu();
-                this._trackerView.ShowMessage("Please enter your choice :");
+                this._trackerView.DisplayMessage("Please enter your choice :");
                 choiceValue = this.GetChoice();
                 menu = (TrackerMenu)choiceValue;
 
@@ -62,7 +62,7 @@ namespace ExpenseTracker
                     case TrackerMenu.Exit:
                         break;
                     default:
-                        this._trackerView.ShowMessage("Please enter valid choice from [1 to 7].\nEnter your choice again :");
+                        this._trackerView.DisplayMessage("Please enter valid choice from [1 to 7].\nEnter your choice again :");
                         break;
                 }
             }
@@ -77,12 +77,12 @@ namespace ExpenseTracker
 
             while (true)
             {
-                this._trackerView.ShowMessage("Enter source of the income :");
+                this._trackerView.DisplayMessage("Enter source of the income :");
                 source = this._trackerView.ReadInput();
 
-                if (source != source.Trim())
+                if (source != source?.Trim())
                 {
-                    this._trackerView.ShowMessage("Source should not contain leading or trailing whitespace.");
+                    this._trackerView.DisplayMessage("Source should not contain leading or trailing whitespace.");
                     continue;
                 }
 
@@ -91,12 +91,12 @@ namespace ExpenseTracker
                     break;
                 }
 
-                this._trackerView.ShowMessage("Enter valid source.\n(Eg: salary, freelance, etc.)");
+                this._trackerView.DisplayMessage("Enter valid source.\n(Eg: salary, freelance, etc.)");
             }
 
             while (true)
             {
-                this._trackerView.ShowMessage("Enter amount of income :");
+                this._trackerView.DisplayMessage("Enter amount of income :");
                 amount = this.GetAmount();
 
                 if (InputValidator.ValidateAmount(amount))
@@ -104,12 +104,12 @@ namespace ExpenseTracker
                     break;
                 }
 
-                this._trackerView.ShowMessage("Enter valid amount.\nEnter again :");
+                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
             }
 
             while (true)
             {
-                this._trackerView.ShowMessage("Enter the date of income (eg: dd/mm/yyyy) :");
+                this._trackerView.DisplayMessage("Enter the date of income (eg: dd/mm/yyyy) :");
                 date = this.GetDate();
 
                 if (InputValidator.ValidateDate(date))
@@ -117,10 +117,10 @@ namespace ExpenseTracker
                     break;
                 }
 
-                this._trackerView.ShowMessage("Please enter valid date\nDate cannot be in future.");
+                this._trackerView.DisplayMessage("Please enter valid date\nDate cannot be in future.");
             }
 
-            TrackerInfo tracker = new TrackerInfo("Income", source, amount, date);
+            TrackerInfo tracker = new ("Income", source, amount, date);
             this._trackerManager.AddNewTransaction(tracker);
         }
 
@@ -132,7 +132,7 @@ namespace ExpenseTracker
 
             while (true)
             {
-                this._trackerView.ShowMessage("Enter category of the expense :");
+                this._trackerView.DisplayMessage("Enter category of the expense :");
                 category = this._trackerView.ReadInput();
 
                 if (InputValidator.ValidateCategory(category))
@@ -140,18 +140,18 @@ namespace ExpenseTracker
                     break;
                 }
 
-                if (category != category.Trim())
+                if (category != category?.Trim())
                 {
-                    this._trackerView.ShowMessage("Category should not contain leading or trailing whitespace.");
+                    this._trackerView.DisplayMessage("Category should not contain leading or trailing whitespace.");
                     continue;
                 }
 
-                this._trackerView.ShowMessage("Enter valid source.\n(Eg: food, transport, etc.)");
+                this._trackerView.DisplayMessage("Enter valid source.\n(Eg: food, transport, etc.)");
             }
 
             while (true)
             {
-                this._trackerView.ShowMessage("Enter amount of expense :");
+                this._trackerView.DisplayMessage("Enter amount of expense :");
                 amount = this.GetAmount();
 
                 if (InputValidator.ValidateAmount(amount))
@@ -159,12 +159,12 @@ namespace ExpenseTracker
                     break;
                 }
 
-                this._trackerView.ShowMessage("Enter valid amount.\nEnter again :");
+                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
             }
 
             while (true)
             {
-                this._trackerView.ShowMessage("Enter the date of expense (eg: dd/mm/yyyy) :");
+                this._trackerView.DisplayMessage("Enter the date of expense (eg: dd/mm/yyyy) :");
                 date = this.GetDate();
 
                 if (InputValidator.ValidateDate(date))
@@ -172,16 +172,22 @@ namespace ExpenseTracker
                     break;
                 }
 
-                this._trackerView.ShowMessage("Please enter valid date\nDate cannot be in future.");
+                this._trackerView.DisplayMessage("Please enter valid date\nDate cannot be in future.");
             }
 
-            TrackerInfo tracker = new TrackerInfo("Expense", category, amount, date);
+            TrackerInfo tracker = new ("Expense", category, amount, date);
             this._trackerManager.AddNewTransaction(tracker);
         }
 
         private void ViewTracker()
         {
-            List<TrackerInfo> tracker = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
+            List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
+            if (tracker.Count == 0)
+            {
+                this._trackerView.DisplayMessage("Tracker is empty.");
+                return;
+            }
+
             this._trackerView.DisplayTracker(tracker);
         }
 
@@ -190,29 +196,29 @@ namespace ExpenseTracker
             List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
             if (records.Count == 0)
             {
-                this._trackerView.ShowMessage("Tracker is empty.");
+                this._trackerView.DisplayMessage("Tracker is empty.");
                 return;
             }
 
             this._trackerView.DisplayTracker(records);
-            this._trackerView.ShowMessage("Enter the serial number of the record to edit :");
+            this._trackerView.DisplayMessage("Enter the serial number of the record to edit :");
             int serialNumber = this.GetChoice();
 
             if (serialNumber < 0 || serialNumber > records.Count)
             {
-                this._trackerView.ShowMessage($"There is no record with the serial number :{serialNumber}");
+                this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
             }
             else
             {
                 Guid selectedId = (Guid)records[serialNumber - 1].Id;
-                TrackerInfo tracker = this._trackerManager.GetByGuid(selectedId);
+                TrackerInfo? tracker = this._trackerManager.GetByGuid(selectedId);
 
                 int choice;
                 EditMenu menu;
                 do
                 {
-                    this._trackerView.ShowMessage("[1]. Source/Category\n[2]. Amount\n[3]. Date\n[4]. Exit");
-                    this._trackerView.ShowMessage("Please enter an option :");
+                    this._trackerView.DisplayMessage("[1]. Source/Category\n[2]. Amount\n[3]. Date\n[4]. Exit");
+                    this._trackerView.DisplayMessage("Please enter an option :");
                     choice = this.GetChoice();
                     menu = (EditMenu)choice;
                     switch (menu)
@@ -220,54 +226,54 @@ namespace ExpenseTracker
                         case EditMenu.Category:
                             while (true)
                             {
-                                this._trackerView.ShowMessage("Enter new source/category :");
+                                this._trackerView.DisplayMessage("Enter new source/category :");
                                 tracker.Category = this._trackerView.ReadInput();
                                 if (InputValidator.ValidateCategory(tracker.Category))
                                 {
                                     break;
                                 }
 
-                                this._trackerView.ShowMessage("Invalid input for source/category.\nEnter again :");
+                                this._trackerView.DisplayMessage("Invalid input for source/category.\nEnter again :");
                             }
 
                             break;
                         case EditMenu.Amount:
                             while (true)
                             {
-                                this._trackerView.ShowMessage("Enter new amount :");
+                                this._trackerView.DisplayMessage("Enter new amount :");
                                 tracker.Amount = this.GetAmount();
                                 if (InputValidator.ValidateAmount(tracker.Amount))
                                 {
                                     break;
                                 }
 
-                                this._trackerView.ShowMessage("Invalid input for amount. Amount cannot be negative or null.\nEnter again :");
+                                this._trackerView.DisplayMessage("Invalid input for amount. Amount cannot be negative or null.\nEnter again :");
                             }
 
                             break;
                         case EditMenu.Date:
                             while (true)
                             {
-                                this._trackerView.ShowMessage("Enter new date :");
+                                this._trackerView.DisplayMessage("Enter new date :");
                                 tracker.Date = this.GetDate();
                                 if (InputValidator.ValidateDate(tracker.Date))
                                 {
                                     break;
                                 }
 
-                                this._trackerView.ShowMessage("Invalid input for date. Date cannot be in future.\nEnter again :");
+                                this._trackerView.DisplayMessage("Invalid input for date. Date cannot be in future.\nEnter again :");
                             }
 
                             break;
                         default:
-                            this._trackerView.ShowMessage("Invalid input for choice\nPlease enter from [1 to 4].");
+                            this._trackerView.DisplayMessage("Invalid input for choice\nPlease enter from [1 to 4].");
                             break;
                     }
                 }
                 while (menu != EditMenu.Exit);
 
                 this._trackerManager.UpdateTransaction(tracker);
-                this._trackerView.ShowMessage("Update successful");
+                this._trackerView.DisplayMessage("Update successful");
             }
         }
 
@@ -276,30 +282,30 @@ namespace ExpenseTracker
             List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
             if (records.Count == 0)
             {
-                this._trackerView.ShowMessage("Tracker is empty.");
+                this._trackerView.DisplayMessage("Tracker is empty.");
                 return;
             }
 
             this._trackerView.DisplayTracker(records);
 
-            this._trackerView.ShowMessage("Enter the serial number of the record to edit :");
+            this._trackerView.DisplayMessage("Enter the serial number of the record to edit :");
             int serialNumber = this.GetChoice();
             if (serialNumber < 0 || serialNumber > records.Count)
             {
-                this._trackerView.ShowMessage($"There is no record with the serial number :{serialNumber}");
+                this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
             }
             else
             {
                 Guid selectedId = (Guid)records[serialNumber - 1].Id;
-                TrackerInfo tracker = this._trackerManager.GetByGuid(selectedId);
+                TrackerInfo? tracker = this._trackerManager.GetByGuid(selectedId);
                 bool removed = this._trackerManager.DeleteTransaction(tracker);
                 if (removed)
                 {
-                    this._trackerView.ShowMessage($"Record :{serialNumber} deleted successfully.");
+                    this._trackerView.DisplayMessage($"Record :{serialNumber} deleted successfully.");
                 }
                 else
                 {
-                    this._trackerView.ShowMessage("Deletion failed.");
+                    this._trackerView.DisplayMessage("Deletion failed.");
                 }
             }
         }
@@ -309,7 +315,7 @@ namespace ExpenseTracker
             List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
             if (records.Count == 0)
             {
-                this._trackerView.ShowMessage("Tracker has no records.");
+                this._trackerView.DisplayMessage("Tracker has no records.");
                 return;
             }
 
@@ -319,7 +325,7 @@ namespace ExpenseTracker
 
             if (totalIncome < totalExpense)
             {
-                this._trackerView.ShowMessage("You have spent more than your income.");
+                this._trackerView.DisplayMessage("You have spent more than your income.");
                 this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
             }
             else
@@ -338,7 +344,7 @@ namespace ExpenseTracker
                 }
                 else
                 {
-                    this._trackerView.ShowMessage("Invalid entry.\nEnter again :");
+                    this._trackerView.DisplayMessage("Invalid entry.\nEnter again :");
                 }
             }
         }
@@ -353,7 +359,7 @@ namespace ExpenseTracker
                 }
                 else
                 {
-                    this._trackerView.ShowMessage("Invalid entry for amount.\nPlease enter again :");
+                    this._trackerView.DisplayMessage("Invalid entry for amount.\nPlease enter again :");
                 }
             }
         }
@@ -368,7 +374,7 @@ namespace ExpenseTracker
                 }
                 else
                 {
-                    this._trackerView.ShowMessage("Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
+                    this._trackerView.DisplayMessage("Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
                 }
             }
         }

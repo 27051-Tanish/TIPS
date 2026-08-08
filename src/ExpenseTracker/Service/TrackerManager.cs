@@ -8,7 +8,7 @@ namespace ExpenseTracker.Service
     /// </summary>
     public class TrackerManager
     {
-        private InMemoryTrackerRepository _storage = new InMemoryTrackerRepository();
+        private readonly InMemoryTrackerRepository _repository = new ();
 
         /// <summary>
         /// Add new transaction details to the record.
@@ -17,7 +17,7 @@ namespace ExpenseTracker.Service
         public void AddNewTransaction(TrackerInfo transaction)
         {
             transaction.Id = Guid.NewGuid();
-            this._storage.AddTransactions(transaction);
+            this._repository.AddTransaction(transaction);
         }
 
         /// <summary>
@@ -25,13 +25,13 @@ namespace ExpenseTracker.Service
         /// </summary>
         /// <param name="transaction">Transaction to be deleted.</param>
         /// <returns>True if the transaction details deleted, otherwise false.</returns>
-        public bool DeleteTransaction(TrackerInfo transaction)
+        public bool DeleteTransaction(TrackerInfo? transaction)
         {
-            TrackerInfo tracker = this._storage.GetById(transaction.Id);
+            TrackerInfo? tracker = this._repository.GetById(transaction.Id);
 
             if (tracker != null)
             {
-                this._storage.RemoveTransactions(tracker);
+                this._repository.RemoveTransaction(tracker);
                 return true;
             }
 
@@ -43,9 +43,9 @@ namespace ExpenseTracker.Service
         /// </summary>
         /// <param name="id">The unique id of the record.</param>
         /// <returns>The record from the tracker of the given id.</returns>
-        public TrackerInfo GetByGuid(Guid id)
+        public TrackerInfo? GetByGuid(Guid id)
         {
-            return this._storage.GetById(id);
+            return this._repository.GetById(id);
         }
 
         /// <summary>
@@ -54,16 +54,16 @@ namespace ExpenseTracker.Service
         /// <param name="transaction">Transaction which needed to be edited.</param>
         public void UpdateTransaction(TrackerInfo transaction)
         {
-            this._storage.UpdateTracker(transaction);
+            this._repository.UpdateTracker(transaction);
         }
 
         /// <summary>
         /// Get all the transaction details from the tracker.
         /// </summary>
         /// <returns>The list of tracking record.</returns>
-        public IEnumerable<TrackerInfo> GetAllTransactions()
+        public List<TrackerInfo> GetAllTransactions()
         {
-            return this._storage.GetTransactions();
+            return this._repository.GetTransactions();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace ExpenseTracker.Service
             decimal totalIncome = 0;
             foreach (var transaction in trackerInfos)
             {
-                if (transaction.Type.Equals("Income", StringComparison.OrdinalIgnoreCase))
+                if (transaction.Type?.Equals("Income", StringComparison.OrdinalIgnoreCase) ?? false)
                 {
                     totalIncome += transaction.Amount;
                 }
@@ -95,7 +95,7 @@ namespace ExpenseTracker.Service
             decimal totalExpense = 0;
             foreach (var transaction in trackerInfos)
             {
-                if (transaction.Type.Equals("Expense", StringComparison.OrdinalIgnoreCase))
+                if (transaction.Type?.Equals("Expense", StringComparison.OrdinalIgnoreCase) ?? false)
                 {
                     totalExpense += transaction.Amount;
                 }
