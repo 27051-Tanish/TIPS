@@ -12,7 +12,7 @@ namespace InventoryManagement
     /// </summary>
     public class InventoryController
     {
-        private readonly InventoryConsole _consoleView;
+        private readonly IInventoryConsole _consoleView;
         private readonly InventoryManager _projectManager;
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace InventoryManagement
         /// </summary>
         /// <param name="consoleView">The console view instance used for user interaction.</param>
         /// <param name="projectManager">The project manager instance used for managing inventory data.</param>
-        public InventoryController(InventoryConsole consoleView, InventoryManager projectManager)
+        public InventoryController(IInventoryConsole consoleView, InventoryManager projectManager)
         {
             this._consoleView = consoleView;
             this._projectManager = projectManager;

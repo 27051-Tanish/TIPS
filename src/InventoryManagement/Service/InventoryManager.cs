@@ -9,7 +9,7 @@ namespace InventoryManagement.Service
     /// </summary>
     public class InventoryManager
     {
-        private readonly InMemoryStorage _storage = new ();
+        private readonly IInventoryRepository _storage = new InMemoryStorage();
 
         /// <summary>
         /// Add new product details to the inventory log.

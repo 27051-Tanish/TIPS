@@ -13,7 +13,7 @@ namespace InventoryManagement
         /// </summary>
         public static void Main()
         {
-            InventoryConsole consoleView = new ();
+            IInventoryConsole consoleView = new InventoryConsole();
             InventoryManager inventoryManager = new ();
             try
             {

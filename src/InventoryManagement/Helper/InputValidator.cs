@@ -20,6 +20,11 @@ namespace InventoryManagement.Helper
                 return false;
             }
 
+            if (name.All(n => char.IsDigit(n)))
+            {
+                return true;
+            }
+
             if (name.Length < ConstantVariables.MinimumNameLength || name.Length >= ConstantVariables.MaximumNameLength)
             {
                 return false;
