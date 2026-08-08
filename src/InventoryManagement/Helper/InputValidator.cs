@@ -22,7 +22,7 @@ namespace InventoryManagement.Helper
 
             if (name.All(n => char.IsDigit(n)))
             {
-                return true;
+                return false;
             }
 
             if (name.Length < ConstantVariables.MinimumNameLength || name.Length >= ConstantVariables.MaximumNameLength)
