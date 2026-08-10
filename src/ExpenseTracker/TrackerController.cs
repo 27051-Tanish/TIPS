@@ -33,7 +33,7 @@ namespace ExpenseTracker
         /// <param name="value">When this method returns, contains the parsed value if the conversion
         /// succeeded; otherwise, contains the default value</param>
         /// <returns>True if the input was successfully parsed; otherwise,false.</returns>
-        public delegate bool TryParseDelegate<T>(string input, out T value);
+        public delegate bool TryParseHandler<T>(string input, out T value);
 
         /// <summary>
         /// Starts the execution of expense tracker application.
@@ -259,7 +259,7 @@ namespace ExpenseTracker
             return this.GetValue<DateOnly>(DateOnly.TryParse, "Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
         }
 
-        private T GetValue<T>(TryParseDelegate<T> tryParse, string errorMessage)
+        private T GetValue<T>(TryParseHandler<T> tryParse, string errorMessage)
         {
             while (true)
             {
