@@ -54,7 +54,7 @@ namespace InventoryManagement.Helper
         /// </summary>
         /// <param name="price">Price of the item/product.</param>
         /// <returns>True if the price is valid, otherwise false.</returns>
-        public static bool ValidPrice(decimal price)
+        public static bool ValidatePrice(decimal price)
         {
             return price > ConstantVariables.MinimumPriceValue && price <= ConstantVariables.MaximumPriceValue;
         }
@@ -74,7 +74,7 @@ namespace InventoryManagement.Helper
         /// </summary>
         /// <param name="searchKey">The search key from the user.</param>
         /// <returns>True if the key is valid, otherwise false.</returns>
-        public static bool IsValidSearchKey(string searchKey)
+        public static bool IsValidSearchKey(string? searchKey)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {

@@ -66,13 +66,14 @@ namespace InventoryManagement.Service
         }
 
         /// <summary>
-        /// Search for product details from log by name.
+        /// Search for product details from log by name or id.
         /// </summary>
-        /// <param name="name">Name of the product.</param>
+        /// <param name="searchKey">Name or id of the product.</param>
         /// <returns>List of product details of the given name.</returns>
-        public List<InventoryInfo> SearchItem(string? name)
+        public List<InventoryInfo>? SearchItem(string? searchKey)
         {
-            return this._storage.GetAllItems().Where(s => s.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+            return this._storage.GetAllItems().Where(s => s.Id.Contains(searchKey, StringComparison.OrdinalIgnoreCase) ||
+            s.Name.Contains(searchKey, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         /// <summary>

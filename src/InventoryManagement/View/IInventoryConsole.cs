@@ -13,10 +13,16 @@ namespace InventoryManagement.View
         void ShowMenu();
 
         /// <summary>
-        ///  Displays the product information of the records.
+        /// Displays the product information from the records.
         /// </summary>
         /// <param name="items">The inventory details log.</param>
-        void DisplayAll(List<InventoryInfo> items);
+        void DisplayAll(List<InventoryInfo>? items);
+
+        /// <summary>
+        /// Display a particular product details from the inventory log.
+        /// </summary>
+        /// <param name="item">The product details that needs to be displayed.</param>
+        void DisplayItem(InventoryInfo item);
 
         /// <summary>
         /// Writes the message to the UI.
