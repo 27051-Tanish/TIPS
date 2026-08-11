@@ -34,5 +34,10 @@
         /// Stores the constant value of maximum quantity value.
         /// </summary>
         public const int MaximumQuantity = 1000;
+
+        /// <summary>
+        /// Stores the constant value of maximum attempts to get input.
+        /// </summary>
+        public const int MaxAttempts = 5;
     }
 }

@@ -37,6 +37,7 @@ namespace InventoryManagement
             {
                 this._consoleView.ShowMenu();
                 this._consoleView.ShowMessage("Please select the option to perform :");
+
                 choiceValue = this.GetChoice();
                 menu = (MenuEnum)choiceValue;
                 switch (menu)
@@ -87,6 +88,10 @@ namespace InventoryManagement
                 this._consoleView.ShowMessage("Product added successfully");
             }
             catch (DuplicateWaitObjectException ex)
+            {
+                this._consoleView.ShowMessage(ex.Message);
+            }
+            catch (InvalidOperationException ex)
             {
                 this._consoleView.ShowMessage(ex.Message);
             }
@@ -200,37 +205,44 @@ namespace InventoryManagement
                 return;
             }
 
-            this._consoleView.ShowMessage("Enter id to delete :");
             string? id;
-            while (true)
+            try
             {
-                this._consoleView.ShowMessage("Enter product id to delete : ");
-                id = this._consoleView.ReadInput();
-
-                if (!InputValidator.ValidateId(id))
+                while (true)
                 {
-                    this._consoleView.ShowMessage("Invalid Id! enter 2 letters followed by 3 digits.");
-                    continue;
+                    this._consoleView.ShowMessage("Enter product id to delete : ");
+
+                    id = this.GetProductId();
+
+                    if (!InputValidator.ValidateId(id))
+                    {
+                        this._consoleView.ShowMessage("Invalid Id! enter 2 letters followed by 3 digits.");
+                        continue;
+                    }
+
+                    InventoryInfo? product = this._projectManager.GetProduct(id);
+                    if (product == null)
+                    {
+                        this._consoleView.ShowMessage($"No product found with ID: {id}");
+                        continue;
+                    }
+
+                    break;
                 }
 
-                InventoryInfo? product = this._projectManager.GetProduct(id);
-                if (product == null)
+                bool isItemRemoved = this._projectManager.DeleteItems(id);
+                if (isItemRemoved)
                 {
-                    this._consoleView.ShowMessage($"No product found with ID: {id}");
-                    continue;
+                    this._consoleView.ShowMessage("Deleted successfully");
                 }
-
-                break;
+                else
+                {
+                    this._consoleView.ShowMessage("Failed to delete product details.");
+                }
             }
-
-            bool isItemRemoved = this._projectManager.DeleteItems(id);
-            if (isItemRemoved)
+            catch (InvalidOperationException ex)
             {
-                this._consoleView.ShowMessage("Deleted successfully");
-            }
-            else
-            {
-                this._consoleView.ShowMessage("Failed to delete product details.");
+                this._consoleView.ShowMessage($"Error: {ex.Message}");
             }
         }
 
@@ -283,7 +295,8 @@ namespace InventoryManagement
         /// <returns>Quantity of desired type if true, otherwise false.</returns>
         private int GetQuantity()
         {
-            while (true)
+            int attempts = 0;
+            while (attempts < ConstantVariables.MaxAttempts)
             {
                 if (int.TryParse(this._consoleView.ReadInput(), out int quantity))
                 {
@@ -291,9 +304,13 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Please enter valid input for quantity.\nQuantity should not contain characters, white space, or null.");
+                    attempts++;
+                    this._consoleView.ShowMessage("Please enter valid input for quantity.\nQuantity should not contain characters, white space, or null.\n" +
+                        $"Attempts remaining : {ConstantVariables.MaxAttempts - attempts}");
                 }
             }
+
+            throw new InvalidOperationException("Maximum attempts reached.");
         }
 
         /// <summary>
@@ -304,14 +321,12 @@ namespace InventoryManagement
         {
             while (true)
             {
-                if (int.TryParse(this._consoleView.ReadInput(), out int choiceValue))
+                if (int.TryParse(this._consoleView.ReadInput(), out int choiceValue) && choiceValue > 0 && choiceValue <= 6)
                 {
                     return choiceValue;
                 }
-                else
-                {
-                    this._consoleView.ShowMessage("Please enter valid choice from the menu [1 to 6]");
-                }
+
+                this._consoleView.ShowMessage($"Please enter valid choice from the menu [1 to 6]");
             }
         }
 
@@ -321,7 +336,8 @@ namespace InventoryManagement
         /// <returns>Value of desired type if true, otherwise false.</returns>
         private decimal GetPrice()
         {
-            while (true)
+            int attempts = 0;
+            while (attempts < ConstantVariables.MaxAttempts)
             {
                 if (decimal.TryParse(this._consoleView.ReadInput(), out decimal priceValue))
                 {
@@ -329,15 +345,20 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    this._consoleView.ShowMessage("Please enter valid input for price.\nPrice should not contain characters, white space, or null.");
+                    attempts++;
+                    this._consoleView.ShowMessage("Please enter valid input for price.\nPrice should not contain characters, white space, or null.\n" +
+                        $"Attempts remaining :{ConstantVariables.MaxAttempts - attempts}");
                 }
             }
+
+            throw new InvalidOperationException("Maximum attempts reached.");
         }
 
         private string? GetProductId()
         {
+            int attempts = 0;
             string? id;
-            while (true)
+            while (attempts < ConstantVariables.MaxAttempts)
             {
                 this._consoleView.ShowMessage("Enter product id (example: 'AB123'): ");
                 id = this._consoleView.ReadInput();
@@ -346,15 +367,22 @@ namespace InventoryManagement
                 {
                     return id;
                 }
-
-                this._consoleView.ShowMessage("Invalid Id! enter 2 capital letters followed by 3 digits.");
+                else
+                {
+                    attempts++;
+                    this._consoleView.ShowMessage("Invalid Id! enter 2 capital letters followed by 3 digits.\n" +
+                       $"Attempts remaining :{ConstantVariables.MaxAttempts - attempts}");
+                }
             }
+
+            throw new InvalidOperationException("Maximum attempts reached.");
         }
 
         private string? GetProductName()
         {
+            int attempts = 0;
             string? name;
-            while (true)
+            while (attempts < ConstantVariables.MaxAttempts)
             {
                 this._consoleView.ShowMessage("Enter product name: ");
                 name = this._consoleView.ReadInput();
@@ -363,15 +391,22 @@ namespace InventoryManagement
                 {
                     return name;
                 }
-
-                this._consoleView.ShowMessage("Invalid product name!\nName length should be between 2 to 50 characters.");
+                else
+                {
+                    attempts++;
+                    this._consoleView.ShowMessage("Invalid product name!\nName length should be between 2 to 50 characters.\n" +
+                        $"Attempts remaining :{ConstantVariables.MaxAttempts - attempts}");
+                }
             }
+
+            throw new InvalidOperationException("Maximum attempts reached.");
         }
 
         private decimal GetProductPrice()
         {
+            int attempts = 0;
             decimal price;
-            while (true)
+            while (attempts < ConstantVariables.MaxAttempts)
             {
                 this._consoleView.ShowMessage("Enter product price: ");
                 price = this.GetPrice();
@@ -380,16 +415,23 @@ namespace InventoryManagement
                 {
                     return price;
                 }
-
-                this._consoleView.ShowMessage("Invalid price!\nPrice should be positive and within the limit.\n" +
-                    $"Price Limit : {ConstantVariables.MaximumPriceValue} ");
+                else
+                {
+                    attempts++;
+                    this._consoleView.ShowMessage("Invalid price!\nPrice should be positive and within the limit.\n" +
+                        $"Price Limit : {ConstantVariables.MaximumPriceValue}" +
+                        $"Attempts remaining :{ConstantVariables.MaxAttempts - attempts}");
+                }
             }
+
+            throw new InvalidOperationException("Maximum attempts reached.");
         }
 
         private int GetProductQuantity()
         {
+            int attempts = 0;
             int quantity;
-            while (true)
+            while (attempts < ConstantVariables.MaxAttempts)
             {
                 this._consoleView.ShowMessage("Enter product quantity: ");
                 quantity = this.GetQuantity();
@@ -398,10 +440,16 @@ namespace InventoryManagement
                 {
                     return quantity;
                 }
-
-                this._consoleView.ShowMessage("Invalid input for quantity! Quantity should be positive and within the limit.\n" +
-                    $"Quantity limit : {ConstantVariables.MaximumQuantity}");
+                else
+                {
+                    attempts++;
+                    this._consoleView.ShowMessage("Invalid input for quantity! Quantity should be positive and within the limit.\n" +
+                        $"Quantity limit : {ConstantVariables.MaximumQuantity}\n" +
+                        $"Attempts remaining :{ConstantVariables.MaxAttempts - attempts}");
+                }
             }
+
+            throw new InvalidOperationException("Maximum attempts reached.");
         }
     }
 }
