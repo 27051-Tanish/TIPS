@@ -27,7 +27,7 @@
         /// <returns>True if the amount is valid, otherwise false.</returns>
         public static bool ValidateAmount(decimal amount)
         {
-            return amount > 0;
+            return amount > ConstantVariables.MinAmount && amount < ConstantVariables.MaxAmount;
         }
 
         /// <summary>

@@ -46,7 +46,7 @@ namespace ExpenseTracker
             {
                 this._trackerView.ShowMenu();
                 this._trackerView.DisplayMessage("Please enter your choice :");
-                choiceValue = this.GetChoice();
+                choiceValue = this._trackerView.GetChoice();
                 menu = (TrackerMenu)choiceValue;
 
                 switch (menu)
@@ -69,25 +69,22 @@ namespace ExpenseTracker
                     case TrackerMenu.Summary:
                         this.RetrieveSummary();
                         break;
+                    case TrackerMenu.Backup:
+                        this.PerformBackup();
+                        break;
                     case TrackerMenu.Exit:
                         break;
                     default:
-                        this._trackerView.DisplayMessage("Please enter valid choice from [1 to 7].\nEnter your choice again :");
+                        this._trackerView.DisplayMessage("Please enter valid choice from [1 to 8].\nEnter your choice again :");
                         break;
                 }
             }
             while (menu != TrackerMenu.Exit);
         }
 
-        private void AddIncome()
-        {
-            this.AddRecord(RecordType.Income, "source", "income", "(Eg: salary, freelance, etc.)");
-        }
+        private void AddIncome() => this.AddRecord(RecordType.Income, "source", "income", "(Eg: salary, freelance, etc.)");
 
-        private void AddExpense()
-        {
-            this.AddRecord(RecordType.Expense, "category", "expense", "(Eg: food, transport, etc.)");
-        }
+        private void AddExpense() => this.AddRecord(RecordType.Expense, "category", "expense", "(Eg: food, transport, etc.)");
 
         private void ViewTracker()
         {
@@ -112,11 +109,13 @@ namespace ExpenseTracker
 
             this._trackerView.DisplayTracker(records);
             this._trackerView.DisplayMessage("Enter the serial number of the record to edit :");
-            int serialNumber = this.GetChoice();
+            int serialNumber = this._trackerView.GetChoice();
 
-            if (serialNumber < 0 || serialNumber > records.Count)
+            if (serialNumber < 1 || serialNumber > records.Count)
             {
+                Logger.WriteLog("FAILURE", "Trying to edit record that is not present in the tracker.");
                 this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
+                return;
             }
             else
             {
@@ -129,7 +128,7 @@ namespace ExpenseTracker
                 {
                     this._trackerView.DisplayMessage("[1]. Source/Category\n[2]. Amount\n[3]. Date\n[4]. Exit");
                     this._trackerView.DisplayMessage("Please enter an option :");
-                    choice = this.GetChoice();
+                    choice = this._trackerView.GetChoice();
                     menu = (EditMenu)choice;
                     switch (menu)
                     {
@@ -140,6 +139,7 @@ namespace ExpenseTracker
                                 tracker.Category = this._trackerView.ReadInput();
                                 if (InputValidator.ValidateCategory(tracker.Category))
                                 {
+                                    this._trackerView.DisplayMessage($"Source/category updated successfully");
                                     break;
                                 }
 
@@ -151,9 +151,10 @@ namespace ExpenseTracker
                             while (true)
                             {
                                 this._trackerView.DisplayMessage("Enter new amount :");
-                                tracker.Amount = this.GetAmount();
+                                tracker.Amount = this._trackerView.GetAmount();
                                 if (InputValidator.ValidateAmount(tracker.Amount))
                                 {
+                                    this._trackerView.DisplayMessage($"Amount updated successfully");
                                     break;
                                 }
 
@@ -165,9 +166,10 @@ namespace ExpenseTracker
                             while (true)
                             {
                                 this._trackerView.DisplayMessage("Enter new date :");
-                                tracker.Date = this.GetDate();
+                                tracker.Date = this._trackerView.GetDate();
                                 if (InputValidator.ValidateDate(tracker.Date))
                                 {
+                                    this._trackerView.DisplayMessage($"Date updated successfully");
                                     break;
                                 }
 
@@ -183,6 +185,7 @@ namespace ExpenseTracker
                 while (menu != EditMenu.Exit);
 
                 this._trackerManager.UpdateTransaction(tracker);
+                Logger.WriteLog("SUCCESS", $"Record: {serialNumber} updated successfully ");
                 this._trackerView.DisplayMessage("Update successful");
             }
         }
@@ -199,10 +202,12 @@ namespace ExpenseTracker
             this._trackerView.DisplayTracker(records);
 
             this._trackerView.DisplayMessage("Enter the serial number of the record to edit :");
-            int serialNumber = this.GetChoice();
-            if (serialNumber < 0 || serialNumber > records.Count)
+            int serialNumber = this._trackerView.GetChoice();
+            if (serialNumber < 1 || serialNumber > records.Count)
             {
+                Logger.WriteLog("FAILURE", "Trying to delete record that is not present in the tracker.");
                 this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
+                return;
             }
             else
             {
@@ -211,10 +216,12 @@ namespace ExpenseTracker
                 bool removed = this._trackerManager.DeleteTransaction(tracker);
                 if (removed)
                 {
+                    Logger.WriteLog("SUCCESS", $"Record: {serialNumber} deleted successfully ");
                     this._trackerView.DisplayMessage($"Record :{serialNumber} deleted successfully.");
                 }
                 else
                 {
+                    Logger.WriteLog("FAILURE", $"Record: {serialNumber} deletion failed.");
                     this._trackerView.DisplayMessage("Deletion failed.");
                 }
             }
@@ -235,6 +242,7 @@ namespace ExpenseTracker
 
             if (totalIncome < totalExpense)
             {
+                Logger.WriteLog("WARNING", "Expense is more than income.");
                 this._trackerView.DisplayMessage("You have spent more than your income.");
                 this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
             }
@@ -244,32 +252,11 @@ namespace ExpenseTracker
             }
         }
 
-        private int GetChoice()
+        private void PerformBackup()
         {
-            return this.GetValue<int>(int.TryParse, "Invalid choice\nPlease enter valid choice from the menu.");
-        }
-
-        private decimal GetAmount()
-        {
-            return this.GetValue<decimal>(decimal.TryParse, "Invalid entry for amount.\nPlease enter again :");
-        }
-
-        private DateOnly GetDate()
-        {
-            return this.GetValue<DateOnly>(DateOnly.TryParse, "Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
-        }
-
-        private T GetValue<T>(TryParseHandler<T> tryParse, string errorMessage)
-        {
-            while (true)
-            {
-                if (tryParse(this._trackerView.ReadInput(), out T value))
-                {
-                    return value;
-                }
-
-                this._trackerView.DisplayMessage(errorMessage);
-            }
+            this._trackerManager.BackupRecords();
+            Logger.WriteLog("SUCCESS", "Backup created successfully.");
+            this._trackerView.DisplayMessage("Backup created successfully.");
         }
 
         private void AddRecord(RecordType recordType, string fieldName, string recordName, string exampleMessage)
@@ -277,54 +264,104 @@ namespace ExpenseTracker
             string? category;
             decimal amount;
             DateOnly date;
-            while (true)
+            try
+            {
+                category = this.GetCategoryInput(fieldName, recordName, exampleMessage);
+                amount = this.GetAmountInput(recordName);
+                date = this.GetDateInput(recordName);
+            }
+            catch (InvalidOperationException ex)
+            {
+                this._trackerView.DisplayMessage($"Error :{ex.Message}");
+                return;
+            }
+
+            TrackerInfo tracker = new (recordType, category, amount, date);
+            this._trackerManager.AddNewTransaction(tracker);
+            Logger.WriteLog("SUCCESS", "Record added successfully");
+            this._trackerView.DisplayMessage("Record added successfully!");
+        }
+
+        private string GetCategoryInput(string fieldName, string recordName, string exampleMessage)
+        {
+            string? category;
+            int attempt = 0;
+
+            while (attempt < ConstantVariables.MaxLimit)
             {
                 this._trackerView.DisplayMessage($"Enter {fieldName} of the {recordName} :");
                 category = this._trackerView.ReadInput();
 
                 if (InputValidator.ValidateCategory(category))
                 {
-                    break;
+                    return category;
                 }
+
+                attempt++;
 
                 if (category != category?.Trim())
                 {
                     this._trackerView.DisplayMessage("Entry should not contain leading or trailing whitespace.");
-                    continue;
+                }
+                else
+                {
+                    this._trackerView.DisplayMessage($"Enter valid {fieldName}.\n{exampleMessage}");
                 }
 
-                this._trackerView.DisplayMessage($"Enter valid {fieldName}.\n{exampleMessage}");
+                if (attempt < ConstantVariables.MaxLimit)
+                {
+                    this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
+                }
             }
 
-            while (true)
+            Logger.WriteLog("FAILURE", "Maximum re-try limit reached for getting source/category as input.");
+            throw new InvalidOperationException($"Maximum limit reached.");
+        }
+
+        private decimal GetAmountInput(string recordName)
+        {
+            decimal amount;
+            int attempt = 0;
+            while (attempt < ConstantVariables.MaxLimit)
             {
                 this._trackerView.DisplayMessage($"Enter amount of {recordName} :");
-                amount = this.GetAmount();
+                amount = this._trackerView.GetAmount();
 
                 if (InputValidator.ValidateAmount(amount))
                 {
-                    break;
+                    return amount;
                 }
 
+                attempt++;
                 this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
+                this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 
-            while (true)
+            Logger.WriteLog("FAILURE", "Maximum re-try limit reached for getting amount as input.");
+            throw new InvalidOperationException("Maximum limit reached.");
+        }
+
+        private DateOnly GetDateInput(string recordName)
+        {
+            DateOnly date;
+            int attempt = 0;
+            while (attempt < ConstantVariables.MaxLimit)
             {
                 this._trackerView.DisplayMessage($"Enter the date of {recordName} (eg: dd/mm/yyyy) :");
-                date = this.GetDate();
+                date = this._trackerView.GetDate();
 
                 if (InputValidator.ValidateDate(date))
                 {
-                    break;
+                    return date;
                 }
 
+                attempt++;
                 this._trackerView.DisplayMessage("Please enter valid date\nDate cannot be in future.");
+                this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 
-            TrackerInfo tracker = new (recordType, category, amount, date);
-            this._trackerManager.AddNewTransaction(tracker);
-            this._trackerView.DisplayMessage("Record added successfully!");
+            Logger.WriteLog("FAILURE", "Maximum re-try limit reached for getting date as input.");
+            throw new InvalidOperationException("Maximum limit reached.");
         }
     }
 }

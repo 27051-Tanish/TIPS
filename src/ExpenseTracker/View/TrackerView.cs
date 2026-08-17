@@ -1,6 +1,8 @@
 ﻿using ConsoleTables;
 using ExpenseTracker.Core.Model;
 using ExpenseTracker.Core.TrackerInterface;
+using ExpenseTracker.Helper;
+using static ExpenseTracker.TrackerController;
 
 namespace ExpenseTracker.View
 {
@@ -10,9 +12,7 @@ namespace ExpenseTracker.View
     /// </summary>
     public class TrackerView : ITrackerView
     {
-        /// <summary>
-        /// Shows menu to the user for selecting a operation.
-        /// </summary>
+        /// <inheritdoc/>
         public void ShowMenu()
         {
             this.DisplayMessage("===Expense Tracker===");
@@ -22,14 +22,12 @@ namespace ExpenseTracker.View
             this.DisplayMessage("[4]. Update tracker.");
             this.DisplayMessage("[5]. Delete tracker.");
             this.DisplayMessage("[6]. View summary.");
-            this.DisplayMessage("[7]. Exit.");
+            this.DisplayMessage("[7]. Back up.");
+            this.DisplayMessage("[8]. Exit.");
             this.EndLine();
         }
 
-        /// <summary>
-        /// Displays all the transactions record of the tracker.
-        /// </summary>
-        /// <param name="tracker">List of transaction records.</param>
+        /// <inheritdoc/>
         public void DisplayTracker(List<TrackerInfo> tracker)
         {
             int serialNumber = 1;
@@ -45,12 +43,7 @@ namespace ExpenseTracker.View
             table.Write();
         }
 
-        /// <summary>
-        /// Displays the total financial summary of the tracker.
-        /// </summary>
-        /// <param name="totalIncome">Total income from the records.</param>
-        /// <param name="totalExpense">Total expense from the records.</param>
-        /// <param name="netBalance">Net balance of the records.</param>
+        /// <inheritdoc/>
         public void DisplaySummary(decimal totalIncome, decimal totalExpense, decimal netBalance)
         {
             ConsoleTable table = new ("Total Income", "Total Expense", "Net Balance");
@@ -58,27 +51,51 @@ namespace ExpenseTracker.View
             table.Write();
         }
 
-        /// <summary>
-        /// Writes a message to the console.
-        /// </summary>
-        /// <param name="message">The message to display.</param>
+        /// <inheritdoc/>
         public void DisplayMessage(string message) => Console.WriteLine(message);
 
-        /// <summary>
-        /// Reads a line of input from the console.
-        /// </summary>
-        /// <returns>The input entered by the user, or null, if no input is available.</returns>
+        /// <inheritdoc/>
         public string? ReadInput()
         {
             return Console.ReadLine();
         }
 
-        /// <summary>
-        /// Draws a visual separator line to improve the console view.
-        /// </summary>
+        /// <inheritdoc/>
         public void EndLine()
         {
             this.DisplayMessage(new string('=', 25));
+        }
+
+        /// <inheritdoc/>
+        public int GetChoice()
+        {
+            return this.GetValue<int>(int.TryParse, "Invalid choice\nPlease enter valid choice from the menu.");
+        }
+
+        /// <inheritdoc/>
+        public decimal GetAmount()
+        {
+            return this.GetValue<decimal>(decimal.TryParse, "Invalid entry for amount.\nPlease enter again :");
+        }
+
+        /// <inheritdoc/>
+        public DateOnly GetDate()
+        {
+            return this.GetValue<DateOnly>(DateOnly.TryParse, "Invalid entry for date.\nDate should be in (dd/mm/yyyy) format.\nPlease enter again :");
+        }
+
+        /// <inheritdoc/>
+        public T GetValue<T>(TryParseHandler<T> tryParse, string errorMessage)
+        {
+            while (true)
+            {
+                if (tryParse(this.ReadInput(), out T value))
+                {
+                    return value;
+                }
+
+                this.DisplayMessage(errorMessage);
+            }
         }
     }
 }
