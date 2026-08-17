@@ -44,6 +44,13 @@ namespace ExpenseTracker.View
         }
 
         /// <inheritdoc/>
+        public void DisplayRecord(TrackerInfo tracker)
+        {
+            ConsoleTable table = new ("Type", "Category/Source", "Amount", "Date");
+            table.AddRow(tracker.Type, tracker.Category, tracker.Amount, tracker.Date);
+        }
+
+        /// <inheritdoc/>
         public void DisplaySummary(decimal totalIncome, decimal totalExpense, decimal netBalance)
         {
             ConsoleTable table = new ("Total Income", "Total Expense", "Net Balance");

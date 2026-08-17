@@ -177,6 +177,9 @@ namespace ExpenseTracker
                             }
 
                             break;
+                        case EditMenu.Exit:
+                            this._trackerView.DisplayMessage("Closing edit menu.");
+                            break;
                         default:
                             this._trackerView.DisplayMessage("Invalid input for choice\nPlease enter from [1 to 4].");
                             break;
@@ -187,6 +190,7 @@ namespace ExpenseTracker
                 this._trackerManager.UpdateTransaction(tracker);
                 Logger.WriteLog("SUCCESS", $"Record: {serialNumber} updated successfully ");
                 this._trackerView.DisplayMessage("Update successful");
+                this._trackerView.DisplayRecord(tracker);
             }
         }
 
@@ -333,7 +337,7 @@ namespace ExpenseTracker
                 }
 
                 attempt++;
-                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
+                this._trackerView.DisplayMessage($"Enter valid amount.\nAmount limit : {ConstantVariables.MaxAmount}\nEnter again :");
                 this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 

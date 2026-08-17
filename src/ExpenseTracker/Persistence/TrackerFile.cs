@@ -40,7 +40,7 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc/>
         public List<TrackerInfo> GetTransactions()
         {
-            List<TrackerInfo> records = new();
+            List<TrackerInfo> records = new ();
             if (!File.Exists(this._filePath))
             {
                 return records;
