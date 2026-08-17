@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Model;
+﻿using InventoryManagement.Helper;
+using InventoryManagement.Model;
 
 namespace InventoryManagement.Repository
 {
@@ -18,6 +19,11 @@ namespace InventoryManagement.Repository
         /// <inheritdoc/>
         public void RemoveItems(InventoryInfo item)
         {
+            if (!InputValidator.ValidateId(item.Id))
+            {
+                throw new InvalidOperationException("Please enter valid ID.");
+            }
+
             this._inventories.Remove(item);
         }
 

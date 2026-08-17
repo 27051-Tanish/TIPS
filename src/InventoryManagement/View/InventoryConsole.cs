@@ -23,7 +23,7 @@ namespace InventoryManagement.View
         }
 
         /// <inheritdoc/>
-        public void DisplayAll(List<InventoryInfo>? items)
+        public void DisplayAll(List<InventoryInfo> items)
         {
             var table = new ConsoleTable("ID", "Product Name", "Price", "Quantity");
 

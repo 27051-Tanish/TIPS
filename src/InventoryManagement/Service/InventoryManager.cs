@@ -66,6 +66,24 @@ namespace InventoryManagement.Service
         }
 
         /// <summary>
+        /// Fetch the inventory records by the given name and id.
+        /// </summary>
+        /// <param name="items">The list of inventory records.</param>
+        /// <param name="input">Name or Id of the product detail.</param>
+        /// <returns>Null if invalid input, otherwise the inventory details of the product.</returns>
+        public InventoryInfo? FindItemByIdOrName(IEnumerable<InventoryInfo> items, string? input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+
+            return items.FirstOrDefault(item =>
+                string.Equals(item.Id, input, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(item.Name, input, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
         /// Search for product details from log by name or id.
         /// </summary>
         /// <param name="searchKey">Name or id of the product.</param>

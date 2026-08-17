@@ -133,23 +133,14 @@ namespace InventoryManagement
             InventoryInfo? matchedItem = null;
             while (true)
             {
-                this._consoleView.ShowMessage("Enter product ID or Name: ");
-                this._consoleView.ShowMessage("ID:(eg. AB123)");
+                this._consoleView.ShowMessage("Enter product ID or Name (e.g., ID: AB123): ");
                 input = this._consoleView.ReadInput();
 
-                if (!InputValidator.ValidateName(input) && !InputValidator.ValidateId(input))
-                {
-                    this._consoleView.ShowMessage("Input cannot be null or white space.");
-                    continue;
-                }
-
-                matchedItem = items.FirstOrDefault(item =>
-                string.Equals(item.Id, input, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(item.Name, input, StringComparison.OrdinalIgnoreCase));
+                matchedItem = this._projectManager.FindItemByIdOrName(items, input);
 
                 if (matchedItem == null)
                 {
-                    this._consoleView.ShowMessage($"No product found matching: '{input}'");
+                    this._consoleView.ShowMessage($"Invalid input or no product found matching: '{input}'");
                     continue;
                 }
 
@@ -259,7 +250,7 @@ namespace InventoryManagement
             }
 
             string? input;
-            InventoryInfo? matchedItem = null;
+            List<InventoryInfo>? products = null;
             while (true)
             {
                 this._consoleView.ShowMessage("Enter product ID or Name: ");
@@ -272,11 +263,9 @@ namespace InventoryManagement
                     continue;
                 }
 
-                matchedItem = items.Find(item =>
-                item.Id.Contains(input, StringComparison.OrdinalIgnoreCase) ||
-                item.Name.Contains(input, StringComparison.OrdinalIgnoreCase));
+                products = this._projectManager.SearchItem(input);
 
-                if (matchedItem == null)
+                if (products == null)
                 {
                     this._consoleView.ShowMessage($"No product found matching: '{input}'");
                     continue;
@@ -285,7 +274,6 @@ namespace InventoryManagement
                 break;
             }
 
-            List<InventoryInfo>? products = this._projectManager.SearchItem(input);
             this._consoleView.DisplayAll(products);
         }
 
