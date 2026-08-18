@@ -44,7 +44,7 @@
         }
 
         /// <summary>
-        /// Attempts to parse the user input.
+        /// Attempts to parse the user input into a choice.
         /// </summary>
         /// <param name="message">The message needed to displayed.</param>
         /// <returns>Choice of required type if true, otherwise the error message.</returns>
@@ -64,7 +64,7 @@
         }
 
         /// <summary>
-        /// Attempts to parse the user input.
+        /// Attempts to parse the user input into a dimension.
         /// </summary>
         /// <returns>Value of required type if true, otherwise the error message.</returns>
         public double GetInput()
@@ -83,7 +83,7 @@
         }
 
         /// <summary>
-        /// Attempts to parse the user input.
+        /// Attempts to parse the user input into a salary.
         /// </summary>
         /// <returns>Value of required type if true, otherwise the error message.</returns>
         public decimal GetSalary()
