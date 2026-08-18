@@ -67,6 +67,9 @@
             }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
 
         /// <summary>
         /// Attempts to parse the user input into a dimension.
@@ -105,7 +108,10 @@
                 }
             }
         }
+<<<<<<< HEAD
 =======
 >>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
+=======
+>>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
     }
 }
