@@ -35,10 +35,17 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
                 switch (employeeMenu)
                 {
                     case EmployeeMenu.Manager:
+<<<<<<< HEAD
                         this.HandleManagerDetails();
                         break;
                     case EmployeeMenu.Developer:
                         this.HandleDeveloperDetails();
+=======
+                        this.GetManagerDetails();
+                        break;
+                    case EmployeeMenu.Developer:
+                        this.GetDeveloperDetails();
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
                         break;
                     case EmployeeMenu.Exit:
                         this._employeeView.ShowMessage("Closing employee hierarchy application.");
@@ -54,7 +61,11 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// <summary>
         /// Gets and prints manager details.
         /// </summary>
+<<<<<<< HEAD
         public void HandleManagerDetails()
+=======
+        public void GetManagerDetails()
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
         {
             var employee = this.GetEmployeeDetails("Manager");
             Manager manager = new (employee.name, employee.salary);
@@ -65,7 +76,11 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
         /// <summary>
         /// Gets and prints developer details.
         /// </summary>
+<<<<<<< HEAD
         public void HandleDeveloperDetails()
+=======
+        public void GetDeveloperDetails()
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
         {
             var employee = this.GetEmployeeDetails("Developer");
             Developer developer = new (employee.name, employee.salary);
@@ -73,6 +88,24 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             this._employeeView.ShowMessage(developer.PrintDetails());
         }
 
+<<<<<<< HEAD
+=======
+        private decimal GetSalary()
+        {
+            while (true)
+            {
+                if (decimal.TryParse(this._employeeView.ReadInput(), out decimal salary))
+                {
+                    return salary;
+                }
+                else
+                {
+                    this._employeeView.ShowMessage($"Salary should not contains characters and should not exceed the limit.\nSalary limit :{decimal.MaxValue}\nPlease enter valid salary :");
+                }
+            }
+        }
+
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
         private (string? name, decimal salary) GetEmployeeDetails(string employeeType)
         {
             string? name;
@@ -93,7 +126,11 @@ namespace OopsAssignment.EmployeeHierarchy.EmployeeController
             while (true)
             {
                 this._employeeView.ShowMessage($"Enter salary of the {employeeType}: ");
+<<<<<<< HEAD
                 salary = this._employeeView.GetSalary();
+=======
+                salary = this.GetSalary();
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
 
                 if (InputValidator.ValidateAmount(salary))
                 {

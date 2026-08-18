@@ -44,7 +44,11 @@
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// Attempts to parse the user input into a choice.
+=======
+        /// Attempts to parse the user input.
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
         /// </summary>
         /// <param name="message">The message needed to displayed.</param>
         /// <returns>Choice of required type if true, otherwise the error message.</returns>
@@ -62,6 +66,7 @@
                 }
             }
         }
+<<<<<<< HEAD
 
         /// <summary>
         /// Attempts to parse the user input into a dimension.
@@ -100,5 +105,7 @@
                 }
             }
         }
+=======
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
     }
 }

@@ -72,7 +72,11 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the length of the rectangle :");
+<<<<<<< HEAD
                 length = this._view.GetInput();
+=======
+                length = this.GetInput();
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
 
                 if (InputValidator.ValidateDimension(length))
                 {
@@ -85,7 +89,11 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the width of the rectangle :");
+<<<<<<< HEAD
                 width = this._view.GetInput();
+=======
+                width = this.GetInput();
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
 
                 if (InputValidator.ValidateDimension(width))
                 {
@@ -126,7 +134,11 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the radius of the circle :");
+<<<<<<< HEAD
                 radius = this._view.GetInput();
+=======
+                radius = this.GetInput();
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
 
                 if (InputValidator.ValidateDimension(radius))
                 {
@@ -146,5 +158,23 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 this._view.ShowMessage($"Error :{ex.Message}");
             }
         }
+<<<<<<< HEAD
+=======
+
+        private double GetInput()
+        {
+            while (true)
+            {
+                if (double.TryParse(this._view.ReadInput(), out double value))
+                {
+                    return value;
+                }
+                else
+                {
+                    this._view.ShowMessage("Invalid input for dimension.\nEnter again :");
+                }
+            }
+        }
+>>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
     }
 }
