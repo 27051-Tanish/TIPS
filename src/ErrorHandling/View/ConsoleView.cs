@@ -152,8 +152,6 @@ namespace ErrorHandling.View
                 int number = int.Parse(this.ReadInput());
                 int result = this._errorHandlingManager.GetNumber(number);
                 this.SuccessMessage($"Entered number is {result}");
-
-                throw new Exception("Unhandled exception occurred");
             }
             catch (InvalidUserInputException ex)
             {
