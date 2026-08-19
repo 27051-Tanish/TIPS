@@ -131,7 +131,7 @@ namespace OopsAssignment.BankingSystem.BankController
 
             this._consoleView.EndLine();
             this._consoleView.ShowMessage(savingsAccount.PrintDetails());
-            this._consoleView.ShowMessage($"Deposit amount: {amount}");
+            this._consoleView.ShowMessage($"Debited amount: {amount}");
             this._consoleView.EndLine();
         }
 
@@ -147,7 +147,11 @@ namespace OopsAssignment.BankingSystem.BankController
             {
                 this._consoleView.EndLine();
                 this._consoleView.ShowMessage(savingsAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Debited amount: {amount}");
+                if (amount > 0 && amount <= savingsAccount.Balance)
+                {
+                    this._consoleView.ShowMessage($"Debited amount: {amount}");
+                }
+
                 this._consoleView.EndLine();
             }
         }
@@ -238,7 +242,11 @@ namespace OopsAssignment.BankingSystem.BankController
 
                 this._consoleView.EndLine();
                 this._consoleView.ShowMessage(checkingAccount.PrintDetails());
-                this._consoleView.ShowMessage($"Debited amount: {amount}");
+                if (amount > 0 && amount <= checkingAccount.Balance)
+                {
+                    this._consoleView.ShowMessage($"Debited amount: {amount}");
+                }
+
                 this._consoleView.EndLine();
         }
 

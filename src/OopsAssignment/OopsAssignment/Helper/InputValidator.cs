@@ -29,7 +29,7 @@ namespace OopsAssignment.Helper
         /// <returns>True if the dimensions are valid, otherwise false.</returns>
         public static bool ValidateDimension(double dimension)
         {
-            if (dimension < 0 || dimension > double.MaxValue || double.IsNaN(dimension))
+            if (dimension < 1 || dimension > double.MaxValue || double.IsNaN(dimension))
             {
                 return false;
             }
@@ -44,7 +44,7 @@ namespace OopsAssignment.Helper
         /// <returns>True if the amount is valid, otherwise false.</returns>
         public static bool ValidateAmount(decimal amount)
         {
-            if (amount < 0 || amount > decimal.MaxValue)
+            if (amount < 1 || amount > decimal.MaxValue)
             {
                 return false;
             }
