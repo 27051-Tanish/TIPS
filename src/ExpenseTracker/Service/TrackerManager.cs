@@ -26,7 +26,6 @@ namespace ExpenseTracker.Service
         /// <param name="transaction">Transaction to be added.</param>
         public void AddNewTransaction(TrackerInfo transaction)
         {
-            transaction.Id = Guid.NewGuid();
             this._repository.AddTransaction(transaction);
         }
 
@@ -83,16 +82,9 @@ namespace ExpenseTracker.Service
         /// <returns>The total income from the tracker.</returns>
         public decimal GetTotalIncome(List<TrackerInfo> trackerInfos)
         {
-            decimal totalIncome = 0;
-            foreach (var transaction in trackerInfos)
-            {
-                if (transaction.Type == RecordType.Income)
-                {
-                    totalIncome += transaction.Amount;
-                }
-            }
-
-            return totalIncome;
+            return trackerInfos
+                .Where(t => t.Type == RecordType.Income)
+                .Sum(t => t.Amount);
         }
 
         /// <summary>
@@ -102,16 +94,9 @@ namespace ExpenseTracker.Service
         /// <returns>The total income from the tracker.</returns>
         public decimal GetTotalExpense(List<TrackerInfo> trackerInfos)
         {
-            decimal totalExpense = 0;
-            foreach (var transaction in trackerInfos)
-            {
-                if (transaction.Type == RecordType.Expense)
-                {
-                    totalExpense += transaction.Amount;
-                }
-            }
-
-            return totalExpense;
+            return trackerInfos
+                .Where(t => t.Type == RecordType.Expense)
+                .Sum(t => t.Amount);
         }
 
         /// <summary>

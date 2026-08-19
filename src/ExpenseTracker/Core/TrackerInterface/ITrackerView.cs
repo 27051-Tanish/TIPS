@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Core.Model;
+using static ExpenseTracker.TrackerController;
 
 namespace ExpenseTracker.Core.TrackerInterface
 {
@@ -17,6 +18,18 @@ namespace ExpenseTracker.Core.TrackerInterface
         /// </summary>
         /// <param name="tracker">The tracker record.</param>
         void DisplayTracker(List<TrackerInfo> tracker);
+
+        /// <summary>
+        /// Displays only the income records from the tracker.
+        /// </summary>
+        /// <param name="tracker">The tracker records.</param>
+        void DisplayIncome(List<TrackerInfo> tracker);
+
+        /// <summary>
+        /// Displays only the expense records from the tracker.
+        /// </summary>
+        /// <param name="tracker">The tracker records.</param>
+        void DisplayExpense(List<TrackerInfo> tracker);
 
         /// <summary>
         /// Displays the final finance summary of the tracker record.
@@ -42,5 +55,33 @@ namespace ExpenseTracker.Core.TrackerInterface
         /// Draws a visual separator line to improve the UI.
         /// </summary>
         void EndLine();
+
+        /// <summary>
+        /// Gets user input for performing various functions.
+        /// </summary>
+        /// <returns>The value of choice from menu if valid, otherwise error message.</returns>
+        int GetChoice();
+
+        /// <summary>
+        /// Gets user input for amount.
+        /// </summary>
+        /// <returns>The amount if valid, otherwise the error message.</returns>
+        decimal GetAmount();
+
+        /// <summary>
+        /// Gets user input for date.
+        /// </summary>
+        /// <returns>The date if valid, otherwise the error message.</returns>
+        DateOnly GetDate();
+
+        /// <summary>
+        /// Attempts to parse the user input.
+        /// </summary>
+        /// <typeparam name="T">The object type required.</typeparam>
+        /// <param name="tryParse">The delegate implementation wrapping matching types.</param>
+        /// <param name="errorMessage">The error message to be displayed.</param>
+        /// <returns>The parsed value if true, otherwise error message.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the looping threshold is exceeded without processing success.</exception>
+        T GetValue<T>(TryParseHandler<T> tryParse, string errorMessage);
     }
 }

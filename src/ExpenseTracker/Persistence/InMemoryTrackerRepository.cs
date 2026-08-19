@@ -18,56 +18,48 @@ namespace ExpenseTracker.Persistence
             this._repository = new List<TrackerInfo>();
         }
 
-        /// <summary>
-        /// Add a new tracker information to the record.
-        /// </summary>
-        /// <param name="trackerInfo">The tracker record to be added.</param>
+        /// <inheritdoc/>
         public void AddTransaction(TrackerInfo trackerInfo)
         {
             this._repository.Add(trackerInfo);
         }
 
-        /// <summary>
-        /// Remove a existing tracker record from the list.
-        /// </summary>
-        /// <param name="trackerInfo">Tracker record needed to be deleted.</param>
+        /// <inheritdoc/>
         public void RemoveTransaction(TrackerInfo trackerInfo)
         {
             this._repository.Remove(trackerInfo);
         }
 
-        /// <summary>
-        /// Retrieves the tracker records information.
-        /// </summary>
-        /// <returns>The list of transaction record.</returns>
+        /// <inheritdoc/>
         public List<TrackerInfo> GetTransactions()
         {
-            return this._repository;
+            return this._repository.OrderBy(records => records.Date).ToList();
         }
 
-        /// <summary>
-        /// Retrieves the particular tracker record using unique id.
-        /// </summary>
-        /// <param name="id">Id of the tracker record.</param>
-        /// <returns>The particular tracker record.</returns>
+        /// <inheritdoc/>
         public TrackerInfo? GetById(Guid id)
         {
             return this._repository.Find(i => i.Id == id);
         }
 
-        /// <summary>
-        /// Update the tracker details.
-        /// </summary>
-        /// <param name="transaction">The record that needed to be updated.</param>
+        /// <inheritdoc/>
         public void UpdateTracker(TrackerInfo transaction)
         {
             TrackerInfo? oldTransaction = this.GetById(transaction.Id);
 
             if (oldTransaction != null)
             {
-                oldTransaction.Category = transaction.Category;
                 oldTransaction.Amount = transaction.Amount;
                 oldTransaction.Date = transaction.Date;
+
+                if (oldTransaction is Income oldIncome && transaction is Income newIncome)
+                {
+                    oldIncome.Source = newIncome.Source;
+                }
+                else if (oldTransaction is Expense oldExpense && transaction is Expense newExpense)
+                {
+                    oldExpense.Category = newExpense.Category;
+                }
             }
         }
     }

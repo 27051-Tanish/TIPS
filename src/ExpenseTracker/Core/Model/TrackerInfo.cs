@@ -5,19 +5,17 @@ namespace ExpenseTracker.Core.Model
     /// <summary>
     /// Provides a base contract and shared properties for expense tracker objects.
     /// </summary>
-    public class TrackerInfo
+    public abstract class TrackerInfo
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackerInfo"/> class.
         /// </summary>
-        /// <param name="type">The type of transaction used in the tracker.</param>
-        /// <param name="category">The category in which the transaction takes place.</param>
+        /// <param name="id">The id of transaction in the tracker.</param>
         /// <param name="amount">The monetary value of the transaction.</param>
         /// <param name="date">The calendar date when the transaction occurred.</param>
-        public TrackerInfo(RecordType type, string? category, decimal amount, DateOnly date)
+        public TrackerInfo(Guid id, decimal amount, DateOnly date)
         {
-            this.Type = type;
-            this.Category = category;
+            this.Id = id;
             this.Amount = amount;
             this.Date = date;
         }
@@ -37,14 +35,6 @@ namespace ExpenseTracker.Core.Model
         /// The type of transaction.
         /// </value>
         public RecordType Type { get; set; }
-
-        /// <summary>
-        /// Gets or sets the category of the monetary transaction.
-        /// </summary>
-        /// <value>
-        /// The category in which the transaction takes place.
-        /// </value>
-        public string? Category { get; set; }
 
         /// <summary>
         /// Gets or sets the monetary amount.
