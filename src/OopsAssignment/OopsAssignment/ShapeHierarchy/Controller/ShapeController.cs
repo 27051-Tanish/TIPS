@@ -72,15 +72,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the length of the rectangle :");
-<<<<<<< HEAD
-<<<<<<< HEAD
                 length = this._view.GetInput();
-=======
-                length = this.GetInput();
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
-                length = this._view.GetInput();
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
 
                 if (InputValidator.ValidateDimension(length))
                 {
@@ -93,15 +85,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the width of the rectangle :");
-<<<<<<< HEAD
-<<<<<<< HEAD
                 width = this._view.GetInput();
-=======
-                width = this.GetInput();
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
-                width = this._view.GetInput();
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
 
                 if (InputValidator.ValidateDimension(width))
                 {
@@ -142,15 +126,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the radius of the circle :");
-<<<<<<< HEAD
-<<<<<<< HEAD
                 radius = this._view.GetInput();
-=======
-                radius = this.GetInput();
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
-                radius = this._view.GetInput();
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
 
                 if (InputValidator.ValidateDimension(radius))
                 {
@@ -170,9 +146,6 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 this._view.ShowMessage($"Error :{ex.Message}");
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
         private double GetInput()
         {
@@ -188,8 +161,5 @@ namespace OopsAssignment.ShapeHierarchy.Controller
                 }
             }
         }
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
     }
 }

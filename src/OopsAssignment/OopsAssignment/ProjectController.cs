@@ -45,14 +45,8 @@ namespace OopsAssignment
                         this.StartBankApplication();
                         break;
                     case MainMenu.Exit:
-<<<<<<< HEAD
-<<<<<<< HEAD
                         this._projectConsole.ShowMessage("Exiting the application.");
-=======
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
                         this._projectConsole.ShowMessage("Exiting the application.");
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
                         break;
                     default:
                         this._projectConsole.ShowMessage("Invalid choice");

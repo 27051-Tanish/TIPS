@@ -16,15 +16,7 @@
         Checking,
 
         /// <summary>
-<<<<<<< HEAD
-<<<<<<< HEAD
         /// Represents exit operation of the banking application.
-=======
-        /// Represent exit operation of the banking application.
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
-        /// Represents exit operation of the banking application.
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
         /// </summary>
         Exit,
     }
@@ -45,15 +37,7 @@
         Withdraw,
 
         /// <summary>
-<<<<<<< HEAD
-<<<<<<< HEAD
         /// Represents exit operation from banking operation menu.
-=======
-        /// Represent exit operation from banking operation menu.
->>>>>>> 17d2e2e3cefcb344d9ed2f92709ef00e9eddc480
-=======
-        /// Represents exit operation from banking operation menu.
->>>>>>> 3c66d6011e67eb4f8bc54cb3e5c87a50fb33cd2e
         /// </summary>
         Exit,
     }
