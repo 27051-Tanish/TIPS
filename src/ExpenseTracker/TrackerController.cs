@@ -82,10 +82,25 @@ namespace ExpenseTracker
             while (menu != TrackerMenu.Exit);
         }
 
-        private void AddIncome() => this.AddRecord(RecordType.Income, "source", "income", "(Eg: salary, freelance, etc.)");
+        /// <summary>
+        /// Add new income record to the tracker.
+        /// </summary>
+        private void AddIncome()
+        {
+            this.AddRecord(RecordType.Income, "source", "income", "(Eg: salary, freelance, etc.)");
+        }
 
-        private void AddExpense() => this.AddRecord(RecordType.Expense, "category", "expense", "(Eg: food, transport, etc.)");
+        /// <summary>
+        /// Add new expense record to the tracker.
+        /// </summary>
+        private void AddExpense()
+        {
+            this.AddRecord(RecordType.Expense, "category", "expense", "(Eg: food, transport, etc.)");
+        }
 
+        /// <summary>
+        /// Display all the records of the tracker.
+        /// </summary>
         private void ViewTracker()
         {
             List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
@@ -95,9 +110,37 @@ namespace ExpenseTracker
                 return;
             }
 
-            this._trackerView.DisplayTracker(tracker);
+            int choice;
+            ViewMenu menu;
+            do
+            {
+                this._trackerView.DisplayMessage("[1]. View income records\n[2]. View expense record\n[3]. View entire record\n[4]. Exit");
+                choice = this._trackerView.GetChoice();
+                menu = (ViewMenu)choice;
+                switch (menu)
+                {
+                    case ViewMenu.IncomeRecord:
+                        this._trackerView.DisplayIncome(tracker);
+                        break;
+                    case ViewMenu.ExpenseRecord:
+                        this._trackerView.DisplayExpense(tracker);
+                        break;
+                    case ViewMenu.EntireRecord:
+                        this._trackerView.DisplayTracker(tracker);
+                        break;
+                    case ViewMenu.Exit:
+                        break;
+                    default:
+                        this._trackerView.DisplayMessage("Invalid choice\nEnter from the menu [1 to 4]");
+                        break;
+                }
+            }
+            while (menu != ViewMenu.Exit);
         }
 
+        /// <summary>
+        /// Edit a particular record from the tracker.
+        /// </summary>
         private void EditTracker()
         {
             List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
@@ -133,52 +176,50 @@ namespace ExpenseTracker
                     switch (menu)
                     {
                         case EditMenu.Category:
-                            while (true)
+                            if (tracker is Income incomeRecord)
                             {
-                                this._trackerView.DisplayMessage("Enter new source/category :");
-                                tracker.Category = this._trackerView.ReadInput();
-                                if (InputValidator.ValidateCategory(tracker.Category))
-                                {
-                                    this._trackerView.DisplayMessage($"Source/category updated successfully");
-                                    break;
-                                }
-
-                                this._trackerView.DisplayMessage("Invalid input for source/category.\nEnter again :");
+                                incomeRecord.Source = this.GetSourceOrCategoryInput("source", "income", ConstantMessages.IncomeCategoryMessage);
+                                this._trackerView.DisplayMessage($"Source updated successfully\nDo you want to edit anything or close edit menu :");
+                            }
+                            else if (tracker is Expense expenseRecord)
+                            {
+                                expenseRecord.Category = this.GetSourceOrCategoryInput("category", "expense", ConstantMessages.ExpenseCategoryMessage);
+                                this._trackerView.DisplayMessage($"Category updated successfully\nDo you want to edit anything or close edit menu :");
                             }
 
                             break;
                         case EditMenu.Amount:
-                            while (true)
+                            if (tracker is Income income)
                             {
-                                this._trackerView.DisplayMessage("Enter new amount :");
-                                tracker.Amount = this._trackerView.GetAmount();
-                                if (InputValidator.ValidateAmount(tracker.Amount))
-                                {
-                                    this._trackerView.DisplayMessage($"Amount updated successfully");
-                                    break;
-                                }
-
-                                this._trackerView.DisplayMessage("Invalid input for amount. Amount cannot be negative or null.\nEnter again :");
+                                tracker.Amount = this.GetAmountInput("income");
+                                this._trackerView.DisplayMessage($"Amount updated successfully\n" +
+                                            $"Do you want to edit anything or close edit menu :");
+                            }
+                            else if (tracker is Expense expense)
+                            {
+                                tracker.Amount = this.GetAmountInput("expense");
+                                this._trackerView.DisplayMessage($"Amount updated successfully\n" +
+                                            $"Do you want to edit anything or close edit menu :");
                             }
 
                             break;
                         case EditMenu.Date:
-                            while (true)
+                            if (tracker is Income incomeType)
                             {
-                                this._trackerView.DisplayMessage("Enter new date :");
-                                tracker.Date = this._trackerView.GetDate();
-                                if (InputValidator.ValidateDate(tracker.Date))
-                                {
-                                    this._trackerView.DisplayMessage($"Date updated successfully");
-                                    break;
-                                }
-
-                                this._trackerView.DisplayMessage("Invalid input for date. Date cannot be in future.\nEnter again :");
+                                tracker.Date = this.GetDateInput("income");
+                                this._trackerView.DisplayMessage($"Date updated successfully\n" +
+                                            $"Do you want to edit anything or close edit menu :");
+                            }
+                            else if (tracker is Expense expense)
+                            {
+                                tracker.Date = this.GetDateInput("expense");
+                                this._trackerView.DisplayMessage($"Date updated successfully\n" +
+                                            $"Do you want to edit anything or close edit menu :");
                             }
 
                             break;
                         case EditMenu.Exit:
-                            this._trackerView.DisplayMessage("Closing edit menu.");
+                            this._trackerView.DisplayMessage("Closing edit menu...");
                             break;
                         default:
                             this._trackerView.DisplayMessage("Invalid input for choice\nPlease enter from [1 to 4].");
@@ -194,6 +235,9 @@ namespace ExpenseTracker
             }
         }
 
+        /// <summary>
+        /// Delete a particular record from the tracker.
+        /// </summary>
         private void DeleteRecord()
         {
             List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
@@ -231,6 +275,9 @@ namespace ExpenseTracker
             }
         }
 
+        /// <summary>
+        /// Retrieves the total summary of the records in the tracker.
+        /// </summary>
         private void RetrieveSummary()
         {
             List<TrackerInfo> records = (List<TrackerInfo>)this._trackerManager.GetAllTransactions();
@@ -265,7 +312,7 @@ namespace ExpenseTracker
 
         private void AddRecord(RecordType recordType, string fieldName, string recordName, string exampleMessage)
         {
-            string? category;
+            string? input;
             decimal amount;
             DateOnly date;
             try
@@ -276,17 +323,30 @@ namespace ExpenseTracker
             }
             catch (InvalidOperationException ex)
             {
-                this._trackerView.DisplayMessage($"Error :{ex.Message}");
+                this._trackerView.DisplayMessage($"Error: {ex.Message}");
                 return;
             }
 
-            TrackerInfo tracker = new (recordType, category, amount, date);
+            TrackerInfo tracker = recordType switch
+            {
+                RecordType.Income => new Income(Guid.NewGuid(), amount, date, input),
+                RecordType.Expense => new Expense(Guid.NewGuid(), amount, date, input),
+                _ => throw new ArgumentOutOfRangeException(nameof(recordType), $"Invalid record type: {recordType}")
+            };
+
             this._trackerManager.AddNewTransaction(tracker);
-            Logger.WriteLog("SUCCESS", "Record added successfully");
-            this._trackerView.DisplayMessage("Record added successfully!");
+            this._trackerView.DisplayMessage($"{recordType} record added successfully!");
         }
 
-        private string GetCategoryInput(string fieldName, string recordName, string exampleMessage)
+        /// <summary>
+        /// Reusable method for getting source or category as input.
+        /// </summary>
+        /// <param name="fieldName">The field name that is source or category.</param>
+        /// <param name="recordName">The type of the record.</param>
+        /// <param name="exampleMessage">The message to be displayed as an example.</param>
+        /// <returns>The source or category as the outcome.</returns>
+        /// <exception cref="InvalidOperationException">Throws an exception when the user ran out of retries.</exception>
+        private string GetSourceOrCategoryInput(string fieldName, string recordName, string exampleMessage)
         {
             string? category;
             int attempt = 0;

@@ -36,18 +36,67 @@ namespace ExpenseTracker.View
 
             foreach (TrackerInfo trackerInfo in tracker)
             {
-                table.AddRow(serialNumber, trackerInfo.Type, trackerInfo.Category, trackerInfo.Amount, trackerInfo.Date);
-                serialNumber++;
+                if (trackerInfo is Income income)
+                {
+                    table.AddRow(serialNumber, nameof(Income), income.Source, trackerInfo.Amount, trackerInfo.Date);
+                    serialNumber++;
+                }
+                else if (trackerInfo is Expense expense)
+                {
+                    table.AddRow(serialNumber, nameof(Expense), expense.Category, trackerInfo.Amount, trackerInfo.Date);
+                    serialNumber++;
+                }
             }
 
             table.Write();
         }
 
         /// <inheritdoc/>
-        public void DisplayRecord(TrackerInfo tracker)
+        public void DisplayIncome(List<TrackerInfo> tracker)
         {
-            ConsoleTable table = new ("Type", "Category/Source", "Amount", "Date");
-            table.AddRow(tracker.Type, tracker.Category, tracker.Amount, tracker.Date);
+            if (!tracker.Any(t => t is Income))
+            {
+                this.DisplayMessage("No income records found.");
+                return;
+            }
+
+            int serialNumber = 1;
+
+            ConsoleTable table = new ("Serial Number", "Type", "Category/Source", "Amount", "Date");
+            foreach (TrackerInfo trackerInfo in tracker)
+            {
+                if (trackerInfo is Income income)
+                {
+                    table.AddRow(serialNumber, nameof(Income), income.Source, trackerInfo.Amount, trackerInfo.Date);
+                    serialNumber++;
+                }
+            }
+
+            table.Write();
+        }
+
+        /// <inheritdoc/>
+        public void DisplayExpense(List<TrackerInfo> tracker)
+        {
+            if (!tracker.Any(t => t is Expense))
+            {
+                this.DisplayMessage("No expense records found.");
+                return;
+            }
+
+            int serialNumber = 1;
+
+            ConsoleTable table = new ("Serial Number", "Type", "Category/Source", "Amount", "Date");
+            foreach (TrackerInfo trackerInfo in tracker)
+            {
+                if (trackerInfo is Expense expense)
+                {
+                    table.AddRow(serialNumber, nameof(Expense), expense.Category, trackerInfo.Amount, trackerInfo.Date);
+                    serialNumber++;
+                }
+            }
+
+            table.Write();
         }
 
         /// <inheritdoc/>

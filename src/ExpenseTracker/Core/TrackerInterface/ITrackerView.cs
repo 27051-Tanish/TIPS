@@ -20,10 +20,16 @@ namespace ExpenseTracker.Core.TrackerInterface
         void DisplayTracker(List<TrackerInfo> tracker);
 
         /// <summary>
-        /// Displays the tracker information of the record.
+        /// Displays only the income records from the tracker.
         /// </summary>
-        /// <param name="tracker">The record that needs to be displayed.</param>
-        void DisplayRecord(TrackerInfo tracker);
+        /// <param name="tracker">The tracker records.</param>
+        void DisplayIncome(List<TrackerInfo> tracker);
+
+        /// <summary>
+        /// Displays only the expense records from the tracker.
+        /// </summary>
+        /// <param name="tracker">The tracker records.</param>
+        void DisplayExpense(List<TrackerInfo> tracker);
 
         /// <summary>
         /// Displays the final finance summary of the tracker record.

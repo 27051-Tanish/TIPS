@@ -33,7 +33,7 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc/>
         public List<TrackerInfo> GetTransactions()
         {
-            return this._records;
+            return this._repository.OrderBy(records => records.Date).ToList();
         }
 
         /// <inheritdoc/>
@@ -49,9 +49,17 @@ namespace ExpenseTracker.Persistence
 
             if (oldTransaction != null)
             {
-                oldTransaction.Category = transaction.Category;
                 oldTransaction.Amount = transaction.Amount;
                 oldTransaction.Date = transaction.Date;
+
+                if (oldTransaction is Income oldIncome && transaction is Income newIncome)
+                {
+                    oldIncome.Source = newIncome.Source;
+                }
+                else if (oldTransaction is Expense oldExpense && transaction is Expense newExpense)
+                {
+                    oldExpense.Category = newExpense.Category;
+                }
             }
         }
     }
