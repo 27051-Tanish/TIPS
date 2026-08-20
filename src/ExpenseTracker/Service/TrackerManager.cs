@@ -61,7 +61,7 @@ namespace ExpenseTracker.Service
         /// Update the details of the given transaction type in the tracker.
         /// </summary>
         /// <param name="transaction">Transaction which needed to be edited.</param>
-        public void UpdateTransaction(TrackerInfo transaction)
+        public void UpdateTransaction(TrackerInfo? transaction)
         {
             this._repository.UpdateTracker(transaction);
         }
