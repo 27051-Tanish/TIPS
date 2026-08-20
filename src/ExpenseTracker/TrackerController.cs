@@ -308,6 +308,7 @@ namespace ExpenseTracker
             List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
             if (tracker.Count == 0)
             {
+                Logger.WriteLog("FAILURE", "Tracker is empty cannot create a backup.");
                 this._trackerView.DisplayMessage("Tracker is empty cannot create a backup.");
                 return;
             }
