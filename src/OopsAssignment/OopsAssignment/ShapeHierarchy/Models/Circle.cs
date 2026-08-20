@@ -42,7 +42,7 @@
             double maxRadius = Math.Sqrt(double.MaxValue / Math.PI);
             if (this.Radius > maxRadius)
             {
-                throw new OverflowException("The radius is too big to calculate area of the circle");
+                throw new OverflowException("The radius is too big to calculate area of the circle.");
             }
 
             return Math.PI * this.Radius * this.Radius;
