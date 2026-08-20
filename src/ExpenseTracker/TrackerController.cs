@@ -129,6 +129,7 @@ namespace ExpenseTracker
                         this._trackerView.DisplayTracker(tracker);
                         break;
                     case ViewMenu.Exit:
+                        this._trackerView.DisplayMessage("Closing view menu...");
                         break;
                     default:
                         this._trackerView.DisplayMessage("Invalid choice\nEnter from the menu [1 to 4]");
@@ -231,7 +232,6 @@ namespace ExpenseTracker
                 this._trackerManager.UpdateTransaction(tracker);
                 Logger.WriteLog("SUCCESS", $"Record: {serialNumber} updated successfully ");
                 this._trackerView.DisplayMessage("Update successful");
-                this._trackerView.DisplayRecord(tracker);
             }
         }
 
@@ -317,7 +317,7 @@ namespace ExpenseTracker
             DateOnly date;
             try
             {
-                category = this.GetCategoryInput(fieldName, recordName, exampleMessage);
+                input = this.GetSourceOrCategoryInput(fieldName, recordName, exampleMessage);
                 amount = this.GetAmountInput(recordName);
                 date = this.GetDateInput(recordName);
             }
@@ -348,22 +348,22 @@ namespace ExpenseTracker
         /// <exception cref="InvalidOperationException">Throws an exception when the user ran out of retries.</exception>
         private string GetSourceOrCategoryInput(string fieldName, string recordName, string exampleMessage)
         {
-            string? category;
+            string? input;
             int attempt = 0;
 
             while (attempt < ConstantVariables.MaxLimit)
             {
                 this._trackerView.DisplayMessage($"Enter {fieldName} of the {recordName} :");
-                category = this._trackerView.ReadInput();
+                input = this._trackerView.ReadInput();
 
-                if (InputValidator.ValidateCategory(category))
+                if (InputValidator.ValidateCategory(input))
                 {
-                    return category;
+                    return input;
                 }
 
                 attempt++;
 
-                if (category != category?.Trim())
+                if (input != input?.Trim())
                 {
                     this._trackerView.DisplayMessage("Entry should not contain leading or trailing whitespace.");
                 }

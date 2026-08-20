@@ -33,7 +33,7 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc/>
         public List<TrackerInfo> GetTransactions()
         {
-            return this._repository.OrderBy(records => records.Date).ToList();
+            return this._records.OrderBy(records => records.Date).ToList();
         }
 
         /// <inheritdoc/>

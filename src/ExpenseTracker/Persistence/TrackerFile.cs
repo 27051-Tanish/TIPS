@@ -27,8 +27,16 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc/>
         public void AddTransaction(TrackerInfo trackerInfo)
         {
-            string record = $"{trackerInfo.Id},{trackerInfo.Type},{trackerInfo.Category},{trackerInfo.Amount},{trackerInfo.Date}";
-            File.AppendAllText(this._filePath, record + Environment.NewLine);
+            if (trackerInfo is Income income)
+            {
+                string record = $"{trackerInfo.Id},{trackerInfo.Type},{income.Source},{trackerInfo.Amount},{trackerInfo.Date}";
+                File.AppendAllText(this._filePath, record + Environment.NewLine);
+            }
+            else if (trackerInfo is Expense expense)
+            {
+                string record = $"{trackerInfo.Id},{trackerInfo.Type},{expense.Category},{trackerInfo.Amount},{trackerInfo.Date}";
+                File.AppendAllText(this._filePath, record + Environment.NewLine);
+            }
         }
 
         /// <inheritdoc/>
@@ -66,11 +74,20 @@ namespace ExpenseTracker.Persistence
                     decimal.TryParse(data[3].Trim(), out decimal amount) &&
                     DateOnly.TryParse(data[4].Trim(), out DateOnly date))
                 {
-                    records.Add(new TrackerInfo(type, data[2].Trim(), amount, date) { Id = id });
+                    string categoryOrSource = data[2].Trim();
+
+                    if (type == RecordType.Income)
+                    {
+                        records.Add(new Income(id, amount, date, categoryOrSource));
+                    }
+                    else if (type == RecordType.Expense)
+                    {
+                        records.Add(new Expense(id, amount, date, categoryOrSource));
+                    }
                 }
             }
 
-            return records;
+            return records.OrderBy(r => r.Date).ToList();
         }
 
         /// <inheritdoc/>
@@ -91,7 +108,14 @@ namespace ExpenseTracker.Persistence
             List<string> lines = new List<string> { Header };
             foreach (TrackerInfo trackerInfo in records)
             {
-                lines.Add($"{trackerInfo.Id},{trackerInfo.Type},{trackerInfo.Category},{trackerInfo.Amount},{trackerInfo.Date}");
+                if (trackerInfo is Income income)
+                {
+                    lines.Add($"{trackerInfo.Id},{trackerInfo.Type},{income.Source},{trackerInfo.Amount},{trackerInfo.Date}");
+                }
+                else if (trackerInfo is Expense expense)
+                {
+                    lines.Add($"{trackerInfo.Id},{trackerInfo.Type},{expense.Category},{trackerInfo.Amount},{trackerInfo.Date}");
+                }
             }
 
             File.WriteAllLines(this._filePath, lines);
@@ -104,9 +128,17 @@ namespace ExpenseTracker.Persistence
             TrackerInfo? record = records.FirstOrDefault(t => t.Id == trackerInfo.Id);
             if (record != null)
             {
-                record.Category = trackerInfo.Category;
                 record.Amount = trackerInfo.Amount;
                 record.Date = trackerInfo.Date;
+                if (record is Income oldIncome && trackerInfo is Income newIncome)
+                {
+                    oldIncome.Source = newIncome.Source;
+                }
+                else if (record is Expense oldExpense && trackerInfo is Expense newExpense)
+                {
+                    oldExpense.Category = newExpense.Category;
+                }
+
                 this.SaveRecord(records);
             }
         }
