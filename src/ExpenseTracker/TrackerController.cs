@@ -305,6 +305,13 @@ namespace ExpenseTracker
 
         private void PerformBackup()
         {
+            List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
+            if (tracker.Count == 0)
+            {
+                this._trackerView.DisplayMessage("Tracker is empty cannot create a backup.");
+                return;
+            }
+
             this._trackerManager.BackupRecords();
             Logger.WriteLog("SUCCESS", "Backup created successfully.");
             this._trackerView.DisplayMessage("Backup created successfully.");
