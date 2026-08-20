@@ -36,6 +36,6 @@ namespace ExpenseTracker.Core.TrackerInterface
          /// Update the tracker records.
          /// </summary>
          /// <param name="transaction">The tracker record that needs to be edited.</param>
-         void UpdateTracker(TrackerInfo transaction);
+         void UpdateTracker(TrackerInfo? transaction);
     }
 }
