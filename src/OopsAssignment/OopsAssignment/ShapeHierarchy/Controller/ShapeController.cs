@@ -72,7 +72,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the length of the rectangle :");
-                length = this.GetInput();
+                length = this._view.GetInput();
 
                 if (InputValidator.ValidateDimension(length))
                 {
@@ -85,7 +85,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the width of the rectangle :");
-                width = this.GetInput();
+                width = this._view.GetInput();
 
                 if (InputValidator.ValidateDimension(width))
                 {
@@ -126,7 +126,7 @@ namespace OopsAssignment.ShapeHierarchy.Controller
             while (true)
             {
                 this._view.ShowMessage("Enter the radius of the circle :");
-                radius = this.GetInput();
+                radius = this._view.GetInput();
 
                 if (InputValidator.ValidateDimension(radius))
                 {

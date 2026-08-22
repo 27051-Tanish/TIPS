@@ -16,7 +16,7 @@
         Checking,
 
         /// <summary>
-        /// Represent exit operation of the banking application.
+        /// Represents exit operation of the banking application.
         /// </summary>
         Exit,
     }
@@ -37,7 +37,7 @@
         Withdraw,
 
         /// <summary>
-        /// Represent exit operation from banking operation menu.
+        /// Represents exit operation from banking operation menu.
         /// </summary>
         Exit,
     }
