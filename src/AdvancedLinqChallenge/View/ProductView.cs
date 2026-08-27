@@ -27,6 +27,23 @@ namespace AdvancedLinqChallenge.View
         }
 
         /// <summary>
+        /// Displays the details of products only which has category as books in table format.
+        /// </summary>
+        /// <param name="books">Products in the list with category as books.</param>
+        public void DisplayBooks(List<ProductInfo> books)
+        {
+            int serialNUmber = 1;
+            ConsoleTable table = new ConsoleTable("Serial number", "Product name", "Price", "Category");
+            foreach (ProductInfo product in books)
+            {
+                table.AddRow(serialNUmber, product.ProductName, product.Price, product.Category);
+                serialNUmber++;
+            }
+
+            table.Write();
+        }
+
+        /// <summary>
         /// Writes a message to the UI.
         /// </summary>
         /// <param name="message">The message to be displayed.</param>
@@ -42,6 +59,16 @@ namespace AdvancedLinqChallenge.View
         public string? ReadInput()
         {
             return Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Clears the console after each tasks executes.
+        /// </summary>
+        public void ConsoleClear()
+        {
+            this.ShowMessage("Enter any key to close.");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         /// <summary>

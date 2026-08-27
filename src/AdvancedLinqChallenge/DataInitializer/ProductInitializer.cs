@@ -17,6 +17,11 @@ namespace AdvancedLinqChallenge.DataInitializer
             new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "iPhone", Price = 50000m, Category = "Electronics" },
             new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "Soap", Price = 50m, Category = "Grocery" },
             new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "Watch", Price = 1500m, Category = "Accessories" },
+            new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "laptop", Price = 102000m, Category = "Electronics" },
+            new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "The 48 Laws of Power", Price = 500m, Category = "Books" },
+            new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "Apple", Price = 50000m, Category = "Fruits" },
+            new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "Ikigai", Price = 50m, Category = "Books" },
+            new ProductInfo() { ProductId = Guid.NewGuid(), ProductName = "Fan", Price = 1500m, Category = "Accessories" },
         };
     }
 }
