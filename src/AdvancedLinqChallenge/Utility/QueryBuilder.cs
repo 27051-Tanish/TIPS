@@ -26,7 +26,7 @@
         public QueryBuilder<T> Filter(Func<T, bool> filter)
         {
             this._list = this._list.Where(filter);
-            return this;
+            return this; // allows method chaining.
         }
 
         /// <summary>
@@ -38,7 +38,7 @@
         public QueryBuilder<T> Sort<TKey>(Func<T, TKey> keySelector)
         {
             this._list = this._list.OrderBy(keySelector);
-            return this;
+            return this; // allows method chaining.
         }
 
         /// <summary>
