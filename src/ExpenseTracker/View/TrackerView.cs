@@ -52,49 +52,13 @@ namespace ExpenseTracker.View
         /// <inheritdoc/>
         public void DisplayIncome(List<TrackerInfo> tracker)
         {
-            if (!tracker.Any(t => t is Income))
-            {
-                this.DisplayMessage("No income records found.");
-                return;
-            }
-
-            int serialNumber = 1;
-
-            ConsoleTable table = new ("Serial Number", "Type", "Category/Source", "Amount", "Date");
-            foreach (TrackerInfo trackerInfo in tracker)
-            {
-                if (trackerInfo is Income income)
-                {
-                    table.AddRow(serialNumber, nameof(Income), income.Source, trackerInfo.Amount, trackerInfo.Date);
-                    serialNumber++;
-                }
-            }
-
-            table.Write();
+            this.DisplayRecords<Income>(tracker, "Income");
         }
 
         /// <inheritdoc/>
         public void DisplayExpense(List<TrackerInfo> tracker)
         {
-            if (!tracker.Any(t => t is Expense))
-            {
-                this.DisplayMessage("No expense records found.");
-                return;
-            }
-
-            int serialNumber = 1;
-
-            ConsoleTable table = new ("Serial Number", "Type", "Category/Source", "Amount", "Date");
-            foreach (TrackerInfo trackerInfo in tracker)
-            {
-                if (trackerInfo is Expense expense)
-                {
-                    table.AddRow(serialNumber, nameof(Expense), expense.Category, trackerInfo.Amount, trackerInfo.Date);
-                    serialNumber++;
-                }
-            }
-
-            table.Write();
+            this.DisplayRecords<Expense>(tracker, "Expense");
         }
 
         /// <inheritdoc/>
@@ -150,6 +114,37 @@ namespace ExpenseTracker.View
 
                 this.DisplayMessage(errorMessage);
             }
+        }
+
+        /// <inheritdoc/>
+        public void DisplayRecords<T>(List<TrackerInfo> tracker, string recordType)
+            where T : TrackerInfo
+        {
+            var filteredRecords = tracker.OfType<T>().ToList();
+            if (!filteredRecords.Any())
+            {
+                this.DisplayMessage($"No {recordType} records found.");
+                return;
+            }
+
+            ConsoleTable table = new ("Serial Number", "Type", "Category/Source", "Amount", "Date");
+            int serialNumber = 1;
+
+            foreach (TrackerInfo trackerInfo in filteredRecords)
+            {
+                if (trackerInfo is Income income && recordType == "Income")
+                {
+                    table.AddRow(serialNumber, recordType, income.Source, trackerInfo.Amount, trackerInfo.Date);
+                    serialNumber++;
+                }
+                else if (trackerInfo is Expense expense && recordType == "Expense")
+                {
+                    table.AddRow(serialNumber, recordType, expense.Category, trackerInfo.Amount, trackerInfo.Date);
+                    serialNumber++;
+                }
+            }
+
+            table.Write();
         }
     }
 }

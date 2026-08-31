@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Core.Model;
+using ExpenseTracker.Core.Model.Enum;
 using static ExpenseTracker.TrackerController;
 
 namespace ExpenseTracker.Core.TrackerInterface
@@ -30,6 +31,15 @@ namespace ExpenseTracker.Core.TrackerInterface
         /// </summary>
         /// <param name="tracker">The tracker records.</param>
         void DisplayExpense(List<TrackerInfo> tracker);
+
+        /// <summary>
+        /// Segregate and display income and expense separately.
+        /// </summary>
+        /// <param name="tracker">The tracker records.</param>
+        /// <param name="recordType">The type of record.</param>
+        /// <typeparam name="T">The type of the record in the tracker.</typeparam>
+        void DisplayRecords<T>(List<TrackerInfo> tracker, string recordType)
+            where T : TrackerInfo;
 
         /// <summary>
         /// Displays the final finance summary of the tracker record.
