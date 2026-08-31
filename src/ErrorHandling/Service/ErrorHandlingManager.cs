@@ -40,7 +40,7 @@ namespace ErrorHandling.Service
         /// </summary>
         /// <param name="number">The number to be returned.</param>
         /// <returns>The number passes as parameter.</returns>
-        public int GetNumber(int number)
+        public int HandleCustomException(int number)
         {
             if (number < 0)
             {

@@ -39,19 +39,19 @@ namespace ErrorHandling.View
                 switch (menu)
                 {
                     case MainMenu.Task1:
-                        this.Task1();
+                        this.PerformTask1();
                         break;
                     case MainMenu.Task2:
-                        this.Task2();
+                        this.PerformTask2();
                         break;
                     case MainMenu.Task3:
-                        this.Task3();
+                        this.PerformTask3();
                         break;
                     case MainMenu.Task4:
-                        this.Task4();
+                        this.PerformTask4();
                         break;
                     case MainMenu.Task5:
-                        this.Task5();
+                        this.PerformTask5();
                         break;
                     case MainMenu.Exit:
                         break;
@@ -73,7 +73,7 @@ namespace ErrorHandling.View
             this.ShowMessage("[6]. Exit");
         }
 
-        private void Task1()
+        private void PerformTask1()
         {
             this.ShowMessage("Enter the dividend value :");
             int dividend = this.GetIntInput("The value should not be a character, whitespace or null.");
@@ -94,7 +94,7 @@ namespace ErrorHandling.View
             }
         }
 
-        private void Task2()
+        private void PerformTask2()
         {
             this.ShowMessage("Enter the size of the array : ");
             int size = this.GetIntInput("The value should not be a character, whitespace or null.");
@@ -122,14 +122,14 @@ namespace ErrorHandling.View
             }
         }
 
-        private void Task3()
+        private void PerformTask3()
         {
             this.ShowMessage("Enter a positive number :");
             int number = this.GetIntInput("The value should not be a character, whitespace or null.");
 
             try
             {
-                int result = this._errorHandlingManager.GetNumber(number);
+                int result = this._errorHandlingManager.HandleCustomException(number);
                 this.SuccessMessage($"Entered number is {result}");
             }
             catch (InvalidUserInputException ex)
@@ -142,7 +142,7 @@ namespace ErrorHandling.View
             }
         }
 
-        private void Task4()
+        private void PerformTask4()
         {
             AppDomain.CurrentDomain.UnhandledException += this.GlobalExceptionHandler;
             this.ShowMessage("Enter a positive number :");
@@ -150,13 +150,15 @@ namespace ErrorHandling.View
             try
             {
                 int number = int.Parse(this.ReadInput());
-                int result = this._errorHandlingManager.GetNumber(number);
+                int result = this._errorHandlingManager.HandleCustomException(number);
                 this.SuccessMessage($"Entered number is {result}");
             }
             catch (InvalidUserInputException ex)
             {
                 this.ErrorMessage(ex.Message);
             }
+
+            // Comment this catch block to view global exception handling message from app domain.
             catch (Exception ex)
             {
                 this.ErrorMessage(ex.Message);
@@ -167,7 +169,7 @@ namespace ErrorHandling.View
             }
         }
 
-        private void Task5()
+        private void PerformTask5()
         {
             AppDomain.CurrentDomain.UnhandledException += this.GlobalExceptionHandler;
             this.ShowMessage("Enter a positive number :");
@@ -175,7 +177,7 @@ namespace ErrorHandling.View
             try
             {
                 int number = int.Parse(this.ReadInput());
-                int result = this._errorHandlingManager.GetNumber(number);
+                int result = this._errorHandlingManager.HandleCustomException(number);
                 this.SuccessMessage($"Entered number is {result}");
             }
             catch (InvalidUserInputException ex)

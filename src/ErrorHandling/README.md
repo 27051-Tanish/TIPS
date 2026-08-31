@@ -1,6 +1,15 @@
 ﻿#### **Assignment 5 - Error Handling**
 
-
+* Basic concepts to know before proceeding with error handling.
+- try : The try block contains code that might generate an exception during execution. It is the only mandatory block in exception handling.
+- catch : The catch block follows the try block and is used to handle specific exceptions. You can have multiple catch blocks for a single try block,
+each handling a different type of exception. Once a catch block executes, control moves to the finally block (if present) or continues with the rest of the program.
+- finally : The finally block is optional but guarantees execution of code regardless of whether an exception occurred or was handled. It is commonly used for cleanup tasks,
+such as closing files or releasing resources.
+- throw : The throw statement is used to signal the occurrence of an exception. When rethrowing an exception using throw,
+it preserves the original exception’s stack trace, which is crucial for debugging.
+- throw ex : The throw ex statement is another way to rethrow an exception in C#. However, unlike throw, throw ex resets the stack trace information. This means the new stack trace starts from the point where throw ex is called,
+losing the original context where the exception occurred.
 
 * **Task 1** -> Learnt the simple use case of exception handling that how does the "DivideByZeroException" works,
 basically when a number which is divided a number that is zero it throws an exception that cause the interruption in the program.
@@ -30,7 +39,7 @@ type of exception object then it displays the error message.
 #### **Task 5 - Stack Trace**
 
 
-![Alt text]("C:\Users\Tanish.raffi\Pictures\Screenshots\Screenshot 2026-08-18 174608.png")
+![Alt text]("C:\Users\Tanish.raffi\source\repos\TIPS\src\ErrorHandling\ScreenShot\Screenshot 2026-08-18 174608.png")
 
 
 - The stack trace is the list of method calls that tracks the actual execution path of the program.
