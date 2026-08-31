@@ -127,7 +127,6 @@ namespace AdvancedLinqChallenge.Controller
             QueryBuilder<ProductInfo> query = new QueryBuilder<ProductInfo>(products);
             var result = query.Filter(p => p.ProductName == "Phone").Sort(p => p.Price).Execute();
             this._view.DisplayProducts(result);
-
         }
     }
 }
