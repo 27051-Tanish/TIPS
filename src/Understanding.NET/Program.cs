@@ -17,6 +17,7 @@ namespace Understanding.NET
             MathUtils math = new MathUtils();
             try
             {
+                ConsoleView.ShowMessage("\n=== Calculator application ===\n");
                 ConsoleView.ShowMessage("Enter number 1 :");
                 int number1 = ConsoleView.GetIntInput();
                 ConsoleView.ShowMessage("Enter number 2 :");
