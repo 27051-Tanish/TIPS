@@ -27,7 +27,11 @@ namespace Understanding.NET
                 ConsoleView.ShowMessage($"Addition : {math.Add(number1, number2)}");
                 ConsoleView.ShowMessage($"Subtraction : {math.Subtract(number1, number2)}");
                 ConsoleView.ShowMessage($"Multiplication : {math.Multiply(number1, number2)}");
-                ConsoleView.ShowMessage($"Division : {math.Divide(number1, number2)}\n");
+                ConsoleView.ShowMessage($"Division : {math.Divide(number1, number2):f2}\n");
+            }
+            catch (OverflowException ex)
+            {
+                ConsoleView.ShowMessage($"Error :{ex.Message}");
             }
             catch (DivideByZeroException ex)
             {

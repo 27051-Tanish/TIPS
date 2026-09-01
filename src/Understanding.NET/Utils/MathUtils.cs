@@ -44,9 +44,9 @@
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The quotient after the division of two numbers.</returns>
-        public int Divide(int number1, int number2)
+        public decimal Divide(int number1, int number2)
         {
-            return number1 / number2;
+            return (decimal)number1 / number2;
         }
     }
 }
