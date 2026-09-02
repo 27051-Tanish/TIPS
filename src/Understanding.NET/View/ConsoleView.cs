@@ -1,14 +1,14 @@
 ﻿namespace Understanding.NET.View
 {
     /// <summary>
-    /// Acts as UI for handling the reading and writing operations. 
+    /// Acts as UI for handling the reading and writing operations.
     /// </summary>
     public static class ConsoleView
     {
         /// <summary>
-        /// Gets an integer number and returns if valid.
+        /// Gets an integer number and returns if valid, otherwise prompt the user to enter valid number.
         /// </summary>
-        /// <returns>The integer number if valid, otherwise error message.</returns>
+        /// <returns>A valid integer number.</returns>
         public static int GetIntInput()
         {
             while (true)
@@ -18,7 +18,7 @@
                     return number;
                 }
 
-                Console.WriteLine("Please enter valid integer number.");
+                ShowMessage("Please enter valid integer number.");
             }
         }
 

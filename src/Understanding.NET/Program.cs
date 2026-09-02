@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Understanding.NET.Utils;
+﻿using Understanding.NET.Utils;
 using Understanding.NET.View;
 
 namespace Understanding.NET
@@ -14,7 +13,6 @@ namespace Understanding.NET
         /// </summary>
         public static void Main()
         {
-            MathUtils math = new MathUtils();
             try
             {
                 ConsoleView.ShowMessage("\n=== Calculator application ===\n");
@@ -24,22 +22,22 @@ namespace Understanding.NET
                 int number2 = ConsoleView.GetIntInput();
 
                 ConsoleView.ShowMessage("\n=== RESULTS ===\n");
-                ConsoleView.ShowMessage($"Addition : {math.Add(number1, number2)}");
-                ConsoleView.ShowMessage($"Subtraction : {math.Subtract(number1, number2)}");
-                ConsoleView.ShowMessage($"Multiplication : {math.Multiply(number1, number2)}");
-                ConsoleView.ShowMessage($"Division : {math.Divide(number1, number2):f2}\n");
+                ConsoleView.ShowMessage($"Addition : {MathUtils.Add(number1, number2)}");
+                ConsoleView.ShowMessage($"Subtraction : {MathUtils.Subtract(number1, number2)}");
+                ConsoleView.ShowMessage($"Multiplication : {MathUtils.Multiply(number1, number2)}");
+                ConsoleView.ShowMessage($"Division : {MathUtils.Divide(number1, number2):f2}\n");
             }
             catch (OverflowException ex)
             {
-                ConsoleView.ShowMessage($"Error :{ex.Message}");
+                ConsoleView.ShowMessage($"Error: {ex.Message}");
             }
             catch (DivideByZeroException ex)
             {
-                ConsoleView.ShowMessage($"Error : {ex.Message}");
+                ConsoleView.ShowMessage($"Error: {ex.Message}");
             }
             finally
             {
-                ConsoleView.ShowMessage("Enter any key to close...");
+                ConsoleView.ShowMessage("Press any key to close...");
                 Console.ReadKey();
             }
         }
