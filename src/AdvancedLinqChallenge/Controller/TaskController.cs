@@ -111,22 +111,25 @@ namespace AdvancedLinqChallenge.Controller
             watch.Stop();
             this._view.ShowMessage($"Time taken to execute unoptimized version of link query : {watch.Elapsed}");
             this._view.ShowMessage("--- Products with the category books [UNOPTIMIZED] ---");
-            this._view.DisplayBooks(books);
+            this._view.DisplayProductTable(books);
 
             watch.Restart();
             List<ProductInfo> booksOptimized = this._manager.GetBooksInOptimized();
             watch.Stop();
             this._view.ShowMessage($"Time taken to execute optimized version of link query : {watch.Elapsed}");
             this._view.ShowMessage("--- Products with the category books [OPTIMIZED] ---");
-            this._view.DisplayBooks(booksOptimized);
+            this._view.DisplayProductTable(booksOptimized);
         }
 
         private void PerformTask5()
         {
-            List<ProductInfo> products = ProductInitializer.Products;
-            QueryBuilder<ProductInfo> query = new QueryBuilder<ProductInfo>(products);
-            var result = query.Filter(p => p.ProductName == "Phone").Sort(p => p.Price).Execute();
-            this._view.DisplayProducts(result);
+            this._view.ShowMessage("Displays the products that is phone and sorted price.");
+            var products = this._manager.GetPhoneProduct();
+            this._view.DisplayProductTable(products);
+
+            this._view.ShowMessage("\nDisplays the product that starts with 'Elec' and price that is greater than 500.");
+            var electronics = this._manager.GetProductThatStartsWithElec();
+            this._view.DisplayProductTable(electronics);
         }
     }
 }

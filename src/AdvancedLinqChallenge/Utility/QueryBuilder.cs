@@ -1,4 +1,7 @@
-﻿namespace AdvancedLinqChallenge.LinqExtensions
+﻿using System.Linq.Expressions;
+using AdvancedLinqChallenge.Models.Enum;
+
+namespace AdvancedLinqChallenge.LinqExtensions
 {
     /// <summary>
     /// Construct complex LINQ queries that should support filtering, sorting, and joining data.
@@ -19,7 +22,7 @@
         }
 
         /// <summary>
-        /// Filters the collection
+        /// OVERLOAD 2: Filters the collection
         /// </summary>
         /// <param name="filter">The filter to be applied.</param>
         /// <returns>The current query for method chaining.</returns>
@@ -27,6 +30,51 @@
         {
             this._list = this._list.Where(filter);
             return this; // allows method chaining.
+        }
+
+        /// <summary>
+        /// OVERLOAD 2: Dynamic Expression Tree filter
+        /// </summary>
+        /// <param name="propertyName">The property name.</param>
+        /// <param name="condition">The condition that needs to be applied.</param>
+        /// <param name="value">The value that needs to be checked for the property.</param>
+        /// <returns>A filtered query for method chaining.</returns>
+        public QueryBuilder<T> Filter(string propertyName, FilterConditions condition, object value)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName))
+            {
+                throw new ArgumentException("Property name cannot be empty.");
+            }
+
+            ParameterExpression parameter = Expression.Parameter(typeof(T), "t");
+            Expression property = Expression.Property(parameter, propertyName);
+            Expression constant = Expression.Constant(value);
+            Expression body;
+
+            switch (condition)
+            {
+                case FilterConditions.Contains:
+                    body = Expression.Call(property, typeof(string).GetMethod("Contains", new[] { typeof(string) }), constant);
+                    break;
+                case FilterConditions.StartsWith:
+                    body = Expression.Call(property, typeof(string).GetMethod("StartsWith", new[] { typeof(string) }), constant);
+                    break;
+                case FilterConditions.EndsWith:
+                    body = Expression.Call(property, typeof(string).GetMethod("EndsWith", new[] { typeof(string) }), constant);
+                    break;
+                case FilterConditions.GreaterThanEqualTo:
+                    body = Expression.GreaterThanOrEqual(property, Expression.Constant(value, property.Type));
+                    break;
+                case FilterConditions.LesserThanEqualTo:
+                    body = Expression.LessThanOrEqual(property, Expression.Constant(value, property.Type));
+                    break;
+                default:
+                    throw new ArgumentException("Unexpected filter condition.");
+            }
+
+            var lambda = Expression.Lambda<Func<T, bool>>(body, parameter);
+            this._list = this._list.Where(lambda.Compile());
+            return this;
         }
 
         /// <summary>

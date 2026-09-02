@@ -29,15 +29,15 @@ namespace AdvancedLinqChallenge.View
         /// <summary>
         /// Displays the details of products only which has category as books in table format.
         /// </summary>
-        /// <param name="books">Products in the list with category as books.</param>
-        public void DisplayBooks(List<ProductInfo> books)
+        /// <param name="products">Products in the list with category as books.</param>
+        public void DisplayProductTable(List<ProductInfo> products)
         {
-            int serialNUmber = 1;
+            int serialNumber = 1;
             ConsoleTable table = new ConsoleTable("Serial number", "Product name", "Price", "Category");
-            foreach (ProductInfo product in books)
+            foreach (ProductInfo product in products)
             {
-                table.AddRow(serialNUmber, product.ProductName, product.Price, product.Category);
-                serialNUmber++;
+                table.AddRow(serialNumber, product.ProductName, product.Price, product.Category);
+                serialNumber++;
             }
 
             table.Write();

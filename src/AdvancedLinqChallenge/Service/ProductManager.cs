@@ -1,6 +1,8 @@
 ﻿using AdvancedLinqChallenge.DataInitializer;
 using AdvancedLinqChallenge.DataInitializer.ConstantData;
+using AdvancedLinqChallenge.LinqExtensions;
 using AdvancedLinqChallenge.Models;
+using AdvancedLinqChallenge.Models.Enum;
 
 namespace AdvancedLinqChallenge.Service
 {
@@ -94,6 +96,31 @@ namespace AdvancedLinqChallenge.Service
         public List<ProductInfo> GetBooksInOptimized()
         {
             return ProductInitializer.Products.Where(p => p.Category == "Books").OrderBy(p => p.Price).ToList();
+        }
+
+        /// <summary>
+        /// Retrieves products that are phones.
+        /// </summary>
+        /// <returns>The filtered and sorted version of the list.</returns>
+        public List<ProductInfo> GetPhoneProduct()
+        {
+            List<ProductInfo> products = ProductInitializer.Products;
+            QueryBuilder<ProductInfo> query = new QueryBuilder<ProductInfo>(products);
+            var result = query.Filter(p => p.ProductName == "Phone").Sort(p => p.Price).Execute();
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves products that starts with 'Elec' in the category.
+        /// </summary>
+        /// <returns>The filtered and sorted version of the list.</returns>
+        public List<ProductInfo> GetProductThatStartsWithElec()
+        {
+            List<ProductInfo> products = ProductInitializer.Products;
+            var query = new QueryBuilder<ProductInfo>(products)
+                .Filter("Category", FilterConditions.StartsWith, "Elec") // Uses Overload 2 (Expression Tree)
+                .Filter(p => p.Price > 500m).Execute();
+            return query;
         }
     }
 }
