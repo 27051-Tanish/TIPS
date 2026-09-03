@@ -11,7 +11,7 @@
         /// <value>
         /// The product name.
         /// </value>
-        public string? ProductName { get; set; }
+        public string ProductName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the unique product id.

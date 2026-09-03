@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using AdvancedLinqChallenge.DataInitializer;
-using AdvancedLinqChallenge.Models;
+﻿using AdvancedLinqChallenge.Models;
 using ConsoleTables;
 
 namespace AdvancedLinqChallenge.View

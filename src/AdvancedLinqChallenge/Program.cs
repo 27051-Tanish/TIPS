@@ -2,11 +2,17 @@
 using AdvancedLinqChallenge.Service;
 using AdvancedLinqChallenge.View;
 
-namespace Assignments
+namespace AdvancedLinqChallenge
 {
+    /// <summary>
+    /// Contains the main execution logic.
+    /// </summary>
     public class Program
     {
-        public static void Main(string[] args)
+        /// <summary>
+        /// Serves as the primary entry point of the application.
+        /// </summary>
+        public static void Main()
         {
             ProductView view = new ProductView();
             ProductManager manager = new ProductManager();

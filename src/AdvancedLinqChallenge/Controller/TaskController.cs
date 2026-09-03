@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 using AdvancedLinqChallenge.DataInitializer;
 using AdvancedLinqChallenge.DataInitializer.ConstantData;
 using AdvancedLinqChallenge.LinqExtensions;
@@ -10,7 +11,7 @@ using AdvancedLinqChallenge.View;
 namespace AdvancedLinqChallenge.Controller
 {
     /// <summary>
-    /// Handles the data flow between the service and view.
+    /// Handles the logic for performing different linq operations.
     /// </summary>
     public class TaskController
     {
@@ -73,6 +74,9 @@ namespace AdvancedLinqChallenge.Controller
 
         private void PerformBasicLinq()
         {
+            this._view.ShowMessage("-- Filter Electronics products above $500\n" +
+            "-- Sort filtered products by descending price\n" +
+            "-- Calculate the average price\n");
             var (productList, averagePrice) = this._manager.Task1();
             this._view.DisplayProducts(productList);
             this._view.ShowMessage($"Average price : {averagePrice}");
@@ -80,6 +84,9 @@ namespace AdvancedLinqChallenge.Controller
 
         private void PerformTask2()
         {
+            this._view.ShowMessage("-- Group products by category and count them\n" +
+            "-- Find the most expensive product in each category\n" +
+            "-- Join products with their suppliers\n");
             var result = this._manager.Task2();
             foreach (var item in result)
             {
@@ -88,7 +95,7 @@ namespace AdvancedLinqChallenge.Controller
                     $"Expensive Product's Name : {item.ProductName}\n" +
                     $"Expensive product's Price : {item.ExpensiveProductPrice}\n" +
                     $"Supplier Name : {item.SupplierName}");
-                this._view.ShowMessage(new string('=', 20));
+                this._view.ShowMessage(new string('=', 45));
             }
         }
 
