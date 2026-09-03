@@ -104,8 +104,7 @@ namespace AdvancedLinqChallenge.Service
         /// <returns>The filtered and sorted version of the list.</returns>
         public List<ProductInfo> GetPhoneProduct()
         {
-            List<ProductInfo> products = ProductInitializer.Products;
-            QueryBuilder<ProductInfo> query = new QueryBuilder<ProductInfo>(products);
+            QueryBuilder<ProductInfo> query = new QueryBuilder<ProductInfo>(ProductInitializer.Products);
             var result = query.Filter(p => p.ProductName == "Phone").Sort(p => p.Price).Execute();
             return result;
         }
@@ -116,8 +115,7 @@ namespace AdvancedLinqChallenge.Service
         /// <returns>The filtered and sorted version of the list.</returns>
         public List<ProductInfo> GetProductThatStartsWithElec()
         {
-            List<ProductInfo> products = ProductInitializer.Products;
-            var query = new QueryBuilder<ProductInfo>(products)
+            var query = new QueryBuilder<ProductInfo>(ProductInitializer.Products)
                 .Filter("Category", FilterConditions.StartsWith, "Elec") // Uses Overload 2 (Expression Tree)
                 .Filter(p => p.Price > 500m).Execute();
             return query;
