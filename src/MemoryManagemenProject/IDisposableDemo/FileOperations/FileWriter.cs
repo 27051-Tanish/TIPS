@@ -22,7 +22,7 @@
         /// <param name="content">The content to be written in the file.</param>
         public void WriteToFile(string content)
         {
-            this._writer.WriteLine(content + Environment.NewLine);
+            this._writer.WriteLine(content);
         }
 
         /// <inheritdoc/>

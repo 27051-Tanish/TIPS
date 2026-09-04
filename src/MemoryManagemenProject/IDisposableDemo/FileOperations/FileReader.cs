@@ -19,9 +19,10 @@
         /// <summary>
         /// Read from the file.
         /// </summary>
-        public void ReadFromFile()
+        /// <returns>The content read from the file.</returns>
+        public string ReadFromFile()
         {
-            this._reader.ReadToEnd();
+            return this._reader.ReadToEnd();
         }
 
         /// <inheritdoc/>
