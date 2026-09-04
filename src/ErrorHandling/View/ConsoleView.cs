@@ -25,42 +25,49 @@ namespace ErrorHandling.View
         /// </summary>
         public void RunApplication()
         {
-            int choice;
-            MainMenu menu;
-            do
+            try
             {
-                this.ShowMessage("WELCOME TO ERROR HANDLING APPLICATION");
-                this.ShowMenu();
-                this.ShowMessage("Please select your option: ");
-                choice = this.GetIntInput("The value should not be a character, whitespace or null.\n" +
-                    "Please enter the choice again from the menu");
-                menu = (MainMenu)choice;
-
-                switch (menu)
+                int choice;
+                MainMenu menu;
+                do
                 {
-                    case MainMenu.Task1:
-                        this.PerformTask1();
-                        break;
-                    case MainMenu.Task2:
-                        this.PerformTask2();
-                        break;
-                    case MainMenu.Task3:
-                        this.PerformTask3();
-                        break;
-                    case MainMenu.Task4:
-                        this.PerformTask4();
-                        break;
-                    case MainMenu.Task5:
-                        this.PerformTask5();
-                        break;
-                    case MainMenu.Exit:
-                        break;
-                    default:
-                        this.ErrorMessage("Invalid input for choice.\nPlease select between [1 to 6].");
-                        break;
+                    this.ShowMessage("WELCOME TO ERROR HANDLING APPLICATION");
+                    this.ShowMenu();
+                    this.ShowMessage("Please select your option: ");
+                    choice = this.GetIntInput("The value should not be a character, whitespace or null.\n" +
+                        "Please enter the choice again from the menu");
+                    menu = (MainMenu)choice;
+
+                    switch (menu)
+                    {
+                        case MainMenu.Task1:
+                            this.PerformTask1();
+                            break;
+                        case MainMenu.Task2:
+                            this.PerformTask2();
+                            break;
+                        case MainMenu.Task3:
+                            this.PerformTask3();
+                            break;
+                        case MainMenu.Task4:
+                            this.PerformTask4();
+                            break;
+                        case MainMenu.Task5:
+                            this.PerformTask5();
+                            break;
+                        case MainMenu.Exit:
+                            break;
+                        default:
+                            this.ErrorMessage("Invalid input for choice.\nPlease select between [1 to 6].");
+                            break;
+                    }
                 }
+                while (menu != MainMenu.Exit);
             }
-            while (menu != MainMenu.Exit);
+            catch (Exception ex)
+            {
+                this.ShowMessage(ex.Message);
+            }
         }
 
         private void ShowMenu()
