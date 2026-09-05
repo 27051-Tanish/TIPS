@@ -157,7 +157,7 @@ namespace ExpenseTracker
 
             if (serialNumber < 1 || serialNumber > records.Count)
             {
-                Logger.WriteLog("FAILURE", "Trying to edit record that is not present in the tracker.");
+                Logger.WriteLog("[WARNING]", "Trying to edit record that is not present in the tracker.");
                 this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
                 return;
             }
@@ -230,7 +230,7 @@ namespace ExpenseTracker
                 while (menu != EditMenu.Exit);
 
                 this._trackerManager.UpdateTransaction(tracker);
-                Logger.WriteLog("SUCCESS", $"Record: {serialNumber} updated successfully ");
+                Logger.WriteLog("[INFO]", $"Record: {serialNumber} updated successfully ");
                 this._trackerView.DisplayMessage("Update successful");
             }
         }
@@ -253,7 +253,7 @@ namespace ExpenseTracker
             int serialNumber = this._trackerView.GetChoice();
             if (serialNumber < 1 || serialNumber > records.Count)
             {
-                Logger.WriteLog("FAILURE", "Trying to delete record that is not present in the tracker.");
+                Logger.WriteLog("[WARNING]", "Trying to delete record that is not present in the tracker.");
                 this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
                 return;
             }
@@ -264,12 +264,12 @@ namespace ExpenseTracker
                 bool removed = this._trackerManager.DeleteTransaction(tracker);
                 if (removed)
                 {
-                    Logger.WriteLog("SUCCESS", $"Record: {serialNumber} deleted successfully ");
+                    Logger.WriteLog("[INFO]", $"Record: {serialNumber} deleted successfully ");
                     this._trackerView.DisplayMessage($"Record :{serialNumber} deleted successfully.");
                 }
                 else
                 {
-                    Logger.WriteLog("FAILURE", $"Record: {serialNumber} deletion failed.");
+                    Logger.WriteLog("[ERROR]", $"Record: {serialNumber} deletion failed.");
                     this._trackerView.DisplayMessage("Deletion failed.");
                 }
             }
@@ -293,7 +293,7 @@ namespace ExpenseTracker
 
             if (totalIncome < totalExpense)
             {
-                Logger.WriteLog("WARNING", "Expense is more than income.");
+                Logger.WriteLog("[WARNING]", "Expense is more than income.");
                 this._trackerView.DisplayMessage("You have spent more than your income.");
                 this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
             }
@@ -308,13 +308,13 @@ namespace ExpenseTracker
             List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
             if (tracker.Count == 0)
             {
-                Logger.WriteLog("FAILURE", "Tracker is empty cannot create a backup.");
+                Logger.WriteLog("[ERROR]", "Tracker is empty cannot create a backup.");
                 this._trackerView.DisplayMessage("Tracker is empty cannot create a backup.");
                 return;
             }
 
             this._trackerManager.BackupRecords();
-            Logger.WriteLog("SUCCESS", "Backup created successfully.");
+            Logger.WriteLog("[INFO]", "Backup created successfully.");
             this._trackerView.DisplayMessage("Backup created successfully.");
         }
 
@@ -386,7 +386,7 @@ namespace ExpenseTracker
                 }
             }
 
-            Logger.WriteLog("FAILURE", "Maximum re-try limit reached for getting source/category as input.");
+            Logger.WriteLog("[ERROR]", "Maximum re-try limit reached for getting source/category as input.");
             throw new InvalidOperationException($"Maximum limit reached.");
         }
 
@@ -409,7 +409,7 @@ namespace ExpenseTracker
                 this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 
-            Logger.WriteLog("FAILURE", "Maximum re-try limit reached for getting amount as input.");
+            Logger.WriteLog("[ERROR]", "Maximum re-try limit reached for getting amount as input.");
             throw new InvalidOperationException("Maximum limit reached.");
         }
 
@@ -432,7 +432,7 @@ namespace ExpenseTracker
                 this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 
-            Logger.WriteLog("FAILURE", "Maximum re-try limit reached for getting date as input.");
+            Logger.WriteLog("[ERROR]", "Maximum re-try limit reached for getting date as input.");
             throw new InvalidOperationException("Maximum limit reached.");
         }
     }

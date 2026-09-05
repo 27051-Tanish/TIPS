@@ -8,15 +8,15 @@ namespace ExpenseTracker.Persistence
     /// <summary>
     /// Provides file storage for tracking monetary records.
     /// </summary>
-    public class TrackerFile : ITrackerRepository, IFileRepository
+    public class FinanceFileRepository : ITrackerRepository, IFileRepository
     {
         private const string Header = "Id,Type,Category/Source,Amount,Date";
         private readonly string _filePath = "records.csv";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackerFile"/> class.
+        /// Initializes a new instance of the <see cref="FinanceFileRepository"/> class.
         /// </summary>
-        public TrackerFile()
+        public FinanceFileRepository()
         {
             if (!File.Exists(this._filePath))
             {
