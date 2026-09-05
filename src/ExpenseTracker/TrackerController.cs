@@ -303,6 +303,9 @@ namespace ExpenseTracker
             }
         }
 
+        /// <summary>
+        /// Takes all the details from the source file and takes a backup copy.
+        /// </summary>
         private void PerformBackup()
         {
             List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
@@ -318,6 +321,14 @@ namespace ExpenseTracker
             this._trackerView.DisplayMessage("Backup created successfully.");
         }
 
+        /// <summary>
+        /// Reuse method for adding new record to the tracker.
+        /// </summary>
+        /// <param name="recordType">The type of the record.</param>
+        /// <param name="fieldName">The field name that is source or category.</param>
+        /// <param name="recordName">The record name that is income or expense.</param>
+        /// <param name="exampleMessage">The message to be displayed as an example.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Throws exception when the record type is not income or expense.</exception>
         private void AddRecord(RecordType recordType, string fieldName, string recordName, string exampleMessage)
         {
             string? input;
@@ -390,6 +401,12 @@ namespace ExpenseTracker
             throw new InvalidOperationException($"Maximum limit reached.");
         }
 
+        /// <summary>
+        /// Gets amount as an input from the user.
+        /// </summary>
+        /// <param name="recordName">The type of the record.</param>
+        /// <returns>The amount of income or expense.</returns>
+        /// <exception cref="InvalidOperationException">Throws an exception when the user ran out of retries.</exception>
         private decimal GetAmountInput(string recordName)
         {
             decimal amount;
@@ -413,6 +430,12 @@ namespace ExpenseTracker
             throw new InvalidOperationException("Maximum limit reached.");
         }
 
+        /// <summary>
+        /// Gets the date of the income or expense.
+        /// </summary>
+        /// <param name="recordName">The type of the record.</param>
+        /// <returns>The date of occurrence of the transaction.</returns>
+        /// <exception cref="InvalidOperationException">Throws an exception when the user ran out of retries.</exception>
         private DateOnly GetDateInput(string recordName)
         {
             DateOnly date;
