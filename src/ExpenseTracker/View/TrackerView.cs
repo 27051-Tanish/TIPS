@@ -1,6 +1,7 @@
 ﻿using ConsoleTables;
 using ExpenseTracker.Core.Model;
 using ExpenseTracker.Core.TrackerInterface;
+using ExpenseTracker.Helper;
 using static ExpenseTracker.TrackerController;
 
 namespace ExpenseTracker.View
@@ -21,7 +22,8 @@ namespace ExpenseTracker.View
             this.DisplayMessage("[4]. Update tracker.");
             this.DisplayMessage("[5]. Delete tracker.");
             this.DisplayMessage("[6]. View summary.");
-            this.DisplayMessage("[7]. Exit.");
+            this.DisplayMessage("[7]. Back up.");
+            this.DisplayMessage("[8]. Exit.");
             this.EndLine();
         }
 
