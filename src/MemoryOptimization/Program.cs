@@ -12,6 +12,7 @@
         {
             MemoryEater me = new MemoryEater();
             me.Allocate();
+            Console.WriteLine("Memory allocation and deallocation successful...");
             Console.ReadKey();
         }
     }

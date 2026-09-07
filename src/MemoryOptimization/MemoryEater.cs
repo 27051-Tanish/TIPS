@@ -15,11 +15,14 @@
         /// </summary>
         public void Allocate()
         {
-            while (true)
+            for (int i = 0; i < 100; i++)
             {
                 this._memAlloc.Add(new int[1000]);
                 Thread.Sleep(10);
             }
+
+            this._memAlloc.Clear();
+            this._memAlloc.TrimExcess();
         }
     }
 }
