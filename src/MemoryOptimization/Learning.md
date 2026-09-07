@@ -145,7 +145,7 @@ until the system memory overflows, it throws an `OutOfMemoryException`.
 ![snapshot 6](./ScreenShots/InitialStage.png)
 - This the initial stage before creating any object.
 
-![snapshot 6](./ScreenShots/Unoptimized.png)
+![snapshot 6](./ScreenShots/UnOptimized.png)
 - The heap difference in unoptimized code, it runs infinitely so that it occupies more memory and results in `OutOfMemoryException`.
 
 
