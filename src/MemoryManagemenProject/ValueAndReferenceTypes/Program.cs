@@ -18,22 +18,22 @@ namespace ValueAndReferenceTypes
 
             int ageOfPerson = 10;
             int ageOfPerson1 = ageOfPerson;
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
             Console.WriteLine("INITIAL STATE (Before modifying the objects and variables)");
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
             Console.WriteLine($"[Reference Type] Original Person Name: {person.Name}");
             Console.WriteLine($"[Reference Type] Copied Person1 Name: {person1.Name}");
             Console.WriteLine($"[Value Type] Original Age: {ageOfPerson}");
             Console.WriteLine($"[Value Type] Copied Age1: {ageOfPerson1}");
             Console.WriteLine();
-
             ModifyAndDisplay(person1, ageOfPerson1);
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
             Console.WriteLine("FINAL STATE (Verifying effects after applying the modifications.)");
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
+
             Console.WriteLine($"[Reference Type] Original Person Name: {person.Name} (CHANGED - Shares same reference)");
             Console.WriteLine($"[Value Type] Original Age: {ageOfPerson} (UNCHANGED - Passed by value)");
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
             Console.WriteLine();
 
             Console.WriteLine("View heap allocation.");
@@ -55,9 +55,9 @@ namespace ValueAndReferenceTypes
         {
             person1.Name = "Badhusha1";
             ageOfPerson1 = 20;
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
             Console.WriteLine("INSIDE METHOD (Modifications Applied)");
-            Console.WriteLine("==================================================");
+            Console.WriteLine(new string('=', 20));
             Console.WriteLine($"[Inside Method] person1.Name changed to: {person1.Name}");
             Console.WriteLine($"[Inside Method] ageOfPerson1 changed to: {ageOfPerson1}");
             Console.WriteLine();
