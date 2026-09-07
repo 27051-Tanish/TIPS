@@ -131,7 +131,7 @@ until the system memory overflows, it throws an `OutOfMemoryException`.
 ![snapshot 2](./ScreenShots/AfterOneIteration.png)
 - After the first iteration there is memory difference from initial stage in the heap.
 
-![snapshot 3](./ScreenShots/AfterhundredIteration.png)
+![snapshot 3](./ScreenShots/AfterHundredIteration.png)
 - After the loop gets executed there is tremendous increase in the heap memory usage.
 
 ![snapshot 4](./ScreenShots/AfterClearing.png)
