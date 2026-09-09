@@ -6,11 +6,13 @@
     public static class ConsoleView
     {
         /// <summary>
-        /// Gets an integer number and returns if valid, otherwise prompt the user to enter valid number.
+        /// Displays a prompt and reads console input, repeatedly showing an error message until a valid integer is entered.
         /// </summary>
+        /// <param name="prompt">The prompt to be displayed.</param>
         /// <returns>A valid integer number.</returns>
-        public static int GetIntInput()
+        public static int GetIntInput(string prompt)
         {
+            ShowMessage(prompt);
             while (true)
             {
                 if (int.TryParse(Console.ReadLine(), out int number))

@@ -16,10 +16,8 @@ namespace Understanding.NET
             try
             {
                 ConsoleView.ShowMessage("\n=== Calculator application ===\n");
-                ConsoleView.ShowMessage("Enter number 1 :");
-                int number1 = ConsoleView.GetIntInput();
-                ConsoleView.ShowMessage("Enter number 2 :");
-                int number2 = ConsoleView.GetIntInput();
+                int number1 = ConsoleView.GetIntInput("Enter number 1: ");
+                int number2 = ConsoleView.GetIntInput("Enter number 2: ");
 
                 ConsoleView.ShowMessage("\n=== RESULTS ===\n");
                 ConsoleView.ShowMessage($"Addition : {MathUtils.Add(number1, number2)}");
@@ -27,11 +25,7 @@ namespace Understanding.NET
                 ConsoleView.ShowMessage($"Multiplication : {MathUtils.Multiply(number1, number2)}");
                 ConsoleView.ShowMessage($"Division : {MathUtils.Divide(number1, number2):f2}\n");
             }
-            catch (OverflowException ex)
-            {
-                ConsoleView.ShowMessage($"Error: {ex.Message}");
-            }
-            catch (DivideByZeroException ex)
+            catch (Exception ex) when (ex is OverflowException || ex is DivideByZeroException)
             {
                 ConsoleView.ShowMessage($"Error: {ex.Message}");
             }
