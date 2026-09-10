@@ -93,7 +93,7 @@ Incase several applications use same shared library, instead each application ha
 - Garbage collection in .NET is an automatic memory manager that handles the allocation and release of memory for your application’s managed heap. It inspects the heap in the background and when it finds the object that the application no longer uses, it detects and deletes them to free up space.
 Developers don't need to clean space manually by writing code. It also performs optimized memory allocation for better performance; also unused objects are removed.
 - The garbage collector does not sit in the background constantly looking for unused objects. It only wakes up when your app runs out of space to create new objects.
-- 
+- When cleaning small, new items, the app pauses for a split second. But for big cleanups, modern .NET hands the work over to a separate background helper. This keeps the application's screen moving smoothly without freezing.
 
 #### 1. The Three Generations (Ephemeral & Long-Lived Heap)
 The managed heap is split into three generations to leverage the statistical fact that newer objects tend to have very short lifespans:
