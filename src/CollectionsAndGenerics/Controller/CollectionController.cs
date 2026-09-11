@@ -173,6 +173,8 @@ namespace CollectionsAndGenerics.Controller
         {
             IReadOnlyDictionary<string, int> dictionary = this._service.GenerateDictionary();
             View.PrintDictionary(dictionary);
+
+            // dictionary["Tanish"] = 100; This line throws an error because IReadOnlyDictionary is immutable.
             View.ConsoleClose();
         }
     }
