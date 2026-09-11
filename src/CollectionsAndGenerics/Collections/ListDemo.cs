@@ -1,73 +1,55 @@
-﻿namespace CollectionsAndGenerics.Collections
+﻿using System.Collections;
+using CollectionsAndGenerics.ConsoleView;
+
+namespace CollectionsAndGenerics.Collections
 {
     /// <summary>
     /// Performs different operations in a list.
     /// </summary>
     /// <typeparam name="T">Type of list.</typeparam>
-    public class ListDemo<T>
+    public class ListDemo<T> : IEnumerable<T>
     {
-        private List<T> _books = new List<T>();
+        private readonly List<T> _items = new List<T>();
 
         /// <summary>
         /// Adds new book to the list.
         /// </summary>
-        /// <param name="book">The book name to be added.</param>
-        public void AddBooks(T book)
+        /// <param name="item">The book name to be added.</param>
+        public void Add(T item)
         {
-            this._books.Add(book);
-        }
-
-        /// <summary>
-        /// Displays the list of books after adding.
-        /// </summary>
-        public void DisplayAfterAdding()
-        {
-            Console.WriteLine(new string('=', 20));
-            this.DisplayBooks();
-            Console.WriteLine(new string('=', 20));
-            Console.WriteLine("Press any key to continue with removing of list");
-            Console.ReadKey();
-            Console.Clear();
+            this._items.Add(item);
         }
 
         /// <summary>
         /// Removes a book from the list.
         /// </summary>
-        /// <param name="book">The book to be removed.</param>
-        public void RemoveBooks(T book)
+        /// <param name="item">The book to be removed.</param>
+        /// <returns>True if removed, otherwise false.</returns>
+        public bool Remove(T item)
         {
-            this._books.Remove(book);
-            Console.WriteLine($"{book} Book removed successfully.\nList of books after removing {book}.");
-            Console.WriteLine(new string('=', 20));
-            this.DisplayBooks();
-            Console.WriteLine(new string('=', 20));
-            Console.WriteLine("Press any key to continue with contains");
-            Console.ReadKey();
-            Console.Clear();
+            return this._items.Remove(item);
         }
 
         /// <summary>
         /// Checks if a particular book is in the list.
         /// </summary>
-        /// <param name="book">The book to searched.</param>
-        public void ContainBooks(T book)
+        /// <param name="item">The book to searched.</param>
+        /// <returns>True if the value found, otherwise false.</returns>
+        public bool Contains(T item)
         {
-            bool availableBooks = this._books.Contains(book);
-            Console.WriteLine($"Is there any book named 'GOT' exists : {availableBooks}");
-            Console.WriteLine("Press any key to close...");
-            Console.ReadKey();
-            Console.Clear();
+            return this._items.Contains(item);
         }
 
-        /// <summary>
-        /// Displays the books in the list.
-        /// </summary>
-        public void DisplayBooks()
+        /// <inheritdoc/>
+        public IEnumerator<T> GetEnumerator()
         {
-            foreach (T book in this._books)
-            {
-                Console.WriteLine(book);
-            }
+            return this._items.GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this._items.GetEnumerator();
         }
     }
 }

@@ -11,29 +11,28 @@
         /// <summary>
         /// Pushes the characters of the string into a stack.
         /// </summary>
-        /// <param name="name">The name to be pushed into a stack.</param>
-        public void PushName(T name)
+        /// <param name="item">The name to be pushed into a stack.</param>
+        public void PushName(T item)
         {
-            foreach (T c in name)
-            {
-                this._stack.Push(c);
-            }
-
-            Console.WriteLine($"original name: {name}");
+            this._stack.Push(item);
         }
 
         /// <summary>
         /// Pops a character from the stack and appends with the string variables.
         /// </summary>
-        public void PopName()
+        /// <returns>The stack after removing elements.</returns>
+        public T PopName()
         {
-            string reverse = " ";
-            while (this._stack.Count > 0)
-            {
-                reverse += this._stack.Pop();
-            }
+            return this._stack.Pop();
+        }
 
-            Console.WriteLine($"Reversed name: {reverse}");
+        /// <summary>
+        /// Checks for the count in the stack.
+        /// </summary>
+        /// <returns>True if the stack is empty, otherwise false.</returns>
+        public bool IsEmpty()
+        {
+            return this._stack.Count == 0;
         }
     }
 }
