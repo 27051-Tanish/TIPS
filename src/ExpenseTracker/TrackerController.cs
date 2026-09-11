@@ -69,10 +69,13 @@ namespace ExpenseTracker
                     case TrackerMenu.Summary:
                         this.RetrieveSummary();
                         break;
+                    case TrackerMenu.Backup:
+                        this.PerformBackup();
+                        break;
                     case TrackerMenu.Exit:
                         break;
                     default:
-                        this._trackerView.DisplayMessage("Please enter valid choice from [1 to 7].\nEnter your choice again :");
+                        this._trackerView.DisplayMessage("Please enter valid choice from [1 to 8].\nEnter your choice again :");
                         break;
                 }
             }
@@ -126,6 +129,7 @@ namespace ExpenseTracker
                         this._trackerView.DisplayTracker(tracker);
                         break;
                     case ViewMenu.Exit:
+                        this._trackerView.DisplayMessage("Closing view menu...");
                         break;
                     default:
                         this._trackerView.DisplayMessage("Invalid choice\nEnter from the menu [1 to 4]");
@@ -153,7 +157,9 @@ namespace ExpenseTracker
 
             if (serialNumber < 1 || serialNumber > records.Count)
             {
+                Logger.WriteLog("[WARNING]", "Trying to edit record that is not present in the tracker.");
                 this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
+                return;
             }
             else
             {
@@ -224,6 +230,7 @@ namespace ExpenseTracker
                 while (menu != EditMenu.Exit);
 
                 this._trackerManager.UpdateTransaction(tracker);
+                Logger.WriteLog("[INFO]", $"Record: {serialNumber} updated successfully ");
                 this._trackerView.DisplayMessage("Update successful");
             }
         }
@@ -246,7 +253,9 @@ namespace ExpenseTracker
             int serialNumber = this._trackerView.GetChoice();
             if (serialNumber < 1 || serialNumber > records.Count)
             {
+                Logger.WriteLog("[WARNING]", "Trying to delete record that is not present in the tracker.");
                 this._trackerView.DisplayMessage($"There is no record with the serial number :{serialNumber}");
+                return;
             }
             else
             {
@@ -255,10 +264,12 @@ namespace ExpenseTracker
                 bool removed = this._trackerManager.DeleteTransaction(tracker);
                 if (removed)
                 {
+                    Logger.WriteLog("[INFO]", $"Record: {serialNumber} deleted successfully ");
                     this._trackerView.DisplayMessage($"Record :{serialNumber} deleted successfully.");
                 }
                 else
                 {
+                    Logger.WriteLog("[ERROR]", $"Record: {serialNumber} deletion failed.");
                     this._trackerView.DisplayMessage("Deletion failed.");
                 }
             }
@@ -282,6 +293,7 @@ namespace ExpenseTracker
 
             if (totalIncome < totalExpense)
             {
+                Logger.WriteLog("[WARNING]", "Expense is more than income.");
                 this._trackerView.DisplayMessage("You have spent more than your income.");
                 this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
             }
@@ -289,6 +301,24 @@ namespace ExpenseTracker
             {
                 this._trackerView.DisplaySummary(totalIncome, totalExpense, netBalance);
             }
+        }
+
+        /// <summary>
+        /// Takes all the details from the source file and takes a backup copy.
+        /// </summary>
+        private void PerformBackup()
+        {
+            List<TrackerInfo> tracker = this._trackerManager.GetAllTransactions();
+            if (tracker.Count == 0)
+            {
+                Logger.WriteLog("[ERROR]", "Tracker is empty cannot create a backup.");
+                this._trackerView.DisplayMessage("Tracker is empty cannot create a backup.");
+                return;
+            }
+
+            this._trackerManager.BackupRecords();
+            Logger.WriteLog("[INFO]", "Backup created successfully.");
+            this._trackerView.DisplayMessage("Backup created successfully.");
         }
 
         /// <summary>
@@ -304,7 +334,6 @@ namespace ExpenseTracker
             string? input;
             decimal amount;
             DateOnly date;
-
             try
             {
                 input = this.GetSourceOrCategoryInput(fieldName, recordName, exampleMessage);
@@ -338,22 +367,22 @@ namespace ExpenseTracker
         /// <exception cref="InvalidOperationException">Throws an exception when the user ran out of retries.</exception>
         private string GetSourceOrCategoryInput(string fieldName, string recordName, string exampleMessage)
         {
-            string? category;
+            string? input;
             int attempt = 0;
 
             while (attempt < ConstantVariables.MaxLimit)
             {
                 this._trackerView.DisplayMessage($"Enter {fieldName} of the {recordName} :");
-                category = this._trackerView.ReadInput();
+                input = this._trackerView.ReadInput();
 
-                if (InputValidator.ValidateCategory(category))
+                if (InputValidator.ValidateCategory(input))
                 {
-                    return category;
+                    return input;
                 }
 
                 attempt++;
 
-                if (category != category?.Trim())
+                if (input != input?.Trim())
                 {
                     this._trackerView.DisplayMessage("Entry should not contain leading or trailing whitespace.");
                 }
@@ -368,6 +397,7 @@ namespace ExpenseTracker
                 }
             }
 
+            Logger.WriteLog("[ERROR]", "Maximum re-try limit reached for getting source/category as input.");
             throw new InvalidOperationException($"Maximum limit reached.");
         }
 
@@ -392,17 +422,18 @@ namespace ExpenseTracker
                 }
 
                 attempt++;
-                this._trackerView.DisplayMessage("Enter valid amount.\nEnter again :");
+                this._trackerView.DisplayMessage($"Enter valid amount.\nAmount limit : {ConstantVariables.MaxAmount}\nEnter again :");
                 this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 
+            Logger.WriteLog("[ERROR]", "Maximum re-try limit reached for getting amount as input.");
             throw new InvalidOperationException("Maximum limit reached.");
         }
 
         /// <summary>
-        /// Gets the input of date of the income or expense.
+        /// Gets the date of the income or expense.
         /// </summary>
-        /// <param name="recordName">he type of the record.</param>
+        /// <param name="recordName">The type of the record.</param>
         /// <returns>The date of occurrence of the transaction.</returns>
         /// <exception cref="InvalidOperationException">Throws an exception when the user ran out of retries.</exception>
         private DateOnly GetDateInput(string recordName)
@@ -424,6 +455,7 @@ namespace ExpenseTracker
                 this._trackerView.DisplayMessage($"Attempts remaining : {ConstantVariables.MaxLimit - attempt}");
             }
 
+            Logger.WriteLog("[ERROR]", "Maximum re-try limit reached for getting date as input.");
             throw new InvalidOperationException("Maximum limit reached.");
         }
     }
