@@ -1,7 +1,7 @@
 ﻿namespace Understanding.NET.Utils
 {
     /// <summary>
-    /// Utility class which handles different mathematical operations in different methods.
+    /// Utility class which handles mathematical operations.
     /// </summary>
     public static class MathUtils
     {
