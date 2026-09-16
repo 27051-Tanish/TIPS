@@ -8,7 +8,8 @@ using FileStreamProject.View;
 namespace FileStreamProject.Controller
 {
     /// <summary>
-    /// Handles the data flow and communication between view and each tasks.
+    /// Coordinates the application workflow by managing user input from the view and
+    /// directing the execution of file streaming tasks.
     /// </summary>
     public class TaskController
     {
@@ -17,14 +18,14 @@ namespace FileStreamProject.Controller
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskController"/> class.
         /// </summary>
-        /// <param name="consoleView">The instance of the view class.</param>
+        /// <param name="consoleView">The instance used to handle user interactions and display messages.</param>
         public TaskController(ConsoleView consoleView)
         {
             this._consoleView = consoleView;
         }
 
         /// <summary>
-        /// Provides the execution of each tasks from the user input.
+        /// Starts the main program loop, continuously displaying the menu and executing tasks based on user selection until the user exits.
         /// </summary>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task RunTasks()
@@ -34,6 +35,7 @@ namespace FileStreamProject.Controller
 
             do
             {
+                this._consoleView.ShowMessage("MAIN MENU");
                 this._consoleView.ShowMessage("[1]. Task1\n[2]. Task2\n[3]. Task3\n[4]. Task4\n[5]. Exit\n");
                 choice = this._consoleView.GetIntInput("Enter your choice: ");
                 menu = (MainMenu)choice;
@@ -98,12 +100,12 @@ namespace FileStreamProject.Controller
                 Stopwatch watch = Stopwatch.StartNew();
                 await task.ReadFromStreamerAsync(FilePaths.DataFilePath);
                 watch.Stop();
-                this._consoleView.ShowMessage($"\nTime taken to read from the using FileStream is {watch.ElapsedMilliseconds}");
+                this._consoleView.ShowMessage($"\nTime taken to read from the file using FileStream is {watch.ElapsedMilliseconds}");
 
                 watch.Restart();
                 await task.ReadFromBufferAsync(FilePaths.DataFilePath);
                 watch.Stop();
-                this._consoleView.ShowMessage($"\nTime taken to read from the using BufferedStream is {watch.ElapsedMilliseconds}");
+                this._consoleView.ShowMessage($"\nTime taken to read from the file using BufferedStream is {watch.ElapsedMilliseconds}");
 
                 await task.WriteTheProcessedDataAsync(FilePaths.DataFilePath, FilePaths.ProcessDataPath);
                 this._consoleView.ShowMessage("Data processed to upper-case successfully");
@@ -122,6 +124,8 @@ namespace FileStreamProject.Controller
             this._consoleView.ShowMessage("TASK 4");
             Task4 task = new Task4();
             task.Run();
+
+            // The files are modified after performing the tasks.
             this._consoleView.ShowMessage("Task 4 completed");
         }
     }

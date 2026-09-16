@@ -114,6 +114,7 @@ namespace FileStreamProject.FileStreamTasks
                 byte[] processData = this.ProcessToUpperCase(buffer, bytesRead);
                 using MemoryStream memoryStream = new MemoryStream();
                 await memoryStream.WriteAsync(processData, 0, processData.Length);
+                memoryStream.Position = 0;
                 await memoryStream.CopyToAsync(outputStream);
             }
         }

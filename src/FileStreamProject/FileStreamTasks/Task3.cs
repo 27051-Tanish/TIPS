@@ -18,22 +18,20 @@ namespace FileStreamProject.FileStreamTasks
             string path = FilePaths.FilePathTask4;
             string data = "This is some text data";
 
-            using (MemoryStream memory = new MemoryStream())
+            // Fix of the starter code: Stream directly to disk, completely bypassing the redundant MemoryStream array copies.
+            using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (StreamWriter writer = new StreamWriter(fileStream, Encoding.UTF8))
             {
-                byte[] buffer = Encoding.ASCII.GetBytes(data);
-                memory.Write(buffer, 0, buffer.Length);
-
-                memory.Position = 0;
-                using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
-                {
-                    memory.CopyTo(fileStream);
-                }
+                writer.Write(data);
             }
 
             using (FileStream fileStream = new FileStream(path, FileMode.Open))
             {
                 byte[] buffer = new byte[1024];
                 int bytesRead;
+
+                // Fix of the starter code: Use the StringBuilder to read from the buffer and append them to produce as a string
+                // to prevent dynamic memory re-allocations.
                 StringBuilder sb = new StringBuilder();
                 while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
                 {

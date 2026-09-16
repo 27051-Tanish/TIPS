@@ -30,9 +30,9 @@
         /// </summary>
         public static readonly string[] SourceFiles =
         {
-            "Source/file1.txt",
-            "Source/file2.txt",
-            "Source/file3.txt",
+            "SampleFolder/file1.txt",
+            "SampleFolder/file2.txt",
+            "SampleFolder/file3.txt",
         };
 
         /// <summary>
