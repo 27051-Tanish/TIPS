@@ -23,6 +23,7 @@ namespace FileStreamProject.FileStreamTasks
         {
             byte[] errorBytes = Encoding.UTF8.GetBytes(errorMessage);
 
+            // [subtask 1] Fix of the starter code: Stream directly to disk, completely bypassing the redundant MemoryStream array copies.
             using (FileStream stream = new FileStream(_logFilePath, FileMode.Append))
             {
                 stream.Write(errorBytes, 0, errorBytes.Length);
