@@ -117,5 +117,27 @@ namespace FileStreamProject.FileStreamTasks
                 await memoryStream.CopyToAsync(outputStream);
             }
         }
+
+        /// <summary>
+        /// Processes multiple files concurrently.
+        /// </summary>
+        /// <param name="sourceFiles">The source file paths.</param>
+        /// <param name="destinationFiles">The destination file paths.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task ProcessMultipleFileAsync(string[] sourceFiles, string[] destinationFiles)
+        {
+            if (sourceFiles.Length != destinationFiles.Length)
+            {
+                throw new ArgumentException("Source and destination file counts must be the same.");
+            }
+
+            List<Task> tasks = new List<Task>();
+            for (int i = 0; i < sourceFiles.Length; i++)
+            {
+                tasks.Add(this.WriteTheProcessedDataAsync(sourceFiles[i], destinationFiles[i]));
+            }
+
+            await Task.WhenAll(tasks);
+        }
     }
 }
