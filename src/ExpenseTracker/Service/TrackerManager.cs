@@ -9,13 +9,13 @@ namespace ExpenseTracker.Service
     /// </summary>
     public class TrackerManager
     {
-        private readonly ITrackerRepository _repository;
+        private readonly IFileRepository _repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TrackerManager"/> class.
         /// </summary>
         /// <param name="repository">Contract of the data repository.</param>
-        public TrackerManager(ITrackerRepository repository)
+        public TrackerManager(IFileRepository repository)
         {
             this._repository = repository;
         }
@@ -61,7 +61,7 @@ namespace ExpenseTracker.Service
         /// Update the details of the given transaction type in the tracker.
         /// </summary>
         /// <param name="transaction">Transaction which needed to be edited.</param>
-        public void UpdateTransaction(TrackerInfo transaction)
+        public void UpdateTransaction(TrackerInfo? transaction)
         {
             this._repository.UpdateTracker(transaction);
         }
@@ -73,6 +73,14 @@ namespace ExpenseTracker.Service
         public List<TrackerInfo> GetAllTransactions()
         {
             return this._repository.GetTransactions();
+        }
+
+        /// <summary>
+        /// Copies all the record details to a new backup file.
+        /// </summary>
+        public void BackupRecords()
+        {
+            this._repository.FileBackup();
         }
 
         /// <summary>

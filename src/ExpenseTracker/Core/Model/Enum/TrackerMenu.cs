@@ -36,6 +36,11 @@
         Summary,
 
         /// <summary>
+        /// Represents the backup operation in the tracker application.
+        /// </summary>
+        Backup,
+
+        /// <summary>
         /// Represents the exit operation of the application.
         /// </summary>
         Exit,

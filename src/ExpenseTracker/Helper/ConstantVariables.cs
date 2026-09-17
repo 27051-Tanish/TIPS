@@ -13,11 +13,11 @@
         /// <summary>
         /// Stores the maximum value of amount.
         /// </summary>
-        public const decimal MaxAmount = 1000000;
+        public const decimal MaxAmount = 1000000m;
 
         /// <summary>
         /// Stores the minimum value of amount.
         /// </summary>
-        public const decimal MinAmount = 0;
+        public const decimal MinAmount = 0m;
     }
 }

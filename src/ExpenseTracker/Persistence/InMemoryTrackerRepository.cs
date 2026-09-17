@@ -8,38 +8,38 @@ namespace ExpenseTracker.Persistence
     /// </summary>
     public class InMemoryTrackerRepository : ITrackerRepository
     {
-        private readonly List<TrackerInfo> _repository;
+        private readonly List<TrackerInfo> _records;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InMemoryTrackerRepository"/> class.
         /// </summary>
         public InMemoryTrackerRepository()
         {
-            this._repository = new List<TrackerInfo>();
+            this._records = new List<TrackerInfo>();
         }
 
         /// <inheritdoc/>
         public void AddTransaction(TrackerInfo trackerInfo)
         {
-            this._repository.Add(trackerInfo);
+            this._records.Add(trackerInfo);
         }
 
         /// <inheritdoc/>
         public void RemoveTransaction(TrackerInfo trackerInfo)
         {
-            this._repository.Remove(trackerInfo);
+            this._records.Remove(trackerInfo);
         }
 
         /// <inheritdoc/>
         public List<TrackerInfo> GetTransactions()
         {
-            return this._repository.OrderBy(records => records.Date).ToList();
+            return this._records.OrderBy(records => records.Date).ToList();
         }
 
         /// <inheritdoc/>
         public TrackerInfo? GetById(Guid id)
         {
-            return this._repository.Find(i => i.Id == id);
+            return this._records.Find(i => i.Id == id);
         }
 
         /// <inheritdoc/>

@@ -16,8 +16,8 @@ namespace Assignments
         /// </summary>
         public static void Main()
         {
-            ITrackerRepository repository = new InMemoryTrackerRepository();
-            TrackerManager manager = new TrackerManager(repository);
+            IFileRepository fileRepository = new FinanceFileRepository();
+            TrackerManager manager = new TrackerManager(fileRepository);
             ITrackerView view = new TrackerView();
 
             TrackerController controller = new TrackerController(view, manager);
