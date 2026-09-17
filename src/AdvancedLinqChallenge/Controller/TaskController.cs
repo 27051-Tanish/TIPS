@@ -89,8 +89,15 @@ namespace AdvancedLinqChallenge.Controller
             }
 
             var (productList, averagePrice) = this._manager.Task1(category);
-            this._view.DisplayProducts(productList);
-            this._view.ShowMessage($"Average price: {averagePrice:F2}");
+            if (productList.Count == 0)
+            {
+                this._view.ShowMessage($"There is no product in the list for given filter.");
+            }
+            else
+            {
+                this._view.DisplayProducts(productList);
+                this._view.ShowMessage($"Average price: {averagePrice:F2}");
+            }
         }
 
         private void PerformTask2()
