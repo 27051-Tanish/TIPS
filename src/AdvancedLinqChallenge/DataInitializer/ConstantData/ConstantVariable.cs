@@ -9,5 +9,10 @@
         /// Stores an array that is used across the application.
         /// </summary>
         public static readonly int[] Array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, };
+
+        /// <summary>
+        /// Provides the length of the separator line;
+        /// </summary>
+        public static readonly int SeparatorLine = 45;
     }
 }

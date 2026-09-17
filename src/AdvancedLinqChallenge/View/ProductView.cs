@@ -51,6 +51,14 @@ namespace AdvancedLinqChallenge.View
         }
 
         /// <summary>
+        /// Shows the available category in the product list.
+        /// </summary>
+        public void ShowCategory()
+        {
+            this.ShowMessage("[1]. Electronics\n[2]. Books\n[3]. Grocery\n[4]. Accessories\n[5]. Fruits");
+        }
+
+        /// <summary>
         /// Reads an user input from UI.
         /// </summary>
         /// <returns>The value read from the UI.</returns>
@@ -92,6 +100,23 @@ namespace AdvancedLinqChallenge.View
                 }
 
                 this.ShowMessage("Please enter valid choice :");
+            }
+        }
+
+        /// <summary>
+        /// Gets the value for price from the user.
+        /// </summary>
+        /// <returns>The value as the price.</returns>
+        public decimal GetPriceInput()
+        {
+            while (true)
+            {
+                if (decimal.TryParse(this.ReadInput(), out decimal value))
+                {
+                    return value;
+                }
+
+                this.ShowMessage("Please enter valid price :");
             }
         }
     }

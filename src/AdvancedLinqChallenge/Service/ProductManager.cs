@@ -1,4 +1,6 @@
-﻿using AdvancedLinqChallenge.DataInitializer;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using AdvancedLinqChallenge.DataInitializer;
 using AdvancedLinqChallenge.DataInitializer.ConstantData;
 using AdvancedLinqChallenge.LinqExtensions;
 using AdvancedLinqChallenge.Models;
@@ -14,11 +16,12 @@ namespace AdvancedLinqChallenge.Service
         /// <summary>
         /// Performs basic LINQ query that filters and sorts products, and calculates an average.
         /// </summary>
+        /// <param name="category">The category to filter.</param>
         /// <returns>The product list with the applied filters.</returns>
-        public (List<ProductInfo>, decimal?) Task1()
+        public (List<ProductInfo>, decimal?) Task1(string? category)
         {
             List<ProductInfo> list = ProductInitializer.Products
-                .Where(p => p.Category == "Electronics" && p.Price > 500m)
+                .Where(p => p.Category == category && p.Price > 500m)
                 .Select(p => new ProductInfo
                 {
                     ProductName = p.ProductName,
@@ -35,7 +38,7 @@ namespace AdvancedLinqChallenge.Service
         /// product of the category.
         /// </summary>
         /// <returns>List of joined details of product and supplier.</returns>
-        public List<(string? Category, int Count, decimal? ExpensiveProductPrice, string? ProductName, string SupplierName)> Task2()
+        public List<(string? Category, int Count, decimal ExpensiveProductPrice, string? ProductName, string SupplierName)> Task2()
         {
             var list = ProductInitializer.Products.GroupBy(p => p.Category)
                 .Select(g => new
@@ -83,34 +86,37 @@ namespace AdvancedLinqChallenge.Service
         /// <summary>
         /// LINQ query that selects all products under the category "Books" and sorts them by price unoptimized version.
         /// </summary>
+        /// <param name="category">The category to filter.</param>
         /// <returns>The sorted version of products with category books.</returns>
-        public List<ProductInfo> GetBooksInUnoptimized()
+        public List<ProductInfo> GetBooksInUnoptimized(string? category)
         {
-            return ProductInitializer.Products.ToList().OrderBy(p => p.Price).Where(p => p.Category == "Books").ToList();
+            return ProductInitializer.Products.ToList().OrderBy(p => p.Price).Where(p => p.Category == category).ToList();
         }
 
         /// <summary>
         /// LINQ query that selects all products under the category "Books" and sorts them by price optimized version.
         /// </summary>
+        /// <param name="category">The category to filter.</param>
         /// <returns>The sorted version of products with category books.</returns>
-        public List<ProductInfo> GetBooksInOptimized()
+        public List<ProductInfo> GetBooksInOptimized(string? category)
         {
-            return ProductInitializer.Products.Where(p => p.Category == "Books").OrderBy(p => p.Price).ToList();
+            return ProductInitializer.Products.Where(p => p.Category == category).OrderBy(p => p.Price).ToList();
         }
 
         /// <summary>
-        /// Retrieves products that are phones.
+        /// Retrieves products that are phones using the first overload filter method..
         /// </summary>
+        /// <param name="productName">The category to filter.</param>
         /// <returns>The filtered and sorted version of the list.</returns>
-        public List<ProductInfo> GetPhoneProduct()
+        public List<ProductInfo> GetPhoneProduct(string? productName)
         {
             QueryBuilder<ProductInfo> query = new QueryBuilder<ProductInfo>(ProductInitializer.Products);
-            var result = query.Filter(p => p.ProductName == "Phone").Sort(p => p.Price).Execute();
+            var result = query.Filter(p => p.ProductName == productName).Sort(p => p.Price).Execute(); // Uses Overload 1.
             return result;
         }
 
         /// <summary>
-        /// Retrieves products that starts with 'Elec' in the category.
+        /// Retrieves products that starts with 'Elec' in the category using the second overload method.
         /// </summary>
         /// <returns>The filtered and sorted version of the list.</returns>
         public List<ProductInfo> GetProductThatStartsWithElec()

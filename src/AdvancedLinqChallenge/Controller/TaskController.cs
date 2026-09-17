@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Text.RegularExpressions;
 using AdvancedLinqChallenge.DataInitializer;
 using AdvancedLinqChallenge.DataInitializer.ConstantData;
-using AdvancedLinqChallenge.LinqExtensions;
 using AdvancedLinqChallenge.Models;
 using AdvancedLinqChallenge.Models.Enum;
 using AdvancedLinqChallenge.Service;
@@ -77,9 +75,22 @@ namespace AdvancedLinqChallenge.Controller
             this._view.ShowMessage("-- Filter Electronics products above $500\n" +
             "-- Sort filtered products by descending price\n" +
             "-- Calculate the average price\n");
-            var (productList, averagePrice) = this._manager.Task1();
+            List<ProductInfo> products = ProductInitializer.Products;
+
+            this._view.ShowCategory();
+            this._view.ShowMessage("Enter the category to filter: ");
+            string? category = this._view.ReadInput();
+
+            bool categoryExists = products.Any(p => string.Equals(p.Category, category, StringComparison.OrdinalIgnoreCase));
+            if (string.IsNullOrWhiteSpace(category) || !categoryExists)
+            {
+                this._view.ShowMessage("Error: Category does not exist.");
+                return;
+            }
+
+            var (productList, averagePrice) = this._manager.Task1(category);
             this._view.DisplayProducts(productList);
-            this._view.ShowMessage($"Average price : {averagePrice}");
+            this._view.ShowMessage($"Average price: {averagePrice:F2}");
         }
 
         private void PerformTask2()
@@ -95,7 +106,7 @@ namespace AdvancedLinqChallenge.Controller
                     $"Expensive Product's Name : {item.ProductName}\n" +
                     $"Expensive product's Price : {item.ExpensiveProductPrice}\n" +
                     $"Supplier Name : {item.SupplierName}");
-                this._view.ShowMessage(new string('=', 45));
+                this._view.ShowMessage(new string('=', ConstantVariable.SeparatorLine));
             }
         }
 
@@ -113,15 +124,28 @@ namespace AdvancedLinqChallenge.Controller
 
         private void PerformTask4()
         {
+            List<ProductInfo> products = ProductInitializer.Products;
+            this._view.ShowCategory();
+
+            this._view.ShowMessage("Enter the category to filter: ");
+            string? category = this._view.ReadInput();
+
+            bool categoryExists = products.Any(p => string.Equals(p.Category, category, StringComparison.OrdinalIgnoreCase));
+            if (string.IsNullOrWhiteSpace(category) || !categoryExists)
+            {
+                this._view.ShowMessage("Error: Category does not exist.");
+                return;
+            }
+
             Stopwatch watch = Stopwatch.StartNew();
-            List<ProductInfo> books = this._manager.GetBooksInUnoptimized();
+            List<ProductInfo> books = this._manager.GetBooksInUnoptimized(category);
             watch.Stop();
             this._view.ShowMessage($"Time taken to execute unoptimized version of link query : {watch.Elapsed}");
             this._view.ShowMessage("--- Products with the category books [UNOPTIMIZED] ---");
             this._view.DisplayProductTable(books);
 
             watch.Restart();
-            List<ProductInfo> booksOptimized = this._manager.GetBooksInOptimized();
+            List<ProductInfo> booksOptimized = this._manager.GetBooksInOptimized(category);
             watch.Stop();
             this._view.ShowMessage($"Time taken to execute optimized version of link query : {watch.Elapsed}");
             this._view.ShowMessage("--- Products with the category books [OPTIMIZED] ---");
@@ -130,13 +154,31 @@ namespace AdvancedLinqChallenge.Controller
 
         private void PerformTask5()
         {
-            this._view.ShowMessage("Displays the products that is phone and sorted price.");
-            var products = this._manager.GetPhoneProduct();
-            this._view.DisplayProductTable(products);
+            try
+            {
+                List<ProductInfo> productList = ProductInitializer.Products;
+                this._view.ShowMessage("Enter the product name to filter: ");
+                string? productName = this._view.ReadInput();
 
-            this._view.ShowMessage("\nDisplays the product that starts with 'Elec' and price that is greater than 500.");
-            var electronics = this._manager.GetProductThatStartsWithElec();
-            this._view.DisplayProductTable(electronics);
+                bool productExists = productList.Any(p => string.Equals(p.ProductName, productName, StringComparison.OrdinalIgnoreCase));
+                if (string.IsNullOrWhiteSpace(productName) || !productExists)
+                {
+                    this._view.ShowMessage($"Error: Product {productName} does not exist.");
+                    return;
+                }
+
+                this._view.ShowMessage($"Displays the products that is {productName} and sorted price.");
+                var products = this._manager.GetPhoneProduct(productName);
+                this._view.DisplayProductTable(products);
+
+                this._view.ShowMessage("\nDisplays the product that starts with 'Elec' and price that is greater than 500.");
+                var electronics = this._manager.GetProductThatStartsWithElec();
+                this._view.DisplayProductTable(electronics);
+            }
+            catch (ArgumentException ex)
+            {
+                this._view.ShowMessage($"Error: {ex.Message}");
+            }
         }
     }
 }

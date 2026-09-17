@@ -22,7 +22,7 @@ namespace AdvancedLinqChallenge.LinqExtensions
         }
 
         /// <summary>
-        /// OVERLOAD 2: Filters the collection
+        /// OVERLOAD 1: Filters the collection
         /// </summary>
         /// <param name="filter">The filter to be applied.</param>
         /// <returns>The current query for method chaining.</returns>
