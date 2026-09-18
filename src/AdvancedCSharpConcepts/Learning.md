@@ -41,6 +41,15 @@
 #### 4. Lambda Expression
 * **What it does:** Filters a list of numbers from 1 to 10.
 * It takes the list and uses a short shortcut formula (`=>`) to quickly pull out and display only the numbers you need.
+* **Lambda Expression**
+  - Simple one-line logic.
+*  **Lambda Statement**
+  - Uses `{ }` and can contain multiple statements.
+  - `Where() and Select()`
+  - `Where()` is used for filtering a collection.
+  - `Select()` is used for transforming/modifying each element in a collection.
+- The select implementation can be simply written as `.Select(x => x * x)`, a lambda statement was intentionally used to satisfy the assignment requirement and demonstrate the syntax.
+- Lambda statements are useful when multiple statements or additional processing are required.
 
 #### 5. Advance Delegate
 * **What it does:** Sorts a list of store products (like Watch, Phone, Bike).
