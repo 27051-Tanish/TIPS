@@ -73,20 +73,20 @@ namespace CollectionsAndGenerics.Controller
         {
             View.ShowTitle("List task");
             ListDemo<string> books = new ListDemo<string>();
-            this._service.Add(books, "Ikigai");
-            this._service.Add(books, "The 48 Laws of Power");
-            this._service.Add(books, "The Alchemist");
-            this._service.Add(books, "Ponniyin Selvan");
-            this._service.Add(books, "Atomic habits");
+            this._service.AddToList(books, "Ikigai");
+            this._service.AddToList(books, "The 48 Laws of Power");
+            this._service.AddToList(books, "The Alchemist");
+            this._service.AddToList(books, "Ponniyin Selvan");
+            this._service.AddToList(books, "Atomic habits");
 
             View.ShowMessage("List of books:\n");
             View.DisplayItems(books);
 
-            this._service.Remove(books, "Ponniyin Selvan");
+            this._service.RemoveFromList(books, "Ponniyin Selvan");
             View.ShowMessage("\nList of books after removing 'Ponniyin Selvan':\n");
             View.DisplayItems(books);
 
-            View.ShowMessage($"\nIs there any book named 'Atomic habits': {this._service.Contains(books, "Atomic habits")}");
+            View.ShowMessage($"\nIs there any book named 'Atomic habits': {this._service.ContainsInTheList(books, "Atomic habits")}");
 
             View.ConsoleClose();
         }
@@ -113,16 +113,16 @@ namespace CollectionsAndGenerics.Controller
         {
             View.ShowTitle("Queue task");
             QueueDemo<string> persons = new QueueDemo<string>();
-            this._service.Enqueue(persons, "Tanish");
-            this._service.Enqueue(persons, "dharanish");
-            this._service.Enqueue(persons, "kavya");
-            this._service.Enqueue(persons, "sukil");
-            this._service.Enqueue(persons, "umayal");
+            this._service.EnqueueToTheQueue(persons, "Tanish");
+            this._service.EnqueueToTheQueue(persons, "dharanish");
+            this._service.EnqueueToTheQueue(persons, "kavya");
+            this._service.EnqueueToTheQueue(persons, "sukil");
+            this._service.EnqueueToTheQueue(persons, "umayal");
 
             View.ShowMessage("People in the queue:\n");
             View.DisplayItems(persons);
 
-            this._service.Dequeue(persons);
+            this._service.DequeueFromTheQueue(persons);
             View.ShowMessage("\nQueue after removing first person:\n");
             View.DisplayItems(persons);
 
@@ -134,22 +134,30 @@ namespace CollectionsAndGenerics.Controller
             View.ShowTitle("Dictionary task");
 
             DictionaryDemo<string, int> students = new DictionaryDemo<string, int>();
-            this._service.AddKeyValuePair(students, "Tanish", 99);
-            this._service.AddKeyValuePair(students, "dharanish", 99);
-            this._service.AddKeyValuePair(students, "kavya", 99);
-            this._service.AddKeyValuePair(students, "sukil", 99);
-            this._service.AddKeyValuePair(students, "umayal", 99);
+            try
+            {
+                this._service.AddKeyValuePair(students, "Tanish", 99);
+                this._service.AddKeyValuePair(students, "Tanish", 99);
+                this._service.AddKeyValuePair(students, "dharanish", 99);
+                this._service.AddKeyValuePair(students, "kavya", 99);
+                this._service.AddKeyValuePair(students, "sukil", 99);
+                this._service.AddKeyValuePair(students, "umayal", 99);
 
-            View.ShowMessage("Students in the dictionary: \n");
-            View.DisplayDictionary(students);
+                View.ShowMessage("Students in the dictionary: \n");
+                View.DisplayDictionary(students);
 
-            View.ShowMessage("\nStudents in the list after removing 'Tanish':\n");
-            this._service.RemoveKey(students, "Tanish", 99);
-            View.DisplayDictionary(students);
+                View.ShowMessage("\nStudents in the list after removing 'Tanish':\n");
+                this._service.RemoveKey(students, "Tanish", 99);
+                View.DisplayDictionary(students);
 
-            View.ShowMessage("\nIs there any student named 'dharanish':");
-            bool student = this._service.ContainsKey(students, "dharanish");
-            View.ShowMessage(student ? "Yes" : "No");
+                View.ShowMessage("\nIs there any student named 'dharanish':");
+                bool student = this._service.ContainsKey(students, "dharanish");
+                View.ShowMessage(student ? "Yes" : "No");
+            }
+            catch (ArgumentException ex)
+            {
+                View.ShowMessage($"{ex.Message}");
+            }
 
             View.ConsoleClose();
         }

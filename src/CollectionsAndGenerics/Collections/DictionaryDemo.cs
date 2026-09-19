@@ -19,7 +19,14 @@ namespace CollectionsAndGenerics.Collections
         /// <param name="value">The value to add to the dictionary</param>
         public void Add(TKey key, TValue value)
         {
-            this._dictionary.Add(key, value);
+            if (this._dictionary.ContainsKey(key))
+            {
+                throw new ArgumentException($"The key {key} already exists");
+            }
+            else
+            {
+                this._dictionary.Add(key, value);
+            }
         }
 
         /// <summary>

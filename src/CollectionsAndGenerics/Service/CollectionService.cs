@@ -13,7 +13,7 @@ namespace CollectionsAndGenerics.Service
         /// <param name="items">The list in which it needs to be added.</param>
         /// <param name="item">The item which needs to be added.</param>
         /// <typeparam name="T">The type of collection.</typeparam>
-        public void Add<T>(ListDemo<T> items, T item)
+        public void AddToList<T>(ListDemo<T> items, T item)
         {
             items.Add(item);
         }
@@ -25,7 +25,7 @@ namespace CollectionsAndGenerics.Service
         /// <param name="items">The list in which it needs to be removed.</param>
         /// <param name="item">The item which needs to be removed.</param>
         /// <returns>True if removed, otherwise false.</returns>
-        public bool Remove<T>(ListDemo<T> items, T item)
+        public bool RemoveFromList<T>(ListDemo<T> items, T item)
         {
             return items.Remove(item);
         }
@@ -37,7 +37,7 @@ namespace CollectionsAndGenerics.Service
         /// <param name="books">The custom list demo collection to search.</param>
         /// <param name="item">The object to locate in the collection.</param>
         /// <returns>True if the item is found in the collection; otherwise, false.</returns>
-        public bool Contains<T>(ListDemo<T> books, T item)
+        public bool ContainsInTheList<T>(ListDemo<T> books, T item)
         {
             return books.Contains(item);
         }
@@ -87,7 +87,7 @@ namespace CollectionsAndGenerics.Service
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <param name="queue">The queue in which the item needs to be added.</param>
         /// <param name="item">The item that needs to be added.</param>
-        public void Enqueue<T>(QueueDemo<T> queue, T item)
+        public void EnqueueToTheQueue<T>(QueueDemo<T> queue, T item)
         {
             queue.Add(item);
         }
@@ -97,7 +97,7 @@ namespace CollectionsAndGenerics.Service
         /// </summary>
         /// <typeparam name="T">The type of collection.</typeparam>
         /// <param name="queue">The queue in which the dequeue operation needs to be performed.</param>
-        public void Dequeue<T>(QueueDemo<T> queue)
+        public void DequeueFromTheQueue<T>(QueueDemo<T> queue)
         {
             queue.Remove();
         }
