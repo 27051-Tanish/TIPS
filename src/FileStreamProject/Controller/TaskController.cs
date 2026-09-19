@@ -98,7 +98,7 @@ namespace FileStreamProject.Controller
         private async Task PerformTask2()
         {
             // Create a CancellationTokenSource that automatically triggers after 2 minutes.
-            using CancellationTokenSource cancelToken = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            using CancellationTokenSource cancelToken = new CancellationTokenSource(TimeSpan.FromMinutes(5));
             CancellationToken token = cancelToken.Token;
             try
             {
@@ -108,14 +108,14 @@ namespace FileStreamProject.Controller
                 FileProcessorAsyncTask fileProcessorAsync = new FileProcessorAsyncTask();
 
                 Stopwatch watch = Stopwatch.StartNew();
-                await fileProcessorAsync.ReadFromStreamerAsync(FilePaths.DataFilePath, token);
+                long totalStreamBytes = await fileProcessorAsync.ReadFromStreamerAsync(FilePaths.DataFilePath, token);
                 watch.Stop();
-                this._consoleView.ShowMessage($"\nTime taken to read asynchronously using FileStream is {watch.ElapsedMilliseconds} ms");
+                this._consoleView.ShowMessage($"\nTime taken to Read {totalStreamBytes:N0} bytes asynchronously using FileStream is {watch.ElapsedMilliseconds} ms");
 
                 watch.Restart();
-                await fileProcessorAsync.ReadFromBufferAsync(FilePaths.DataFilePath, token);
+                long totalBytesFromBuffer = await fileProcessorAsync.ReadFromBufferAsync(FilePaths.DataFilePath, token);
                 watch.Stop();
-                this._consoleView.ShowMessage($"\nTime taken to read asynchronously using BufferedStream is {watch.ElapsedMilliseconds} ms");
+                this._consoleView.ShowMessage($"\nTime taken to Read {totalBytesFromBuffer:N0} asynchronously using BufferedStream is {watch.ElapsedMilliseconds} ms");
 
                 watch.Restart();
                 await fileProcessorAsync.WriteTheProcessedDataAsync(FilePaths.DataFilePath, FilePaths.ProcessDataPath, token);

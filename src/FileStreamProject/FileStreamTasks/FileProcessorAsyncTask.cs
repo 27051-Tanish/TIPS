@@ -15,8 +15,8 @@ namespace FileStreamProject.FileStreamTasks
         /// </summary>
         /// <param name="filePath">The path of the file.</param>
         /// <param name="token">The cancellation token.</param>
-        /// <returns>The content read from the file using FileStreamer.</returns>
-        public async Task ReadFromStreamerAsync(string filePath, CancellationToken token = default)
+        /// <returns>The total number bytes read from the file using FileStreamer.</returns>
+        public async Task<long> ReadFromStreamerAsync(string filePath, CancellationToken token = default)
         {
             byte[] buffer = new byte[_bufferSize];
             using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, _bufferSize, useAsync: true);
@@ -27,6 +27,8 @@ namespace FileStreamProject.FileStreamTasks
             {
                 totalBytesRead += bytesRead;
             }
+
+            return totalBytesRead;
         }
 
         /// <summary>
@@ -34,8 +36,8 @@ namespace FileStreamProject.FileStreamTasks
         /// </summary>
         /// <param name="filePath">The path of the file.</param>
         /// <param name="token">The cancellation token.</param>
-        /// <returns>The content read from the file using BufferedStreamer.</returns>
-        public async Task ReadFromBufferAsync(string filePath, CancellationToken token = default)
+        /// <returns>The total number bytes read from the file using BufferedStreamer.</returns>
+        public async Task<long> ReadFromBufferAsync(string filePath, CancellationToken token = default)
         {
             byte[] buffer = new byte[_bufferSize];
             byte[] internalBuffer = new byte[64 * 1024];
@@ -49,6 +51,8 @@ namespace FileStreamProject.FileStreamTasks
             {
                 totalBytesRead += bytesRead;
             }
+
+            return totalBytesRead;
         }
 
         /// <summary>
@@ -61,12 +65,11 @@ namespace FileStreamProject.FileStreamTasks
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task WriteTheProcessedDataAsync(string sourceFile, string destinationFile, CancellationToken token = default)
         {
-            char[] buffer = new char[64 * 1024];
+            char[] buffer = new char[1 * 1024 * 1024];
             using StreamReader reader = new StreamReader(sourceFile, Encoding.UTF8);
-            using FileStream outputStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 64 * 1024, useAsync: true);
+            using FileStream outputStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 1 * 1024 * 1024, useAsync: true);
 
             int charsRead;
-            using MemoryStream memoryStream = new MemoryStream();
 
             while ((charsRead = await reader.ReadAsync(buffer, 0, buffer.Length)) > 0)
             {
@@ -75,10 +78,7 @@ namespace FileStreamProject.FileStreamTasks
                 string upperData = new string(buffer, 0, charsRead).ToUpper();
                 byte[] processedData = Encoding.UTF8.GetBytes(upperData);
 
-                memoryStream.SetLength(0);
-                await memoryStream.WriteAsync(processedData, 0, processedData.Length, token);
-                memoryStream.Position = 0;
-                await memoryStream.CopyToAsync(outputStream, token);
+                await outputStream.WriteAsync(processedData, 0, processedData.Length, token);
             }
         }
 
