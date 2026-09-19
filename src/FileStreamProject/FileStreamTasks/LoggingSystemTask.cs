@@ -1,5 +1,4 @@
-﻿using FileStreamProject.Constants;
-using System.Text;
+﻿using System.Text;
 
 namespace FileStreamProject.FileStreamTasks
 {
@@ -24,7 +23,7 @@ namespace FileStreamProject.FileStreamTasks
             byte[] errorBytes = Encoding.UTF8.GetBytes(errorMessage);
 
             // [subtask 1] Fix of the starter code: Stream directly to disk, completely bypassing the redundant MemoryStream array copies.
-            using (FileStream stream = new FileStream(_logFilePath, FileMode.Append))
+            using (FileStream stream = new FileStream(_logFilePath, FileMode.Append, FileAccess.Write, FileShare.Write))
             {
                 stream.Write(errorBytes, 0, errorBytes.Length);
             }
@@ -62,34 +61,19 @@ namespace FileStreamProject.FileStreamTasks
         {
             Directory.CreateDirectory(this._userLogFolder);
 
-            List<Thread> threads = new List<Thread>();
-
-            for (int i = 0; i < numberOfUsers; i++)
+            Parallel.For(0, numberOfUsers, i =>
             {
                 int userId = i + 1;
+                string filePath = Path.Combine(this._userLogFolder, $"user-{userId}.txt");
 
-                Thread thread = new Thread(() =>
+                string message = $"{DateTime.Now} - User {userId}: Error";
+                byte[] messageByte = Encoding.UTF8.GetBytes(message + Environment.NewLine);
+
+                using (FileStream stream = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.None))
                 {
-                    string filePath =
-                        Path.Combine(
-                            this._userLogFolder,
-                            $"user-{userId}.txt");
-
-                    string message =
-                        $"{DateTime.Now} - User {userId}: Error";
-                    byte[] messageByte = Encoding.UTF8.GetBytes(message + Environment.NewLine);
-                    using FileStream stream = new FileStream(filePath, FileMode.Append, FileAccess.Write);
                     stream.Write(messageByte, 0, messageByte.Length);
-                });
-
-                threads.Add(thread);
-                thread.Start();
-            }
-
-            foreach (Thread thread in threads)
-            {
-                thread.Join();
-            }
+                }
+            });
         }
 
         /// <summary>
@@ -101,7 +85,7 @@ namespace FileStreamProject.FileStreamTasks
 
             this.ThreadSafeLogging(5);
 
-            this.IndependentLogFiles(5);
+            this.IndependentLogFiles(1000);
         }
 
         private void LogThreadSafe(int userId)

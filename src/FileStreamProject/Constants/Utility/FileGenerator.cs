@@ -26,5 +26,33 @@ namespace FileStreamProject.Constants.Utility
                 totalBytesWritten += buffer.Length;
             }
         }
+
+        /// <summary>
+        /// Generates multiple large testing source files dynamically at runtime if they do not already exist.
+        /// </summary>
+        /// <param name="sourceFiles">An array of target file paths to be checked or created.</param>
+        /// <param name="sizePerFileInBytes">The targeted file size limit constraint in bytes.</param>
+        public static void EnsureMultipleSourceFilesExist(string[] sourceFiles, long sizePerFileInBytes)
+        {
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes("Hello, this is the file stream project.\n");
+
+            foreach (string filePath in sourceFiles)
+            {
+                if (File.Exists(filePath))
+                {
+                    continue;
+                }
+
+                long bytesWritten = 0;
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    while (bytesWritten < sizePerFileInBytes)
+                    {
+                        fs.Write(buffer, 0, buffer.Length);
+                        bytesWritten += buffer.Length;
+                    }
+                }
+            }
+        }
     }
 }

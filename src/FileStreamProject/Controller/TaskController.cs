@@ -79,48 +79,67 @@ namespace FileStreamProject.Controller
             Stopwatch watch = Stopwatch.StartNew();
             fileProcessor.ReadFromStreamer(FilePaths.DataFilePath);
             watch.Stop();
-            this._consoleView.ShowMessage($"\nTime taken to read from the using FileStream is {watch.ElapsedMilliseconds}");
+            this._consoleView.ShowMessage($"\nTime taken to read from the using FileStream is {watch.ElapsedMilliseconds} ms");
 
             watch.Restart();
             fileProcessor.ReadFromBuffer(FilePaths.DataFilePath);
             watch.Stop();
-            this._consoleView.ShowMessage($"\nTime taken to read from the using BufferedStream is {watch.ElapsedMilliseconds}");
+            this._consoleView.ShowMessage($"\nTime taken to read from the using BufferedStream is {watch.ElapsedMilliseconds} ms");
 
+            watch.Restart();
             fileProcessor.WriteTheProcessedData(FilePaths.DataFilePath, FilePaths.ProcessDataPath);
-            this._consoleView.ShowMessage("\nData processed to upper-case successfully\n");
+            watch.Stop();
+            this._consoleView.ShowMessage("\nData processed to upper-case successfully.\n" +
+                $"Time taken to process the data: {watch.ElapsedMilliseconds} ms");
 
             this._consoleView.ConsoleClear();
         }
 
         private async Task PerformTask2()
         {
+            // Create a CancellationTokenSource that automatically triggers after 2 minutes.
+            using CancellationTokenSource cancelToken = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            CancellationToken token = cancelToken.Token;
             try
             {
                 this._consoleView.ShowTitle("TASK 2");
                 Directory.CreateDirectory("Destination");
+
                 FileProcessorAsyncTask fileProcessorAsync = new FileProcessorAsyncTask();
 
                 Stopwatch watch = Stopwatch.StartNew();
-                await fileProcessorAsync.ReadFromStreamerAsync(FilePaths.DataFilePath);
+                await fileProcessorAsync.ReadFromStreamerAsync(FilePaths.DataFilePath, token);
                 watch.Stop();
-                this._consoleView.ShowMessage($"\nTime taken to read from the file using FileStream is {watch.ElapsedMilliseconds}");
+                this._consoleView.ShowMessage($"\nTime taken to read asynchronously using FileStream is {watch.ElapsedMilliseconds} ms");
 
                 watch.Restart();
-                await fileProcessorAsync.ReadFromBufferAsync(FilePaths.DataFilePath);
+                await fileProcessorAsync.ReadFromBufferAsync(FilePaths.DataFilePath, token);
                 watch.Stop();
-                this._consoleView.ShowMessage($"\nTime taken to read from the file using BufferedStream is {watch.ElapsedMilliseconds}");
+                this._consoleView.ShowMessage($"\nTime taken to read asynchronously using BufferedStream is {watch.ElapsedMilliseconds} ms");
 
-                await fileProcessorAsync.WriteTheProcessedDataAsync(FilePaths.DataFilePath, FilePaths.ProcessDataPath);
-                this._consoleView.ShowMessage("\nData processed to upper-case successfully");
+                watch.Restart();
+                await fileProcessorAsync.WriteTheProcessedDataAsync(FilePaths.DataFilePath, FilePaths.ProcessDataPath, token);
+                watch.Stop();
+                this._consoleView.ShowMessage($"\nData processed to upper-case successfully.\nTime taken to process the data: {watch.ElapsedMilliseconds} ms");
 
-                await fileProcessorAsync.ProcessMultipleFileAsync(FilePaths.SourceFiles, FilePaths.DestinationFiles);
+                // Specify a target size for each concurrent file (e.g., 50 MB)
+                long fiftyMbInBytes = 50L * 1024 * 1024;
+
+                // Ensure the source paths are generated before testing non-blocking concurrency
+                FileGenerator.EnsureMultipleSourceFilesExist(FilePaths.SourceFiles, fiftyMbInBytes);
+                this._consoleView.ShowMessage("[INFO] Dynamic 50MB testing source files verified/created at runtime.");
+                await fileProcessorAsync.ProcessMultipleFileAsync(FilePaths.SourceFiles, FilePaths.DestinationFiles, token);
                 this._consoleView.ShowMessage("\nMultiple files processed concurrently.\n");
 
                 this._consoleView.ConsoleClear();
             }
+            catch (OperationCanceledException)
+            {
+                this._consoleView.ShowMessage("\nThe 1 GB file operation was successfully canceled midway by the user/system timeout.");
+            }
             catch (ArgumentException ex)
             {
-                this._consoleView?.ShowMessage(ex.Message);
+                this._consoleView.ShowMessage(ex.Message);
             }
         }
 

@@ -18,7 +18,7 @@
         /// <summary>
         /// It represents the path of the text file for performing task 4.
         /// </summary>
-        public static readonly string FilePathTask4 = "Task4.txt";
+        public static readonly string SampleTextFileTask3 = "Task3.txt";
 
         /// <summary>
         /// It represents three different source files.

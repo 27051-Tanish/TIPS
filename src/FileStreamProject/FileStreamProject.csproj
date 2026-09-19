@@ -7,24 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="SampleFolder\file1.txt" />
-    <None Remove="SampleFolder\file2.txt" />
-    <None Remove="SampleFolder\file3.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="SampleFolder\file1.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleFolder\file2.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleFolder\file3.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   <ItemGroup Label="CSharpAnalyser">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>

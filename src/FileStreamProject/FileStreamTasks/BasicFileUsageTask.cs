@@ -15,7 +15,7 @@ namespace FileStreamProject.FileStreamTasks
         /// <returns>The data written in the file.</returns>
         public static string FileUsage()
         {
-            string path = FilePaths.FilePathTask4;
+            string path = FilePaths.SampleTextFileTask3;
             string data = "This is some text data";
 
             // Fix of the starter code: Stream directly to disk, completely bypassing the redundant MemoryStream array copies.

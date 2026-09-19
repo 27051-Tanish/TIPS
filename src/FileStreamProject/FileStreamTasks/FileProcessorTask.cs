@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using FileStreamProject.Constants;
 
 namespace FileStreamProject.FileStreamTasks
 {
@@ -12,8 +11,7 @@ namespace FileStreamProject.FileStreamTasks
         /// Reads the content using the file stream.
         /// </summary>
         /// <param name="filePath">The path of the file.</param>
-        /// <returns>The content read from the file using FileStreamer.</returns>
-        public long ReadFromStreamer(string filePath)
+        public void ReadFromStreamer(string filePath)
         {
             byte[] buffer = new byte[4096];
             using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -24,16 +22,13 @@ namespace FileStreamProject.FileStreamTasks
             {
                 totalBytesRead += bytesRead;
             }
-
-            return totalBytesRead;
         }
 
         /// <summary>
         /// Reads the content using the buffered file stream.
         /// </summary>
         /// <param name="filePath">The path of the file.</param>
-        /// <returns>The content read from the file using BufferedStreamer.</returns>
-        public long ReadFromBuffer(string filePath)
+        public void ReadFromBuffer(string filePath)
         {
             byte[] buffer = new byte[4096];
             byte[] internalBuffer = new byte[64 * 1024];
@@ -47,44 +42,32 @@ namespace FileStreamProject.FileStreamTasks
             {
                 totalBytesRead += bytesRead;
             }
-
-            return totalBytesRead;
         }
 
         /// <summary>
-        /// Converts a specified number of bytes from a buffer into a UTF-8 string,
-        /// transforms it to uppercase, and returns the result as a new UTF-8 byte array.
-        /// </summary>
-        /// <param name="buffer">The byte array containing the data to process.</param>
-        /// <param name="bytesRead">The number of bytes to read from the buffer starting at index 0.</param>
-        /// <returns>A new byte array containing the uppercase UTF-8 encoded data.</returns>
-        public byte[] ProcessToUpperCase(byte[] buffer, int bytesRead)
-        {
-            string data = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-            string upperCaseData = data.ToUpper();
-            return Encoding.UTF8.GetBytes(upperCaseData);
-        }
-
-        /// <summary>
-        /// Reads a source file in chunks, processes its content to uppercase, 
+        /// Reads a source file in chunks, processes its content to uppercase,
         /// and writes the transformed data into a new destination file.
         /// </summary>
         /// <param name="sourceFile">The file path of the input file to read from.</param>
         /// <param name="destinationFile">The file path of the output file to create.</param>
         public void WriteTheProcessedData(string sourceFile, string destinationFile)
         {
-            byte[] buffer = new byte[4096];
-            using FileStream inputStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read);
-            using FileStream outputStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write);
+            char[] buffer = new char[4096];
+            using StreamReader reader = new StreamReader(sourceFile, Encoding.UTF8);
+            using FileStream outputStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write, FileShare.Read);
 
-            int bytesRead;
+            int charsRead;
+            using MemoryStream memoryStream = new MemoryStream();
 
-            while ((bytesRead = inputStream.Read(buffer, 0, buffer.Length)) > 0)
+            while ((charsRead = reader.Read(buffer, 0, buffer.Length)) > 0)
             {
-                byte[] processData = this.ProcessToUpperCase(buffer, bytesRead);
-                using MemoryStream memoryStream = new MemoryStream();
-                memoryStream.Write(processData, 0, processData.Length);
-                memoryStream.WriteTo(outputStream);
+                string upperData = new string(buffer, 0, charsRead).ToUpper();
+                byte[] processedData = Encoding.UTF8.GetBytes(upperData);
+
+                memoryStream.SetLength(0);
+                memoryStream.Write(processedData, 0, processedData.Length);
+                memoryStream.Position = 0;
+                memoryStream.CopyTo(outputStream);
             }
         }
     }
