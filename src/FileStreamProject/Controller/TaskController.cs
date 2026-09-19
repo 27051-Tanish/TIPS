@@ -127,7 +127,7 @@ namespace FileStreamProject.Controller
 
                 // Ensure the source paths are generated before testing non-blocking concurrency
                 FileGenerator.EnsureMultipleSourceFilesExist(FilePaths.SourceFiles, fiftyMbInBytes);
-                this._consoleView.ShowMessage("[INFO] Dynamic 50MB testing source files verified/created at runtime.");
+                this._consoleView.ShowMessage("50MB testing source files verified/created at runtime.");
                 await fileProcessorAsync.ProcessMultipleFileAsync(FilePaths.SourceFiles, FilePaths.DestinationFiles, token);
                 this._consoleView.ShowMessage("\nMultiple files processed concurrently.\n");
 
