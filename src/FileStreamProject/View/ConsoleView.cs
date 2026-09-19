@@ -32,5 +32,26 @@
                 this.ShowMessage("Please enter valid integer number.");
             }
         }
+
+        /// <summary>
+        /// Displays the title of the task in the UI.
+        /// </summary>
+        /// <param name="title">The title of the task.</param>
+        public void ShowTitle(string title)
+        {
+            this.ShowMessage(new string('=', 25));
+            this.ShowMessage($"       {title}");
+            this.ShowMessage(new string('=', 25));
+        }
+
+        /// <summary>
+        /// Clears the console after executing a method.
+        /// </summary>
+        public void ConsoleClear()
+        {
+            this.ShowMessage("Press any key to close...");
+            Console.ReadKey();
+            Console.Clear();
+        }
     }
 }

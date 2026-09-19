@@ -6,11 +6,6 @@
     public static class FilePaths
     {
         /// <summary>
-        /// It represents the 1 gb source file path.
-        /// </summary>
-        public static readonly string OneGbFile = "SourceData/SourceTextFile.txt";
-
-        /// <summary>
         /// It represents the data file path.
         /// </summary>
         public static readonly string DataFilePath = "DataTextFile.txt";
