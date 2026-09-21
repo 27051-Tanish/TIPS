@@ -11,7 +11,7 @@
         /// </summary>
         /// <param name="numbers">The list of numbers to filter.</param>
         /// <returns>The filtered list.</returns>
-        public static List<int> FilterFromList(List<int> numbers)
+        public static List<int> FilterAndSquareNumbers(List<int> numbers)
         {
             List<int> resultList = numbers.Where(n => n % 2 != 0)
                 .Select(n =>

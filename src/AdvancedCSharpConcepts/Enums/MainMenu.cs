@@ -1,4 +1,4 @@
-﻿namespace AdvancedCSharpConcepts.Enum
+﻿namespace AdvancedCSharpConcepts.Enums
 {
     /// <summary>
     /// Represents various options of the main menu.
@@ -28,7 +28,7 @@
         /// <summary>
         /// Represents the implementation of advanced use of delegates for sorting.
         /// </summary>
-        AdvanceDelegate,
+        AdvancedDelegate,
 
         /// <summary>
         /// Represents the implementation of records.

@@ -26,6 +26,11 @@
         /// <inheritdoc/>
         public override double CalculateArea()
         {
+            if (this.Radius < 0)
+            {
+                throw new ArgumentOutOfRangeException("Radius cannot be negative.");
+            }
+
             double maxRadius = Math.Sqrt(double.MaxValue / Math.PI);
             if (this.Radius > maxRadius)
             {

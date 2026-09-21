@@ -69,19 +69,17 @@ namespace AdvancedCSharpConcepts.View
                 this.ShowMessage("The list is empty...");
                 return;
             }
-            else
-            {
-                int serialNumber = 1;
-                this.ShowMessage(new string('-', 65));
-                this.ShowMessage($"{"S.no",-5} | {"Name",-15} | {"Category",-20} | {"Price",-15} |");
-                this.ShowMessage(new string('-', 65));
 
-                foreach (Product product in products)
-                {
-                    this.ShowMessage($"{serialNumber,-5} | {product.Name,-15} | {product.Category,-20} | {product.Price,-15} |");
-                    this.ShowMessage(new string('-', 65));
-                    serialNumber++;
-                }
+            int serialNumber = 1;
+            this.ShowMessage(new string('-', 65));
+            this.ShowMessage($"{"S.no",-5} | {"Name",-15} | {"Category",-20} | {"Price",-15} |");
+            this.ShowMessage(new string('-', 65));
+
+            foreach (Product product in products)
+            {
+                this.ShowMessage($"{serialNumber,-5} | {product.Name,-15} | {product.Category,-20} | {product.Price,-15} |");
+                this.ShowMessage(new string('-', 65));
+                serialNumber++;
             }
         }
 

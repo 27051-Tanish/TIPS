@@ -1,5 +1,8 @@
 ﻿namespace AdvancedCSharpConcepts.AdvancedTasks
 {
+    /// <summary>
+    /// Represents an immutable book record with value-based equality behavior.
+    /// </summary>
     public record Book
     {
         /// <summary>
@@ -12,32 +15,32 @@
         {
             this.Title = title;
             this.AuthorName = authorName;
-            this.ISBN = isbn;
+            this.Isbn = isbn;
         }
 
         /// <summary>
-        /// Gets or sets the title of the book.
+        /// Gets the title of the book.
         /// </summary>
         /// <value>
         /// The title of the book.
         /// </value>
-        public string Title { get; set; } = string.Empty;
+        public string Title { get; init; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the author name of the book.
+        /// Gets the author name of the book.
         /// </summary>
         /// <value>
         /// The author name of the book.
         /// </value>
-        public string AuthorName { get; set; } = string.Empty;
+        public string AuthorName { get; init; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets ISBN of the book.
+        /// Gets ISBN of the book.
         /// </summary>
         /// <value>
         /// ISBN of the book.
         /// </value>
-        public string ISBN { get; set; } = string.Empty;
+        public string Isbn { get; init; } = string.Empty;
 
         /// <summary>
         /// Deconstructs the book record into its individual components.
@@ -49,7 +52,7 @@
         {
             title = this.Title;
             authorName = this.AuthorName;
-            isbn = this.ISBN;
+            isbn = this.Isbn;
         }
     }
 }

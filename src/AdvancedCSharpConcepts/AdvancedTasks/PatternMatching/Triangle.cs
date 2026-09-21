@@ -8,12 +8,12 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Triangle"/> class.
         /// </summary>
-        /// <param name="base">The base of the triangle.</param>
+        /// <param name="baseOfTriangle">The base of the triangle.</param>
         /// <param name="height">The height of the triangle.</param>
-        public Triangle(double @base, double height)
+        public Triangle(double baseOfTriangle, double height)
         {
             this.Name = "Triangle";
-            this.Base = @base;
+            this.Base = baseOfTriangle;
             this.Height = height;
         }
 
@@ -41,7 +41,7 @@
             // Check if the double calculation resulted in positive infinity (overflow)
             if (double.IsPositiveInfinity(area))
             {
-                throw new OverflowException($"The dimensions are too large caused an arithmetic overflow during area calculation.");
+                throw new OverflowException("The area calculation failed due to an arithmetic overflow.");
             }
 
             return area;

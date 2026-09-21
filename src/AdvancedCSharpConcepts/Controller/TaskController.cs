@@ -1,7 +1,9 @@
-﻿using AdvancedCSharpConcepts.AdvancedTasks;
+﻿using System.Text;
+using System.Text.RegularExpressions;
+using AdvancedCSharpConcepts.AdvancedTasks;
 using AdvancedCSharpConcepts.AdvancedTasks.AdvancedDelegates;
 using AdvancedCSharpConcepts.AdvancedTasks.PatternMatching;
-using AdvancedCSharpConcepts.Enum;
+using AdvancedCSharpConcepts.Enums;
 using AdvancedCSharpConcepts.View;
 
 namespace AdvancedCSharpConcepts.Controller
@@ -36,8 +38,15 @@ namespace AdvancedCSharpConcepts.Controller
             do
             {
                 this._consoleView.ShowTitle("MAIN MENU");
-                this._consoleView.ShowMessage("[1]. Events and Delegate\n[2]. Dynamic and Var\n[3]. Anonymous methods\n[4]. Lambda expression\n" +
-                    "[5]. Advance delegate\n[6]. Record task\n[7]. Pattern matching\n[8]. Exit");
+                StringBuilder menuBuilder = new StringBuilder();
+                foreach (MainMenu menuOption in Enum.GetValues<MainMenu>())
+                {
+                    int optionNumber = (int)menuOption;
+                    string readableName = Regex.Replace(menuOption.ToString(), "([a-z])([A-Z])", "$1 $2");
+                    menuBuilder.AppendLine($"{optionNumber}. {readableName}");
+                }
+
+                this._consoleView.ShowMessage(menuBuilder.ToString().TrimEnd());
                 choice = this._consoleView.GetIntInput("Enter your choice: ");
                 menu = (MainMenu)choice;
 
@@ -55,8 +64,8 @@ namespace AdvancedCSharpConcepts.Controller
                     case MainMenu.LambdaExpression:
                         this.ExecuteLambdaExpressionTask();
                         break;
-                    case MainMenu.AdvanceDelegate:
-                        this.ExecuteAdvanceDelegate();
+                    case MainMenu.AdvancedDelegate:
+                        this.ExecuteAdvancedDelegate();
                         break;
                     case MainMenu.RecordTask:
                         this.ExecuteBookRecord();
@@ -76,10 +85,9 @@ namespace AdvancedCSharpConcepts.Controller
 
         private void PerformEventsTask()
         {
-            Notifier notify = new Notifier();
-            notify.OnAction += this.EventNotification;
+            this._notifier.OnAction += this.EventNotification;
 
-            notify.CallEvent("This event is triggered...");
+            this._notifier.CallEvent("This event is triggered...");
             this._consoleView.ConsoleClear();
         }
 
@@ -121,12 +129,12 @@ namespace AdvancedCSharpConcepts.Controller
             List<int> numbers = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             this._consoleView.ShowMessage($"Original list: {string.Join(", ", numbers)}");
 
-            List<int> filteredList = LambdaExpression.FilterFromList(numbers);
+            List<int> filteredList = LambdaExpression.FilterAndSquareNumbers(numbers);
             this._consoleView.ShowMessage($"\nAfter applying the filter: {string.Join(", ", filteredList)}");
             this._consoleView.ConsoleClear();
         }
 
-        private void ExecuteAdvanceDelegate()
+        private void ExecuteAdvancedDelegate()
         {
             List<Product> products = new List<Product>()
             {
@@ -143,21 +151,21 @@ namespace AdvancedCSharpConcepts.Controller
 
             SortProducts.SortDelegate sort;
             sort = SortProducts.SortByName;
-            List<Product> sortByName = SortProducts.SortAndDisplay(sort, products);
+            List<Product> sortByName = SortProducts.GetSortedProducts(sort, products);
             this._consoleView.ShowMessage("SORT BY NAME");
             this._consoleView.DrawSeparatorLine();
             this._consoleView.DisplaySortedProducts(sortByName);
             this._consoleView.ShowMessage("\n");
 
-            sort += SortProducts.SortByCategory;
-            List<Product> sortByCategory = SortProducts.SortAndDisplay(sort, products);
+            sort = SortProducts.SortByCategory;
+            List<Product> sortByCategory = SortProducts.GetSortedProducts(sort, products);
             this._consoleView.ShowMessage("SORT BY CATEGORY");
             this._consoleView.DrawSeparatorLine();
             this._consoleView.DisplaySortedProducts(sortByCategory);
             this._consoleView.ShowMessage("\n");
 
-            sort += SortProducts.SortByPrice;
-            List<Product> sortByPrice = SortProducts.SortAndDisplay(sort, products);
+            sort = SortProducts.SortByPrice;
+            List<Product> sortByPrice = SortProducts.GetSortedProducts(sort, products);
             this._consoleView.ShowMessage("SORT BY PRICE");
             this._consoleView.DrawSeparatorLine();
             this._consoleView.DisplaySortedProducts(sortByPrice);
@@ -179,24 +187,26 @@ namespace AdvancedCSharpConcepts.Controller
             this._consoleView.DrawSeparatorLine();
 
             this._consoleView.ShowMessage("\nThe values of the 4th book in the record before changing the author name.");
-            this._consoleView.ShowMessage($"Book Name: {book4.Title}\nAuthor Name: {book4.AuthorName}\nISBN: {book4.ISBN}");
+            this._consoleView.ShowMessage($"Book Name: {book4.Title}\nAuthor Name: {book4.AuthorName}\nISBN: {book4.Isbn}");
 
-            book4.AuthorName = "Tanish";
-            this._consoleView.ShowMessage("\nThe values of the 4th book in the record after changing the author name.");
-            this._consoleView.ShowMessage($"Book Name: {book4.Title}\nAuthor Name: {book4.AuthorName}\nISBN: {book4.ISBN}");
+            // Note: book4.AuthorName = "Tanish";
+            // This line was commented out because C# records use init properties. Trying to mutate it directly causes a compiler error.
+            this._consoleView.ShowMessage("\nThe values of the 4th book in the record after trying to change the author name" +
+                "which throws an compiler error.");
+            this._consoleView.ShowMessage($"Book Name: {book4.Title}\nAuthor Name: {book4.AuthorName}\nISBN: {book4.Isbn}");
             this._consoleView.DrawSeparatorLine();
 
             Book updatedBook = book3 with
             {
                 Title = "Atomic Habits: Special Edition",
-                ISBN = "978-0000000000",
+                Isbn = "978-0000000000",
             };
 
             this._consoleView.ShowMessage("\nThe values of the 3rd book in the record before changing title and ISBN.");
-            this._consoleView.ShowMessage($"Book Name: {book3.Title}\nAuthor Name: {book3.AuthorName}\nISBN: {book3.ISBN}");
+            this._consoleView.ShowMessage($"Book Name: {book3.Title}\nAuthor Name: {book3.AuthorName}\nISBN: {book3.Isbn}");
 
             this._consoleView.ShowMessage("\nThe values of the 3rd book in the record after changing title and ISBN.");
-            this._consoleView.ShowMessage($"Book Name: {updatedBook.Title}\nAuthor Name: {updatedBook.AuthorName}\nISBN: {updatedBook.ISBN}");
+            this._consoleView.ShowMessage($"Book Name: {updatedBook.Title}\nAuthor Name: {updatedBook.AuthorName}\nISBN: {updatedBook.Isbn}");
             this._consoleView.DrawSeparatorLine();
 
             this._consoleView.ShowMessage("Display the 5th book from the record.");
@@ -210,9 +220,11 @@ namespace AdvancedCSharpConcepts.Controller
         {
             List<Shape> shapes = new List<Shape>()
             {
-                new Circle(5),
-                new Rectangle(4, 6),
+                new Circle(4),
+                new Rectangle(4, 5),
                 new Triangle(3, 8),
+                new Cube(),
+                null!,
             };
 
             foreach (Shape shape in shapes)
@@ -230,25 +242,29 @@ namespace AdvancedCSharpConcepts.Controller
                 switch (shape)
                 {
                     case Circle c:
-                        Console.WriteLine($"Shape: {c.Name} | Radius: {c.Radius} | Area: {c.CalculateArea():F2}");
+                        this._consoleView.ShowMessage($"Shape: {c.Name} | Radius: {c.Radius} | Area: {c.CalculateArea():F2}");
                         break;
 
                     case Rectangle r:
-                        Console.WriteLine($"Shape: {r.Name} | Dimensions: {r.Length}x{r.Width} | Area: {r.CalculateArea():F2}");
+                        this._consoleView.ShowMessage($"Shape: {r.Name} | Dimensions: {r.Length}x{r.Width} | Area: {r.CalculateArea():F2}");
                         break;
 
                     case Triangle t:
-                        Console.WriteLine($"Shape: {t.Name} | Base: {t.Base}, Height: {t.Height} | Area: {t.CalculateArea():F2}");
+                        this._consoleView.ShowMessage($"Shape: {t.Name} | Base: {t.Base}, Height: {t.Height} | Area: {t.CalculateArea():F2}");
                         break;
 
                     case null:
-                        Console.WriteLine("Error: The shape reference is null.");
+                        this._consoleView.ShowMessage("Error: The shape reference is null.");
                         break;
 
                     default:
-                        Console.WriteLine("Error: Unknown or unsupported shape type.");
+                        this._consoleView.ShowMessage("Error: Unknown or unsupported shape type.");
                         break;
                 }
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                this._consoleView.ShowMessage($"{ex.Message}");
             }
             catch (OverflowException ex)
             {
