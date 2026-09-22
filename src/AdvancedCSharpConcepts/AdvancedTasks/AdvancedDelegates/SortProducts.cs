@@ -52,7 +52,7 @@
         /// </summary>
         /// <param name="sort">The delegate type.</param>
         /// <param name="products">The product list.</param>
-        /// <returns>The sorted list</returns>
+        /// <returns>The sorted list.</returns>
         public static List<Product> GetSortedProducts(SortDelegate sort, List<Product> products)
         {
             List<Product> sortedCopy = new List<Product>(products);

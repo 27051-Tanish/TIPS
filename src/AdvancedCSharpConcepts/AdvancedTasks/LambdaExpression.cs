@@ -6,7 +6,7 @@
     public static class LambdaExpression
     {
         /// <summary>
-        /// Filters out even numbers from the provided list, squares the remaining odd numbers numbers,
+        /// Filters out even numbers from the provided list, squares the remaining odd numbers,
         /// and returns the transformed collection.
         /// </summary>
         /// <param name="numbers">The list of numbers to filter.</param>

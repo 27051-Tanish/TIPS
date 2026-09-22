@@ -12,39 +12,48 @@
         /// <param name="height">The height of the triangle.</param>
         public Triangle(double baseOfTriangle, double height)
         {
-            this.Name = "Triangle";
+            if (!double.IsFinite(baseOfTriangle) || !double.IsFinite(height))
+            {
+                throw new ArgumentException("Triangle dimensions must be finite, valid numbers.");
+            }
+
+            if (baseOfTriangle < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(baseOfTriangle), "The base of the triangle cannot be negative.");
+            }
+
+            if (height < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(height), "The height of the triangle cannot be negative.");
+            }
+
             this.Base = baseOfTriangle;
             this.Height = height;
         }
 
+        /// <inheritdoc/>
+        public override string Name => "Triangle";
+
         /// <summary>
-        /// Gets or sets the base of the triangle.
+        /// Gets the base of the triangle.
         /// </summary>
         /// <value>
         /// The base of the triangle.
         /// </value>
-        public double Base { get; set; }
+        public double Base { get; init; }
 
         /// <summary>
-        /// Gets or sets the height of the triangle.
+        /// Gets the height of the triangle.
         /// </summary>
         /// <value>
         /// The height of the triangle.
         /// </value>
-        public double Height { get; set; }
+        public double Height { get; init; }
 
         /// <inheritdoc/>
         public override double CalculateArea()
         {
-            double area = 0.5 * this.Base * this.Height;
-
-            // Check if the double calculation resulted in positive infinity (overflow)
-            if (double.IsPositiveInfinity(area))
-            {
-                throw new OverflowException("The area calculation failed due to an arithmetic overflow.");
-            }
-
-            return area;
+            return 0.5 * this.Base * this.Height;
         }
     }
 }

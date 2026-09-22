@@ -6,12 +6,12 @@
     public abstract class Shape
     {
         /// <summary>
-        /// Gets or sets the name of the shape.
+        /// Gets the name of the shape.
         /// </summary>
         /// <value>
         /// The name of the shape.
         /// </value>
-        public string Name { get; set; } = string.Empty;
+        public abstract string Name { get; }
 
         /// <summary>
         /// Calculates the area of the shape.

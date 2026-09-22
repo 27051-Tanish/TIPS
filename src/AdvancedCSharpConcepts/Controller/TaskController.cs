@@ -85,6 +85,8 @@ namespace AdvancedCSharpConcepts.Controller
 
         private void PerformEventsTask()
         {
+            // FIX: Unsubscribe first to clear out any legacy registrations from previous menu visits.
+            this._notifier.OnAction -= this.EventNotification;
             this._notifier.OnAction += this.EventNotification;
 
             this._notifier.CallEvent("This event is triggered...");
@@ -218,49 +220,23 @@ namespace AdvancedCSharpConcepts.Controller
 
         private void ExecutePatternMatching()
         {
-            List<Shape> shapes = new List<Shape>()
-            {
-                new Circle(4),
-                new Rectangle(4, 5),
-                new Triangle(3, 8),
-                new Cube(),
-                null!,
-            };
-
-            foreach (Shape shape in shapes)
-            {
-                this.DisplayShapeDetails(shape);
-            }
-
-            this._consoleView.ConsoleClear();
-        }
-
-        private void DisplayShapeDetails(Shape shape)
-        {
             try
             {
-                switch (shape)
+                List<Shape> shapes = new List<Shape>()
                 {
-                    case Circle c:
-                        this._consoleView.ShowMessage($"Shape: {c.Name} | Radius: {c.Radius} | Area: {c.CalculateArea():F2}");
-                        break;
+                    new Circle(4),
+                    new Rectangle(4, 5),
+                    new Triangle(3, 8),
+                    new Square(4),
+                    null!,
+                };
 
-                    case Rectangle r:
-                        this._consoleView.ShowMessage($"Shape: {r.Name} | Dimensions: {r.Length}x{r.Width} | Area: {r.CalculateArea():F2}");
-                        break;
-
-                    case Triangle t:
-                        this._consoleView.ShowMessage($"Shape: {t.Name} | Base: {t.Base}, Height: {t.Height} | Area: {t.CalculateArea():F2}");
-                        break;
-
-                    case null:
-                        this._consoleView.ShowMessage("Error: The shape reference is null.");
-                        break;
-
-                    default:
-                        this._consoleView.ShowMessage("Error: Unknown or unsupported shape type.");
-                        break;
+                foreach (Shape shape in shapes)
+                {
+                    this.DisplayShapeDetails(shape);
                 }
+
+                this._consoleView.ConsoleClear();
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -269,6 +245,32 @@ namespace AdvancedCSharpConcepts.Controller
             catch (OverflowException ex)
             {
                 this._consoleView.ShowMessage($"{ex.Message}");
+            }
+        }
+
+        private void DisplayShapeDetails(Shape shape)
+        {
+            switch (shape)
+            {
+                case Circle c:
+                    this._consoleView.ShowMessage($"Shape: {c.Name} | Radius: {c.Radius} | Area: {c.CalculateArea():F2}");
+                    break;
+
+                case Rectangle r:
+                    this._consoleView.ShowMessage($"Shape: {r.Name} | Dimensions: {r.Length}x{r.Width} | Area: {r.CalculateArea():F2}");
+                    break;
+
+                case Triangle t:
+                    this._consoleView.ShowMessage($"Shape: {t.Name} | Base: {t.Base}, Height: {t.Height} | Area: {t.CalculateArea():F2}");
+                    break;
+
+                case null:
+                    this._consoleView.ShowMessage("Error: The shape reference is null.");
+                    break;
+
+                default:
+                    this._consoleView.ShowMessage("Error: Unknown or unsupported shape type.");
+                    break;
             }
         }
     }
