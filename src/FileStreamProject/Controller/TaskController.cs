@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using FileStreamProject.Constants;
 using FileStreamProject.Constants.Utility;
-using FileStreamProject.Enum;
+using FileStreamProject.Enums;
 using FileStreamProject.FileStreamTasks;
 using FileStreamProject.View;
 
@@ -39,6 +39,14 @@ namespace FileStreamProject.Controller
                 this._consoleView.ShowTitle("MAIN MENU");
                 this._consoleView.ShowMessage("[1]. Task1\n[2]. Task2\n[3]. Task3\n[4]. Task4\n[5]. Exit\n");
                 choice = this._consoleView.GetIntInput("Enter your choice: ");
+
+                if (!Enum.IsDefined(typeof(MainMenu), choice))
+                {
+                    this._consoleView.ShowMessage("Invalid entry! Please select from the menu [1 to 5].\n");
+                    menu = (MainMenu)(-1);
+                    continue;
+                }
+
                 menu = (MainMenu)choice;
 
                 switch (menu)
@@ -50,7 +58,7 @@ namespace FileStreamProject.Controller
                         await this.PerformTask2();
                         break;
                     case MainMenu.Task3:
-                        string data = BasicFileUsageTask.FileUsage();
+                        string data = BasicFileUsage.FileUsage();
                         this._consoleView.ShowMessage($"Data in the file: {data}\n");
                         this._consoleView.ConsoleClear();
                         break;
@@ -69,12 +77,21 @@ namespace FileStreamProject.Controller
 
         private void PerformTask1()
         {
-            FileGenerator.CreateLargeTextFile(FilePaths.DataFilePath);
-            this._consoleView.ShowMessage("1GB File created successfully...\n");
-
             this._consoleView.ShowTitle("TASK 1");
+
+            if (!File.Exists(FilePaths.DataFilePath))
+            {
+                this._consoleView.ShowMessage("Creating 1GB file, please wait...\n");
+                FileGenerator.CreateLargeTextFile(FilePaths.DataFilePath);
+                this._consoleView.ShowMessage("1GB File created successfully...\n");
+            }
+            else
+            {
+                this._consoleView.ShowMessage("Existing 1GB file detected. Skipping generation...\n");
+            }
+
             Directory.CreateDirectory("Destination");
-            FileProcessorTask fileProcessor = new FileProcessorTask();
+            FileProcessor fileProcessor = new FileProcessor();
 
             Stopwatch watch = Stopwatch.StartNew();
             fileProcessor.ReadFromStreamer(FilePaths.DataFilePath);
@@ -98,14 +115,14 @@ namespace FileStreamProject.Controller
         private async Task PerformTask2()
         {
             // Create a CancellationTokenSource that automatically triggers after 2 minutes.
-            using CancellationTokenSource cancelToken = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+            using CancellationTokenSource cancelToken = new CancellationTokenSource(TimeSpan.FromMinutes(2));
             CancellationToken token = cancelToken.Token;
             try
             {
                 this._consoleView.ShowTitle("TASK 2");
                 Directory.CreateDirectory("Destination");
 
-                FileProcessorAsyncTask fileProcessorAsync = new FileProcessorAsyncTask();
+                FileProcessorAsync fileProcessorAsync = new FileProcessorAsync();
 
                 Stopwatch watch = Stopwatch.StartNew();
                 long totalStreamBytes = await fileProcessorAsync.ReadFromStreamerAsync(FilePaths.DataFilePath, token);
@@ -146,11 +163,26 @@ namespace FileStreamProject.Controller
         private void PerformTask4()
         {
             this._consoleView.ShowTitle("TASK 4");
-            LoggingSystemTask loggingSystem = new LoggingSystemTask();
-            loggingSystem.Run();
+            LoggingSystem loggingSystem = new LoggingSystem();
 
-            // The files are modified after performing the tasks.
-            this._consoleView.ShowMessage("Task 4 completed");
+            loggingSystem.ImproveFileWriting("Error occurred from improved logging.\n");
+            this._consoleView.ShowMessage("Message written to the file successfully.");
+
+            Stopwatch watch = Stopwatch.StartNew();
+            loggingSystem.ThreadSafeLogging(5, 30);
+            watch.Stop();
+            this._consoleView.ShowMessage($"Time taken to log error in single in thread safe manner: {watch.ElapsedMilliseconds} ms");
+
+            watch.Restart();
+            loggingSystem.IndependentLogFiles(1000, 30);
+            watch.Stop();
+            this._consoleView.ShowMessage($"[Naive Implementation] Time taken to log errors of multiple users in independent files: {watch.ElapsedMilliseconds} ms");
+
+            watch.Restart();
+            loggingSystem.IndependentLogFiles(1000, 30);
+            watch.Stop();
+            this._consoleView.ShowMessage($"[Optimized Implementation] Time taken to log errors of multiple users in independent files: {watch.ElapsedMilliseconds} ms");
+
             this._consoleView.ConsoleClear();
         }
     }

@@ -16,7 +16,15 @@ namespace FileStreamProject
         {
             ConsoleView view = new ConsoleView();
             TaskController controller = new TaskController(view);
-            await controller.RunTasks();
+            try
+            {
+                await controller.RunTasks();
+            }
+            catch (Exception ex)
+            {
+                view.ShowMessage($"Unknown error occurred: {ex.Message}");
+                view.ConsoleClear();
+            }
         }
     }
 }

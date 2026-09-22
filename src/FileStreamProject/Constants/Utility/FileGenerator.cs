@@ -19,10 +19,10 @@ namespace FileStreamProject.Constants.Utility
             long totalBytesWritten = 0;
 
             using FileStream dataStream = new FileStream(dataFilePath, FileMode.Create, FileAccess.Write);
-
+            using BufferedStream bufferedStream = new BufferedStream(dataStream, 64 * 1024);
             while (totalBytesWritten < targetSize)
             {
-                dataStream.Write(buffer, 0, buffer.Length);
+                bufferedStream.Write(buffer, 0, buffer.Length);
                 totalBytesWritten += buffer.Length;
             }
         }

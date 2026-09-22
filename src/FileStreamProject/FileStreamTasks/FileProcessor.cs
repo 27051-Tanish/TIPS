@@ -5,7 +5,7 @@ namespace FileStreamProject.FileStreamTasks
     /// <summary>
     /// Implements file data processor and manages the execute read from file stream and buffer stream.
     /// </summary>
-    public class FileProcessorTask
+    public class FileProcessor
     {
         /// <summary>
         /// Reads the content using the file stream.
@@ -14,7 +14,8 @@ namespace FileStreamProject.FileStreamTasks
         public void ReadFromStreamer(string filePath)
         {
             byte[] buffer = new byte[4096];
-            using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            int bufferSize = 64 * 1024;
+            using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize);
             long totalBytesRead = 0;
             int bytesRead;
 
@@ -31,12 +32,12 @@ namespace FileStreamProject.FileStreamTasks
         public void ReadFromBuffer(string filePath)
         {
             byte[] buffer = new byte[4096];
-            byte[] internalBuffer = new byte[64 * 1024];
+            int internalBuffer = 64 * 1024;
 
             using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
             long totalBytesRead = 0;
             int bytesRead;
-            using BufferedStream bufferStream = new BufferedStream(stream, internalBuffer.Length);
+            using BufferedStream bufferStream = new BufferedStream(stream, internalBuffer);
 
             while ((bytesRead = bufferStream.Read(buffer, 0, buffer.Length)) > 0)
             {
@@ -57,15 +58,25 @@ namespace FileStreamProject.FileStreamTasks
             using FileStream outputStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write, FileShare.Read);
 
             int charsRead;
-            using MemoryStream memoryStream = new MemoryStream();
+            int maxBufferSize = 64 * 1024;
+            using MemoryStream memoryStream = new MemoryStream(maxBufferSize);
 
             while ((charsRead = reader.Read(buffer, 0, buffer.Length)) > 0)
             {
-                string upperData = new string(buffer, 0, charsRead).ToUpper();
+                string upperData = new string(buffer, 0, charsRead).ToUpperInvariant();
                 byte[] processedData = Encoding.UTF8.GetBytes(upperData);
 
-                memoryStream.SetLength(0);
                 memoryStream.Write(processedData, 0, processedData.Length);
+                if (memoryStream.Length >= maxBufferSize)
+                {
+                    memoryStream.Position = 0;
+                    memoryStream.CopyTo(outputStream);
+                    memoryStream.SetLength(0); // Reset buffer size back to zero for the next batch
+                }
+            }
+
+            if (memoryStream.Length > 0)
+            {
                 memoryStream.Position = 0;
                 memoryStream.CopyTo(outputStream);
             }

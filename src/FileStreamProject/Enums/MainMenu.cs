@@ -1,6 +1,4 @@
-﻿using FileStreamProject.FileStreamTasks;
-
-namespace FileStreamProject.Enum
+﻿namespace FileStreamProject.Enums
 {
     /// <summary>
     /// Represents the options for main menu.

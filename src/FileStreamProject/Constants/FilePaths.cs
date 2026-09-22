@@ -21,9 +21,12 @@
         public static readonly string SampleTextFileTask3 = "Task3.txt";
 
         /// <summary>
-        /// It represents three different source files.
+        /// Gets the three different source files in the sampleFolder directory.
         /// </summary>
-        public static readonly string[] SourceFiles =
+        /// <value>
+        /// The three different source files in the sampleFolder directory.
+        /// </value>
+        public static string[] SourceFiles => new[]
         {
             "SampleFolder/file1.txt",
             "SampleFolder/file2.txt",
@@ -31,9 +34,12 @@
         };
 
         /// <summary>
-        /// It represents three different destination files.
+        /// Gets the three different processed data files in the destination directory.
         /// </summary>
-        public static readonly string[] DestinationFiles =
+        /// <value>
+        /// The three different processed data files in the destination directory.
+        /// </value>
+        public static string[] DestinationFiles => new[]
         {
             "Destination/file1.txt",
             "Destination/file2.txt",

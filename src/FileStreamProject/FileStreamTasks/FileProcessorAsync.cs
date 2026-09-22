@@ -6,7 +6,7 @@ namespace FileStreamProject.FileStreamTasks
     /// <summary>
     /// Implement file data processor with asynchronous methods.
     /// </summary>
-    public class FileProcessorAsyncTask
+    public class FileProcessorAsync
     {
         private const int _bufferSize = 4096;
 
@@ -40,12 +40,12 @@ namespace FileStreamProject.FileStreamTasks
         public async Task<long> ReadFromBufferAsync(string filePath, CancellationToken token = default)
         {
             byte[] buffer = new byte[_bufferSize];
-            byte[] internalBuffer = new byte[64 * 1024];
+            int internalBuffer = 64 * 1024;
 
             using FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, _bufferSize, useAsync: true);
             long totalBytesRead = 0;
             int bytesRead;
-            using BufferedStream bufferStream = new BufferedStream(stream, internalBuffer.Length);
+            using BufferedStream bufferStream = new BufferedStream(stream, internalBuffer);
 
             while ((bytesRead = await bufferStream.ReadAsync(buffer, 0, buffer.Length, token)) > 0)
             {
@@ -75,7 +75,7 @@ namespace FileStreamProject.FileStreamTasks
             {
                 token.ThrowIfCancellationRequested();
 
-                string upperData = new string(buffer, 0, charsRead).ToUpper();
+                string upperData = new string(buffer, 0, charsRead).ToUpperInvariant();
                 byte[] processedData = Encoding.UTF8.GetBytes(upperData);
 
                 await outputStream.WriteAsync(processedData, 0, processedData.Length, token);

@@ -7,7 +7,7 @@ namespace FileStreamProject.FileStreamTasks
     /// <summary>
     /// Investigate Issues in Basic File usage.
     /// </summary>
-    public static class BasicFileUsageTask
+    public static class BasicFileUsage
     {
         /// <summary>
         /// Writing to file from memory stream and reading from file using file stream.
@@ -25,20 +25,10 @@ namespace FileStreamProject.FileStreamTasks
                 writer.Write(data);
             }
 
-            using (FileStream fileStream = new FileStream(path, FileMode.Open))
+            using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (StreamReader reader = new StreamReader(fileStream, Encoding.UTF8))
             {
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-
-                // Fix of the starter code: Use the StringBuilder to read from the buffer and append them to produce as a string
-                // to prevent dynamic memory re-allocations.
-                StringBuilder sb = new StringBuilder();
-                while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    sb.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
-                }
-
-                return sb.ToString();
+                return reader.ReadToEnd();
             }
         }
     }
