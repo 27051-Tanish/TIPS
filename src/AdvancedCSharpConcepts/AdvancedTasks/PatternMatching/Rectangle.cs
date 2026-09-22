@@ -32,7 +32,6 @@
                 throw new OverflowException("The dimensions are too large to calculate the area of the rectangle.");
             }
 
-
             this.Length = length;
             this.Width = width;
         }
