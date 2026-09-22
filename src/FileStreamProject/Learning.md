@@ -50,7 +50,7 @@ The file generation pipeline uses a streamlined `FileStream` loop that writes st
 * **The Fix:** Implemented standard stacked `using` block structures with explicit `FileAccess.Write` settings. This guarantees that unmanaged file handles are safely closed and released immediately upon block termination, avoiding file lock contentions.
 
 * **The Issue 3:** During the reading phase, the starter code looped through raw byte buffers character-by-character to write them to the console layout via `Console.Write((char)buffer[i])`. Executing thousands of tiny, separate console rendering tasks blocks the execution thread.
-* **The Fix:** Replaced per-character stream writing with a high-performance memory accumulation pattern using a **`StringBuilder`**.
+* **The Fix:** Replaced per-character stream writing with a high-performance memory accumulation pattern using a **`StreamReader`** and returning the content read till the end.
 
 * **The Issue 4:** The starter code blindly converted file streams using raw 1024-byte array limits. In UTF-8 encoding, characters can span anywhere from 1 to 4 bytes.
 If a multi-byte symbol sits exactly on the 1024-byte block boundary, its byte sequence is split across loop cycles, creating permanent text data corruption like this(`?`).
