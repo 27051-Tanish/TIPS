@@ -27,6 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionsAndGenerics", "s
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Understanding.NET", "src\Understanding.NET\Understanding.NET.csproj", "{DFACAA1B-7408-4E36-814D-4EB0663B1662}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedCSharpConcepts", "src\AdvancedCSharpConcepts\AdvancedCSharpConcepts.csproj", "{59BD4647-6BC2-49AB-8732-76D5B203004A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStreamProject", "src\FileStreamProject\FileStreamProject.csproj", "{9347006C-4F41-4B67-AF0F-B96F2E894C94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +71,10 @@ Global
 		{59BD4647-6BC2-49AB-8732-76D5B203004A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59BD4647-6BC2-49AB-8732-76D5B203004A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59BD4647-6BC2-49AB-8732-76D5B203004A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +91,7 @@ Global
 		{99ED5FA8-812C-4C62-9BF7-5573F1C85F92} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 		{DFACAA1B-7408-4E36-814D-4EB0663B1662} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 		{59BD4647-6BC2-49AB-8732-76D5B203004A} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
+		{9347006C-4F41-4B67-AF0F-B96F2E894C94} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4CECB66-8E11-49D9-AA1E-464EE0231450}
