@@ -1,4 +1,5 @@
-﻿using MusicalSequencer.Constants;
+﻿using System.Runtime.CompilerServices;
+using MusicalSequencer.Constants;
 
 namespace Assignments
 {
@@ -15,14 +16,12 @@ namespace Assignments
             List<string> notes = new List<string>();
             int duration = ApplicationConstants.DefaultPlaytime;
             string? choice;
+
             do
             {
+                DisplayNotes(notes);
                 Console.WriteLine("Available notes: " +
                     "[C, C#, D, D#, E, F, F#, G, G#, A, A#, B]");
-                foreach (var note in notes)
-                {
-                    Console.WriteLine($"Stored notes : {note}");
-                }
 
                 Console.WriteLine("Please select the note to play: (To close type 'Exit')");
                 choice = Console.ReadLine();
@@ -87,6 +86,18 @@ namespace Assignments
                 }
             }
             while (choice != "Exit");
+        }
+
+        /// <summary>
+        /// Displays the stored notes.
+        /// </summary>
+        /// <param name="notes">The list of musical notes.</param>
+        public static void DisplayNotes(List<string> notes)
+        {
+            foreach (var note in notes)
+            {
+                Console.WriteLine($"Stored notes : {note}");
+            }
         }
     }
 }
