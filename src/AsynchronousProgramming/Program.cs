@@ -1,4 +1,7 @@
-﻿namespace Assignments
+﻿using AsynchronousProgramming.Controller;
+using AsynchronousProgramming.View;
+
+namespace Assignments
 {
     /// <summary>
     /// Provides execution logic of the application.
@@ -8,9 +11,12 @@
         /// <summary>
         /// Provides main entry point of the application.
         /// </summary>
-        public static void Main()
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public static async Task Main()
         {
-            Console.WriteLine("Hello, World!");
+            ConsoleView view = new ConsoleView();
+            TaskController controller = new TaskController(view);
+            await controller.RunApplication();
         }
     }
 }

@@ -39,5 +39,10 @@
         /// Represents the task which provides difference between async void and async Task with exceptions.
         /// </summary>
         ExceptionsInTask,
+
+        /// <summary>
+        /// Represents the exit option.
+        /// </summary>
+        Exit,
     }
 }

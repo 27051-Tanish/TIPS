@@ -42,5 +42,16 @@
                 this.ShowMessage(errorMessage);
             }
         }
+
+        /// <summary>
+        /// Displays the title in the specified format.
+        /// </summary>
+        /// <param name="title">The title to be displayed.</param>
+        public void ShowTitle(string title)
+        {
+            this.ShowMessage(new string('=', 25));
+            this.ShowMessage($"        {title}");
+            this.ShowMessage(new string('=', 25));
+        }
     }
 }
