@@ -55,6 +55,7 @@ namespace AsynchronousProgramming.Controller
                         this.DisplaySquaredNumbers();
                         break;
                     case MainMenu.MultiThreadingTask:
+                        this.PerformMultiThreading();
                         break;
                     case MainMenu.MultiLayeredAsyncTask:
                         break;
@@ -89,6 +90,23 @@ namespace AsynchronousProgramming.Controller
                 this._view.ShowMessage($"[{serialNumber}]. {number}");
                 serialNumber++;
             }
+        }
+
+        private void PerformMultiThreading()
+        {
+            MultiThreading operations = new MultiThreading();
+            Thread thread1 = new Thread(operations.SortAList);
+            Thread thread2 = new Thread(operations.CalculateSquareOfList);
+            thread1.Start();
+            thread2.Start();
+
+            thread1.Join();
+            thread2.Join();
+
+            this._view.ShowMessage("=== Sorted list ===\n");
+            this._view.ShowMessage($"{string.Join(", ", operations.SortedList)}");
+            this._view.ShowMessage("\n=== Squared list ===\n");
+            this._view.ShowMessage($"{string.Join(", ", operations.SquaredList)}");
         }
     }
 }
