@@ -12,6 +12,7 @@ namespace AsynchronousProgramming.Controller
     public class TaskController
     {
         private readonly ConsoleView _view;
+        private readonly MultiLayeredTasks _multiLayeredTasks = new MultiLayeredTasks();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskController"/> class.
@@ -20,6 +21,7 @@ namespace AsynchronousProgramming.Controller
         public TaskController(ConsoleView view)
         {
             this._view = view;
+            this._multiLayeredTasks.Notify += this.DisplayNotification;
         }
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace AsynchronousProgramming.Controller
                         this.PerformMultiThreading();
                         break;
                     case MainMenu.MultiLayeredAsyncTask:
+                        await this.PerformMultiLayeredTask();
                         break;
                     case MainMenu.DebuggingDeadlockTask:
                         break;
@@ -77,6 +80,8 @@ namespace AsynchronousProgramming.Controller
             HttpClientTask http = new HttpClientTask();
             string content = await http.DownloadContentAsync();
             this._view.ShowMessage(content);
+
+            this._view.ConsoleClear();
         }
 
         private void DisplaySquaredNumbers()
@@ -90,6 +95,8 @@ namespace AsynchronousProgramming.Controller
                 this._view.ShowMessage($"[{serialNumber}]. {number}");
                 serialNumber++;
             }
+
+            this._view.ConsoleClear();
         }
 
         private void PerformMultiThreading()
@@ -107,6 +114,28 @@ namespace AsynchronousProgramming.Controller
             this._view.ShowMessage($"{string.Join(", ", operations.SortedList)}");
             this._view.ShowMessage("\n=== Squared list ===\n");
             this._view.ShowMessage($"{string.Join(", ", operations.SquaredList)}");
+
+            this._view.ConsoleClear();
+        }
+
+        private async Task PerformMultiLayeredTask()
+        {
+            try
+            {
+                int keyCount = await this._multiLayeredTasks.PerformMethodC();
+                this._view.ShowMessage($"\nFinal Result: The JSON response contains {keyCount} keys.");
+            }
+            catch (Exception ex)
+            {
+                this._view.ShowMessage($"An error occurred: {ex.Message}");
+            }
+
+            this._view.ConsoleClear();
+        }
+
+        private void DisplayNotification(string obj)
+        {
+            this._view.ShowMessage(obj);
         }
     }
 }

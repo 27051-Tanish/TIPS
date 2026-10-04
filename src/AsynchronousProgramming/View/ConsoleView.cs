@@ -53,5 +53,15 @@
             this.ShowMessage($"        {title}");
             this.ShowMessage(new string('=', 25));
         }
+
+        /// <summary>
+        /// Prompts the user to press any key before clearing the UI.
+        /// </summary>
+        public void ConsoleClear()
+        {
+            this.ShowMessage("Press any key to close...");
+            Console.ReadKey();
+            Console.Clear();
+        }
     }
 }
