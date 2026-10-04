@@ -27,7 +27,7 @@ namespace AsynchronousProgramming.AsyncTasks
                 long sum = 0;
                 for (int i = 0; i < 5_000_000; i++)
                 {
-                    sum = i % 10;
+                    sum += i % 10;
                 }
 
                 int target = (int)sum;
@@ -48,7 +48,7 @@ namespace AsynchronousProgramming.AsyncTasks
             int dataId = await this.PerformMethodA();
             this.Notify?.Invoke($"[MethodB] Received ID {dataId} from MethodA. Preparing HttpClient request...");
 
-            string targetUrl = $"https://typicode.com{dataId}";
+            string targetUrl = $"{ConstantVariables.MockApiUrl}";
             using (HttpClient client = new HttpClient())
             {
                 this.Notify?.Invoke($"[MethodB] Fetching data asynchronously from: {targetUrl}");

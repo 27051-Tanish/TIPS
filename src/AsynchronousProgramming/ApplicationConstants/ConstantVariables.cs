@@ -13,6 +13,6 @@
         /// <summary>
         /// Stores the constant value of the mock api url.
         /// </summary>
-        public static readonly string MockApiUrl = "https://typicode.com";
+        public static readonly string MockApiUrl = "https://jsonplaceholder.typicode.com/todos/1";
     }
 }

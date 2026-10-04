@@ -13,6 +13,7 @@ namespace AsynchronousProgramming.Controller
     {
         private readonly ConsoleView _view;
         private readonly MultiLayeredTasks _multiLayeredTasks = new MultiLayeredTasks();
+        private readonly ConfigurationAwaitSample _configurationAwait = new ConfigurationAwaitSample();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskController"/> class.
@@ -22,6 +23,7 @@ namespace AsynchronousProgramming.Controller
         {
             this._view = view;
             this._multiLayeredTasks.Notify += this.DisplayNotification;
+            this._configurationAwait.ThreadNotifier += this.DisplayNotification;
         }
 
         /// <summary>
@@ -63,10 +65,13 @@ namespace AsynchronousProgramming.Controller
                         await this.PerformMultiLayeredTask();
                         break;
                     case MainMenu.DebuggingDeadlockTask:
-                        break;
-                    case MainMenu.ExceptionsInTask:
+                        await this.PerformDeadlockSample();
                         break;
                     case MainMenu.ThreadTrackingTask:
+                        await this.PerformConfigureAwaitTask();
+                        break;
+                    case MainMenu.ExceptionsInTask:
+                        await this.PerformExceptionsInTask();
                         break;
                     case MainMenu.Exit:
                         break;
@@ -128,6 +133,53 @@ namespace AsynchronousProgramming.Controller
             catch (Exception ex)
             {
                 this._view.ShowMessage($"An error occurred: {ex.Message}");
+            }
+
+            this._view.ConsoleClear();
+        }
+
+        private async Task PerformDeadlockSample()
+        {
+            DeadLockSample deadLock = new DeadLockSample();
+            string result = await deadLock.DeadlockMethod();
+            this._view.ShowMessage($"Waited for 1 second and prints the result: {result}");
+
+            this._view.ConsoleClear();
+        }
+
+        private async Task PerformConfigureAwaitTask()
+        {
+            this._view.ShowMessage($"Starts with the [Thread id]: {Thread.CurrentThread.ManagedThreadId}");
+            string result = await this._configurationAwait.PerformMethodB();
+            this._view.ShowMessage($"The result from the method B is {result}");
+            this._view.ShowMessage($"Finishes the execution with the [Thread id]: {Thread.CurrentThread.ManagedThreadId}");
+
+            this._view.ConsoleClear();
+        }
+
+        private async Task PerformExceptionsInTask()
+        {
+            this._view.ShowMessage("Starting the exception handling.");
+            ExceptionsInTaskTesting testing = new ExceptionsInTaskTesting();
+            try
+            {
+                this._view.ShowMessage("Calling task method.");
+                await testing.TaskMethod();
+            }
+            catch (Exception ex)
+            {
+                this._view.ShowMessage($"Exception caught: {ex.Message}");
+            }
+
+            try
+            {
+                this._view.ShowMessage("Calling void method.");
+                testing.VoidMethod();
+                await Task.Delay(500);
+            }
+            catch (Exception ex) // This catch block will never execute.
+            {
+                this._view.ShowMessage($"{ex.Message}");
             }
 
             this._view.ConsoleClear();

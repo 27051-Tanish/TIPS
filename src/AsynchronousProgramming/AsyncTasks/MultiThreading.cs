@@ -13,7 +13,7 @@ namespace AsynchronousProgramming.AsyncTasks
         /// <value>
         /// The sorted values of the list.
         /// </value>
-        public List<int> SortedList { get; private set; }
+        public List<int>? SortedList { get; private set; }
 
         /// <summary>
         /// Gets the squared values of the list.
@@ -21,7 +21,7 @@ namespace AsynchronousProgramming.AsyncTasks
         /// <value>
         /// The squared values of the list.
         /// </value>
-        public List<int> SquaredList { get; private set; }
+        public List<int>? SquaredList { get; private set; }
 
         /// <summary>
         /// Sorts a list in ascending order.
