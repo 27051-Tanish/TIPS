@@ -48,7 +48,7 @@ namespace AsynchronousProgramming.AsyncTasks
             int dataId = await this.PerformMethodA();
             this.Notify?.Invoke($"[MethodB] Received ID {dataId} from MethodA. Preparing HttpClient request...");
 
-            string targetUrl = $"{ConstantVariables.MockApiUrl}";
+            string targetUrl = $"{ConstantVariables.MockApiUrl}{dataId}"; // If the mock API server has no endpoint or resource matching that specific calculated dataId, it will return a 404.
             using (HttpClient client = new HttpClient())
             {
                 this.Notify?.Invoke($"[MethodB] Fetching data asynchronously from: {targetUrl}");
