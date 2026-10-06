@@ -47,7 +47,7 @@ Visual Studio calculates the compilation sequence based on designated project-to
 3. MathApp (Arithmetic calculation layer)
 4. GreetingApp (Application entry onboarding screen)
 
-![Pre-Modification Build Dependencies](ScreenShots/Snapshot1.png)
+![Pre-Modification Build Dependencies](ScreenShots/Snapshot2.png)
 
 ### Post-Modification Build Sequence
 1. UtilityApp
@@ -56,7 +56,7 @@ Visual Studio calculates the compilation sequence based on designated project-to
 4. MathApp
 5. GreetingApp
 
-![Post-Modification Build Dependencies with Project E](ScreenShots/Snapshot2.png)
+![Post-Modification Build Dependencies with Project E](ScreenShots/Snapshot1.png)
 
 
 ---

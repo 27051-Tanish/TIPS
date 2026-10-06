@@ -9,7 +9,7 @@ namespace DisplayApp
     public class Program
     {
         /// <summary>
-        /// Displays the operational menu to the user in the console interface 
+        /// Displays the operational menu to the user in the console interface
         /// and hands off control to MathApp to process choices.
         /// </summary>
         public static void Main()
