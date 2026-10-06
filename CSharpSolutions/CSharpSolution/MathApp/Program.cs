@@ -27,16 +27,20 @@ namespace MathApp
                 switch (choice)
                 {
                     case 1:
-                        DisplayApp.Program.DisplayResult(calculator.Add(5, 6));
+                        double result1 = DisplayApp.Program.DisplayResult(calculator.Add(5, 6));
+                        ValidatorApp.Program.IsValidateCalculation(result1, "sum");
                         break;
                     case 2:
-                        DisplayApp.Program.DisplayResult(calculator.Sub(12, 6));
+                        double result2 = DisplayApp.Program.DisplayResult(calculator.Sub(12, 6));
+                        ValidatorApp.Program.IsValidateCalculation(result2, "difference");
                         break;
                     case 3:
-                        DisplayApp.Program.DisplayResult(calculator.Multiply(5, 6));
+                        double result3 = DisplayApp.Program.DisplayResult(calculator.Add(5, 6));
+                        ValidatorApp.Program.IsValidateCalculation(result3, "product");
                         break;
                     case 4:
-                        DisplayApp.Program.DisplayResult(calculator.Divide(24, 6));
+                        double result4 = DisplayApp.Program.DisplayResult(calculator.Add(24, 6));
+                        ValidatorApp.Program.IsValidateCalculation(result4, "quotient");
                         break;
                     default:
                         UtilityApp.Program.ShowMessage("Invalid choice...");

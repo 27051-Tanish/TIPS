@@ -22,11 +22,11 @@ namespace DisplayApp
         /// <summary>
         /// Outputs a formatted string representation of a generic calculation result to the console window.
         /// </summary>
-        /// <typeparam name="T">The data type of the calculation result (e.g., int, double, or string).</typeparam>
         /// <param name="result">The specific value to be printed to the screen.</param>
-        public static void DisplayResult<T>(T result)
+        /// <returns>The resultant value.</returns>
+        public static double DisplayResult(double result)
         {
-            UtilityApp.Program.ShowMessage($"Result: {result}");
+            return result;
         }
 
         /// <summary>

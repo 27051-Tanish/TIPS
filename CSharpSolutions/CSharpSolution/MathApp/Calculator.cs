@@ -11,7 +11,7 @@
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The sum of two numbers.</returns>
-        public int Add(int number1, int number2)
+        public double Add(double number1, double number2)
         {
             return number1 + number2;
         }
@@ -22,7 +22,7 @@
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The difference between two numbers.</returns>
-        public int Sub(int number1, int number2)
+        public double Sub(double number1, double number2)
         {
             return number1 - number2;
         }

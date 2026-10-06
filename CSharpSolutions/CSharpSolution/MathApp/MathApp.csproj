@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DisplayApp\DisplayApp.csproj" />
+    <ProjectReference Include="..\ValidatorApp\ValidatorApp.csproj" />
   </ItemGroup>
 
 </Project>
