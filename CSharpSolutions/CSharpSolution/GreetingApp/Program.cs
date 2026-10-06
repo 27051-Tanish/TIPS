@@ -1,10 +1,21 @@
-﻿namespace Assignments
+﻿using MathApp;
+using UtilityApp;
+
+namespace GreetingsApp
 {
-    internal class Program
+    /// <summary>
+    /// Provides the main execution logic of the application.
+    /// </summary>
+    public class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Provides the main entry point of the application.
+        /// </summary>
+        public static void Main()
         {
-            Console.WriteLine("Hello, World!");
+            UtilityApp.Program.ShowMessage("Hello, Tanish!");
+            UtilityApp.Program.ShowMessage("Executing MathApp...");
+            MathApp.Program.Main();
         }
     }
 }
