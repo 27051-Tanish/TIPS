@@ -31,8 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvancedCSharpConcepts", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStreamProject", "src\FileStreamProject\FileStreamProject.csproj", "{9347006C-4F41-4B67-AF0F-B96F2E894C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionsProject", "src\ReflectionsProject\ReflectionsProject.csproj", "{A24416FC-3341-42D4-8511-32F7F891481C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,10 +77,6 @@ Global
 		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9347006C-4F41-4B67-AF0F-B96F2E894C94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A24416FC-3341-42D4-8511-32F7F891481C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A24416FC-3341-42D4-8511-32F7F891481C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A24416FC-3341-42D4-8511-32F7F891481C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A24416FC-3341-42D4-8511-32F7F891481C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,7 +94,6 @@ Global
 		{DFACAA1B-7408-4E36-814D-4EB0663B1662} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 		{59BD4647-6BC2-49AB-8732-76D5B203004A} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 		{9347006C-4F41-4B67-AF0F-B96F2E894C94} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
-		{A24416FC-3341-42D4-8511-32F7F891481C} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4CECB66-8E11-49D9-AA1E-464EE0231450}
