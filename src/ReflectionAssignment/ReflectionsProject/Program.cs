@@ -13,8 +13,7 @@ namespace Assignments
         /// </summary>
         public static void Main()
         {
-            ConsoleView view = new ConsoleView();
-            TaskController controller = new TaskController(view);
+            TaskController controller = new TaskController();
             controller.RunApplication();
         }
     }

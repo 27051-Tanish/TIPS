@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 using ReflectionsProject.Enums;
+using ReflectionsProject.ReflectionTask;
 using ReflectionsProject.View;
 
 namespace ReflectionsProject.Controller
@@ -10,18 +11,6 @@ namespace ReflectionsProject.Controller
     /// </summary>
     public class TaskController
     {
-        private readonly ConsoleView _consoleView;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaskController"/> class.
-        /// </summary>
-        /// <param name="consoleView">The instance of the view class handling user interface input and output.</param>
-        /// <param name="notifier">The notification system used to broadcast event messages.</param>
-        public TaskController(ConsoleView consoleView)
-        {
-            this._consoleView = consoleView;
-        }
-
         /// <summary>
         /// Provides the execution of each tasks from the user input.
         /// </summary>
@@ -32,7 +21,7 @@ namespace ReflectionsProject.Controller
 
             do
             {
-                this._consoleView.ShowTitle("MAIN MENU");
+                ConsoleView.ShowTitle("MAIN MENU");
                 StringBuilder menuBuilder = new StringBuilder();
                 foreach (MainMenu menuOption in Enum.GetValues<MainMenu>())
                 {
@@ -41,13 +30,14 @@ namespace ReflectionsProject.Controller
                     menuBuilder.AppendLine($"{optionNumber}. {readableName}");
                 }
 
-                this._consoleView.ShowMessage(menuBuilder.ToString().TrimEnd());
-                choice = this._consoleView.GetIntInput("Enter your choice: ", "Please select from the menu [1 to 8]");
+                ConsoleView.ShowMessage(menuBuilder.ToString().TrimEnd());
+                choice = ConsoleView.GetIntInput("Enter your choice: ", "Please select from the menu [1 to 8]");
                 menu = (MainMenu)choice;
 
                 switch (menu)
                 {
                     case MainMenu.InspectAssemblyMetadata:
+                        this.PerformInspectMetadata();
                         break;
                     case MainMenu.DynamicObjectInspector:
                         break;
@@ -64,11 +54,19 @@ namespace ReflectionsProject.Controller
                     case MainMenu.Exit:
                         break;
                     default:
-                        this._consoleView.ShowMessage("Please select from the menu [1 to 8].");
+                        ConsoleView.ShowMessage("Please select from the menu [1 to 8].");
                         break;
                 }
             }
             while (menu != MainMenu.Exit);
+        }
+
+        private void PerformInspectMetadata()
+        {
+            InspectAssembly inspectAssembly = new InspectAssembly();
+            ConsoleView.ShowTitle("TASK 1");
+            inspectAssembly.ExecuteInspectAssemblyTask();
+            ConsoleView.ConsoleClear();
         }
     }
 }
