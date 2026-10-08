@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using ReflectionsProject.Enums;
 using ReflectionsProject.ReflectionTask;
+using ReflectionsProject.SampleClasses;
 using ReflectionsProject.View;
 
 namespace ReflectionsProject.Controller
@@ -40,6 +41,7 @@ namespace ReflectionsProject.Controller
                         this.PerformInspectMetadata();
                         break;
                     case MainMenu.DynamicObjectInspector:
+                        this.PerformObjectInspector();
                         break;
                     case MainMenu.DynamicMethodInvoker:
                         break;
@@ -66,6 +68,20 @@ namespace ReflectionsProject.Controller
             InspectAssembly inspectAssembly = new InspectAssembly();
             ConsoleView.ShowTitle("TASK 1");
             inspectAssembly.ExecuteInspectAssemblyTask();
+            ConsoleView.ConsoleClear();
+        }
+
+        private void PerformObjectInspector()
+        {
+            Student student = new Student()
+            {
+                Name = "Jonathan",
+                Marks = 98,
+                Department = "CSE",
+            };
+            ConsoleView.ShowTitle("TASK 2");
+            DynamicObjectInspector dynObjectInspector = new DynamicObjectInspector();
+            dynObjectInspector.InspectObject(student);
             ConsoleView.ConsoleClear();
         }
     }
