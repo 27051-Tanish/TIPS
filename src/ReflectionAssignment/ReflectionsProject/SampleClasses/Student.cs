@@ -28,5 +28,13 @@
         /// The marks of the student.
         /// </value>
         public int Marks { get; set; }
+
+        /// <summary>
+        /// Displays the greeting message.
+        /// </summary>
+        public void DisplayHello()
+        {
+            Console.WriteLine("Hello from student");
+        }
     }
 }

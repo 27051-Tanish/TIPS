@@ -44,6 +44,7 @@ namespace ReflectionsProject.Controller
                         this.PerformObjectInspector();
                         break;
                     case MainMenu.DynamicMethodInvoker:
+                        this.PerformMethodInvoker();
                         break;
                     case MainMenu.DynamicTypeBuilder:
                         break;
@@ -82,6 +83,25 @@ namespace ReflectionsProject.Controller
             ConsoleView.ShowTitle("TASK 2");
             DynamicObjectInspector dynObjectInspector = new DynamicObjectInspector();
             dynObjectInspector.InspectObject(student);
+            ConsoleView.ConsoleClear();
+        }
+
+        private void PerformMethodInvoker()
+        {
+            Student student = new Student();
+            ConsoleView.ShowTitle("TASK 3");
+            DynamicMethodInvoker methodInvoker = new DynamicMethodInvoker();
+            ConsoleView.ShowMessage("Enter the method name: ");
+            string? methodName = ConsoleView.ReadInput();
+            if (methodName != null)
+            {
+                methodInvoker.ExecuteMethodInvoker(student, methodName);
+            }
+            else
+            {
+                ConsoleView.ShowMessage("Method not found");
+            }
+
             ConsoleView.ConsoleClear();
         }
     }
