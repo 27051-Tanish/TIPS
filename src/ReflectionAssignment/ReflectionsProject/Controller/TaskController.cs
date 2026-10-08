@@ -47,6 +47,7 @@ namespace ReflectionsProject.Controller
                         this.PerformMethodInvoker();
                         break;
                     case MainMenu.DynamicTypeBuilder:
+                        this.PerformTypeBuilder();
                         break;
                     case MainMenu.PluginSystem:
                         break;
@@ -102,6 +103,15 @@ namespace ReflectionsProject.Controller
                 ConsoleView.ShowMessage("Method not found");
             }
 
+            ConsoleView.ConsoleClear();
+        }
+
+        private void PerformTypeBuilder()
+        {
+            ConsoleView.ShowTitle("TASK 4");
+
+            DynamicTypeBuilder dynamicTypeBuilder = new DynamicTypeBuilder();
+            dynamicTypeBuilder.ExecuteDynamicTypeBuilder();
             ConsoleView.ConsoleClear();
         }
     }
