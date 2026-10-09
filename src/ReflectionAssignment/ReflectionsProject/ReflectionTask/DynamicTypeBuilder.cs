@@ -47,14 +47,17 @@ namespace ReflectionsProject.ReflectionTask
             displayIl.Emit(OpCodes.Ret);
 
             Type? dynamicType = typeBuilder.CreateType();
-            object? obj = Activator.CreateInstance(dynamicType);
-            PropertyInfo? property = dynamicType.GetProperty("Name");
-            property.SetValue(obj, "Havana");
-            object? value = property.GetValue(obj);
-            ConsoleView.ShowMessage($"Name: {value}");
+            if (dynamicType != null)
+            {
+                object? obj = Activator.CreateInstance(dynamicType);
+                PropertyInfo? property = dynamicType.GetProperty("Name");
+                property.SetValue(obj, "Havana");
+                object? value = property.GetValue(obj);
+                ConsoleView.ShowMessage($"Name: {value}");
 
-            MethodInfo? callMethod = dynamicType.GetMethod("Display");
-            callMethod.Invoke(obj, null);
+                MethodInfo? callMethod = dynamicType.GetMethod("Display");
+                callMethod.Invoke(obj, null);
+            }
         }
     }
 }

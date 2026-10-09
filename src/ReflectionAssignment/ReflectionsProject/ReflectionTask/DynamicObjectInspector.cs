@@ -26,7 +26,7 @@ namespace ReflectionsProject.ReflectionTask
                 ConsoleView.ShowMessage($"{property.Name}: {value}");
             }
 
-            ConsoleView.ShowMessage("Enter the property name which you want to change: ");
+            ConsoleView.ShowMessage("Enter the property name which you want to change: (Name, Mark, Department)");
             string? propertyToChange = ConsoleView.ReadInput();
 
             PropertyInfo? selectedProperty = type.GetProperty(propertyToChange);

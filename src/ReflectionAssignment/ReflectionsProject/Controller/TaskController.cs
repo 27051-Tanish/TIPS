@@ -50,6 +50,7 @@ namespace ReflectionsProject.Controller
                         this.PerformTypeBuilder();
                         break;
                     case MainMenu.PluginSystem:
+                        this.PerformPluginSystem();
                         break;
                     case MainMenu.MockingFramework:
                         break;
@@ -68,7 +69,7 @@ namespace ReflectionsProject.Controller
         private void PerformInspectMetadata()
         {
             InspectAssembly inspectAssembly = new InspectAssembly();
-            ConsoleView.ShowTitle("TASK 1");
+            ConsoleView.ShowTitle("Inspect Metadata");
             inspectAssembly.ExecuteInspectAssemblyTask();
             ConsoleView.ConsoleClear();
         }
@@ -81,7 +82,7 @@ namespace ReflectionsProject.Controller
                 Marks = 98,
                 Department = "CSE",
             };
-            ConsoleView.ShowTitle("TASK 2");
+            ConsoleView.ShowTitle("Object Inspector");
             DynamicObjectInspector dynObjectInspector = new DynamicObjectInspector();
             dynObjectInspector.InspectObject(student);
             ConsoleView.ConsoleClear();
@@ -90,8 +91,9 @@ namespace ReflectionsProject.Controller
         private void PerformMethodInvoker()
         {
             Student student = new Student();
-            ConsoleView.ShowTitle("TASK 3");
+            ConsoleView.ShowTitle("Method Invoker");
             DynamicMethodInvoker methodInvoker = new DynamicMethodInvoker();
+            methodInvoker.DisplayAvailableMethods(student);
             ConsoleView.ShowMessage("Enter the method name: ");
             string? methodName = ConsoleView.ReadInput();
             if (methodName != null)
@@ -108,10 +110,19 @@ namespace ReflectionsProject.Controller
 
         private void PerformTypeBuilder()
         {
-            ConsoleView.ShowTitle("TASK 4");
+            ConsoleView.ShowTitle("Dynamic Type Builder");
 
             DynamicTypeBuilder dynamicTypeBuilder = new DynamicTypeBuilder();
             dynamicTypeBuilder.ExecuteDynamicTypeBuilder();
+            ConsoleView.ConsoleClear();
+        }
+
+        private void PerformPluginSystem()
+        {
+            PluginSystem pluginSystem = new PluginSystem();
+            ConsoleView.ShowTitle("Plugin Task");
+            pluginSystem.ExecutePluginTask();
+
             ConsoleView.ConsoleClear();
         }
     }

@@ -9,6 +9,31 @@ namespace ReflectionsProject.ReflectionTask
     public class DynamicMethodInvoker
     {
         /// <summary>
+        /// Displays all public methods declared on the target object's class.
+        /// </summary>
+        /// <param name="obj">The object the class.</param>
+        public void DisplayAvailableMethods(object obj)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+
+            Type type = obj.GetType();
+
+            // DeclaredOnly hides built-in methods like ToString() and Equals()
+            MethodInfo[] methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            ConsoleView.ShowMessage($"--- Available Methods in {type.Name} ---");
+            foreach (MethodInfo m in methods)
+            {
+                ConsoleView.ShowMessage($"{m.Name}");
+            }
+
+            ConsoleView.ShowMessage("---------------------------------------");
+        }
+
+        /// <summary>
         /// Creates a dynamic type builder that can define a new class at runtime, with properties and methods defined by the user.
         /// </summary>
         /// <param name="obj">The object of an class.</param>
@@ -18,7 +43,7 @@ namespace ReflectionsProject.ReflectionTask
             Type type = obj.GetType();
             MethodInfo? method = type.GetMethod(methodName);
 
-            if (method == null)
+            if (method is null)
             {
                 ConsoleView.ShowMessage("Method not found");
                 return;
