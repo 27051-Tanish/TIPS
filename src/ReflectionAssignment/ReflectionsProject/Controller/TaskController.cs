@@ -53,6 +53,7 @@ namespace ReflectionsProject.Controller
                         this.PerformPluginSystem();
                         break;
                     case MainMenu.MockingFramework:
+                        this.PerformMockFramework();
                         break;
                     case MainMenu.SerializationAPI:
                         break;
@@ -122,6 +123,15 @@ namespace ReflectionsProject.Controller
             PluginSystem pluginSystem = new PluginSystem();
             ConsoleView.ShowTitle("Plugin Task");
             pluginSystem.ExecutePluginTask();
+
+            ConsoleView.ConsoleClear();
+        }
+
+        private void PerformMockFramework()
+        {
+            MockFramework mockFramework = new MockFramework();
+            ConsoleView.ShowTitle("Mock Framework");
+            mockFramework.ExecuteMockFramework();
 
             ConsoleView.ConsoleClear();
         }
