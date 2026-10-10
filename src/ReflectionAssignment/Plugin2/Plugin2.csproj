@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<CSharpAnalyser>true</CSharpAnalyser>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReflectionsProject\ReflectionsProject.csproj" />
+  </ItemGroup>
+
+</Project>
