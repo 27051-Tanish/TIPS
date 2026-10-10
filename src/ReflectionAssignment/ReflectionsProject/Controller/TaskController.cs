@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using ReflectionsProject.Enums;
 using ReflectionsProject.ReflectionTask;
@@ -56,6 +57,7 @@ namespace ReflectionsProject.Controller
                         this.PerformMockFramework();
                         break;
                     case MainMenu.SerializationAPI:
+                        this.PerformSerializationApi();
                         break;
                     case MainMenu.Exit:
                         break;
@@ -132,6 +134,33 @@ namespace ReflectionsProject.Controller
             MockFramework mockFramework = new MockFramework();
             ConsoleView.ShowTitle("Mock Framework");
             mockFramework.ExecuteMockFramework();
+
+            ConsoleView.ConsoleClear();
+        }
+
+        private void PerformSerializationApi()
+        {
+            SerializationApi api = new SerializationApi();
+            ConsoleView.ShowTitle("Serialization API");
+            Student student = new Student()
+            {
+                Name = "Jonathan",
+                Marks = 98,
+                Department = "CSE",
+            };
+
+            Stopwatch watch = Stopwatch.StartNew();
+            string result = api.Serialize(student);
+            watch.Stop();
+            ConsoleView.ShowMessage($"Serialization using reflection:\n{result} \nTime taken: {watch.ElapsedMilliseconds} ms");
+
+            watch.Restart();
+            Func<object, string> serializer = api.CreateSerializer();
+
+            // BUG FIX: Invoke the delegate by passing 'student' as an argument
+            string emitResult = serializer(student);
+            watch.Stop();
+            ConsoleView.ShowMessage($"Serialization using reflection emit:\n{emitResult}\nTime taken: {watch.ElapsedMilliseconds} ms");
 
             ConsoleView.ConsoleClear();
         }
